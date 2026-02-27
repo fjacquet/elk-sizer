@@ -3,12 +3,15 @@
   "nav": {
     "configuration": "Configuration",
     "report": "Report",
-    "guide": "Guide"
+    "guide": "Guide",
+    "advisor": "Advisor"
   },
   "share": {
     "button": "Share URL",
     "copied": "Configuration URL copied to clipboard",
-    "failed": "Failed to copy URL"
+    "failed": "Failed to copy URL",
+    "guideLink": "Guide Link",
+    "guideCopied": "Guide URL copied to clipboard"
   },
   "reset": "Reset",
   "errors": {

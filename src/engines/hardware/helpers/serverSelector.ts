@@ -4,30 +4,45 @@ import type { NodeSizing, TierSizing } from '@/types/sizing'
 
 const servers = dellServers as DellServer[]
 
-export function selectServerForTier(tier: TierSizing): {
+export function selectServerForTier(
+  tier: TierSizing,
+  preferredServerId?: string,
+  preferredCpu?: string,
+): {
   server: DellServer
   config: ServerConfig
 } {
-  // Find server that matches tier requirements
-  const candidates = servers.filter(
-    (s) =>
-      s.recommendedTier.includes(tier.tier) ||
-      (tier.tier === 'cold' && s.recommendedTier.includes('warm')) ||
-      (tier.tier === 'frozen' && s.recommendedTier.includes('warm')),
-  )
+  let server: DellServer | undefined
 
-  const server = candidates[0] ?? servers[0]
+  if (preferredServerId) {
+    server = servers.find((s) => s.id === preferredServerId)
+  }
+
+  if (!server) {
+    const candidates = servers.filter(
+      (s) =>
+        s.recommendedTier.includes(tier.tier) ||
+        (tier.tier === 'cold' && s.recommendedTier.includes('warm')) ||
+        (tier.tier === 'frozen' && s.recommendedTier.includes('warm')),
+    )
+    server = candidates[0] ?? servers[0]
+  }
+
   if (!server) {
     throw new Error('No server models available')
   }
 
-  // Select CPU that meets core requirements
-  const cpu = server.cpuOptions.find((c) => c.cores >= tier.cpuCoresPerNode) ?? server.cpuOptions[0]
+  // Select CPU: prefer user choice, else pick by core requirement, else first
+  const cpu =
+    (preferredCpu ? server.cpuOptions.find((c) => c.model === preferredCpu) : undefined) ??
+    server.cpuOptions.find((c) => c.cores >= tier.cpuCoresPerNode) ??
+    server.cpuOptions[0]
+
   if (!cpu) {
     throw new Error(`No CPU options for ${server.model}`)
   }
 
-  // Memory: round up to nearest DIMM configuration
+  // Memory: use tier requirement capped by server max
   const memoryGB = Math.min(tier.memoryPerNodeGB, server.maxMemoryGB)
 
   // Storage per node

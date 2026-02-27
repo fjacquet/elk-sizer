@@ -1,8 +1,13 @@
 {
   "title": "Data Retention",
   "ilmEnabled": "ILM Enabled",
+  "ilmEnabled_tooltip": "Index Lifecycle Management automatically moves data between tiers as it ages, optimizing storage cost. Disable only if you manage data movement manually.",
   "hotDays": "Hot Tier",
+  "hotDays_tooltip": "Days to keep data in the hot tier. Hot data is actively indexed and frequently queried — stored on fast SAN (PowerStore). Memory:Storage ratio 1:30.",
   "warmDays": "Warm Tier",
+  "warmDays_tooltip": "Days to keep data in the warm tier after leaving hot. Read-only data with occasional queries. Lower memory ratio (1:160) reduces node count vs hot tier.",
   "coldDays": "Cold Tier",
-  "frozenDays": "Frozen Tier"
+  "coldDays_tooltip": "Days to keep data in the cold tier. Rarely queried data for compliance. Very low memory ratio (1:500). Set to 0 to skip this tier.",
+  "frozenDays": "Frozen Tier",
+  "frozenDays_tooltip": "Days to keep data in the frozen tier as searchable snapshots on object storage (PowerScale/ECS). Lowest cost at 1:1600 ratio. Set to 0 to skip this tier."
 }

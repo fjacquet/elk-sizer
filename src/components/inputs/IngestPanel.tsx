@@ -18,6 +18,7 @@ export function IngestPanel() {
       <div className="space-y-4">
         <Slider
           label={t('dailyIngest')}
+          tooltip={t('dailyIngest_tooltip')}
           value={dailyIngestGB}
           min={1}
           max={10000}
@@ -27,6 +28,7 @@ export function IngestPanel() {
         />
         <Select
           label={t('compression')}
+          tooltip={t('compression_tooltip')}
           value={compressionCodec}
           options={[
             { value: 'lz4', label: 'LZ4 (fast, ~1.1x)' },
@@ -37,6 +39,7 @@ export function IngestPanel() {
         />
         <Slider
           label={t('replicas')}
+          tooltip={t('replicas_tooltip')}
           value={replicaCount}
           min={0}
           max={3}
@@ -45,6 +48,7 @@ export function IngestPanel() {
         />
         <Slider
           label={t('indexCount')}
+          tooltip={t('indexCount_tooltip')}
           value={indexCount}
           min={1}
           max={500}

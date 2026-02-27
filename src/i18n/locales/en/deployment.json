@@ -1,10 +1,19 @@
 {
   "title": "Deployment",
   "deploymentType": "Deployment Type",
+  "deploymentType_tooltip": "Bare Metal: direct hardware sizing. Virtual Machine: applies VM overhead factors (CPU ×0.78, storage ×0.86) requiring more physical nodes.",
   "baremetal": "Bare Metal",
   "vm": "Virtual Machine (VMware)",
   "serverModel": "Server Model",
+  "serverModel_tooltip": "Dell PowerEdge server for data nodes. R760 (2U) suits data-heavy tiers. R660 (1U) is used for infrastructure roles. R7725 (AMD EPYC) offers maximum memory for large hot tiers.",
+  "cpuOption": "CPU Option",
+  "cpuOption_tooltip": "CPU model installed in the selected server. More cores improve indexing parallelism and search throughput on hot tier nodes.",
+  "memoryPerNode": "Memory per Node",
+  "memoryPerNode_tooltip": "RAM per data node. Directly controls node count: more RAM per node = fewer nodes needed. JVM heap is set to 50% of RAM, capped at 31 GB (compressed OOPs limit).",
   "storageModel": "SAN Storage Model",
+  "storageModel_tooltip": "Dell PowerStore model for hot/warm SAN storage. Larger models offer more raw capacity and higher IOPS. Used to calculate PowerStore unit count in the BOM.",
   "frozenBackend": "Frozen Tier Backend",
-  "networkSpeed": "Network Speed"
+  "frozenBackend_tooltip": "Object storage backend for frozen tier searchable snapshots. PowerScale: Dell scale-out NAS with S3 protocol. ECS: Dell native object storage with S3-compatible API.",
+  "networkSpeed": "Network Speed",
+  "networkSpeed_tooltip": "Server network uplink speed. 25 GbE is standard for most deployments. 100 GbE is recommended for R7725 or very high indexing rates (>500K docs/sec)."
 }

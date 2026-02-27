@@ -3,12 +3,15 @@
   "nav": {
     "configuration": "Configurazione",
     "report": "Rapporto",
-    "guide": "Guida"
+    "guide": "Guida",
+    "advisor": "Consulente"
   },
   "share": {
     "button": "Condividi URL",
     "copied": "URL di configurazione copiato negli appunti",
-    "failed": "Impossibile copiare l'URL"
+    "failed": "Impossibile copiare l'URL",
+    "guideLink": "Link Guida",
+    "guideCopied": "URL della guida copiato negli appunti"
   },
   "reset": "Ripristina",
   "errors": {

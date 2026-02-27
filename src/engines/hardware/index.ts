@@ -15,10 +15,12 @@ export interface HardwareEngineInput {
   clusterResult: ClusterResult
   deploymentType: DeploymentType
   frozenBackend: FrozenBackend
+  serverModel?: string
+  cpuOption?: string
 }
 
 export function calculateHardware(input: HardwareEngineInput): HardwareResult {
-  const { clusterResult, deploymentType, frozenBackend } = input
+  const { clusterResult, deploymentType, frozenBackend, serverModel, cpuOption } = input
   const isVM = deploymentType === 'vm'
 
   const bomServers: BOMServerEntry[] = []
@@ -36,7 +38,7 @@ export function calculateHardware(input: HardwareEngineInput): HardwareResult {
         }
       : tier
 
-    const { server, config } = selectServerForTier(adjustedTier)
+    const { server, config } = selectServerForTier(adjustedTier, serverModel, cpuOption)
     bomServers.push({
       model: server.model,
       role: `data_${tier.tier}`,

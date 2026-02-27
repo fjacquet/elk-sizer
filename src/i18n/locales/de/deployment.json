@@ -6,5 +6,7 @@
   "serverModel": "Servermodell",
   "storageModel": "SAN-Speichermodell",
   "frozenBackend": "Frozen-Stufe Backend",
+  "cpuOption": "CPU-Option",
+  "memoryPerNode": "Speicher pro Knoten",
   "networkSpeed": "Netzwerkgeschwindigkeit"
 }

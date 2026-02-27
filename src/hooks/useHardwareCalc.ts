@@ -6,6 +6,8 @@ import type { ClusterResult, HardwareResult } from '@/types/results'
 export function useHardwareCalc(clusterResult: ClusterResult): HardwareResult {
   const deploymentType = useConfigStore((s) => s.deploymentType)
   const frozenBackend = useConfigStore((s) => s.frozenBackend)
+  const serverModel = useConfigStore((s) => s.serverModel)
+  const cpuOption = useConfigStore((s) => s.cpuOption)
 
   return useMemo(
     () =>
@@ -13,7 +15,9 @@ export function useHardwareCalc(clusterResult: ClusterResult): HardwareResult {
         clusterResult,
         deploymentType,
         frozenBackend,
+        serverModel,
+        cpuOption,
       }),
-    [clusterResult, deploymentType, frozenBackend],
+    [clusterResult, deploymentType, frozenBackend, serverModel, cpuOption],
   )
 }

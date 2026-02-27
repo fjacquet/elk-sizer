@@ -18,9 +18,15 @@ export function RetentionPanel() {
   return (
     <Card title={t('title')}>
       <div className="space-y-4">
-        <Toggle label={t('ilmEnabled')} checked={ilmEnabled} onChange={setIlmEnabled} />
+        <Toggle
+          label={t('ilmEnabled')}
+          tooltip={t('ilmEnabled_tooltip')}
+          checked={ilmEnabled}
+          onChange={setIlmEnabled}
+        />
         <Slider
           label={t('hotDays')}
+          tooltip={t('hotDays_tooltip')}
           value={hotDays}
           min={1}
           max={90}
@@ -29,6 +35,7 @@ export function RetentionPanel() {
         />
         <Slider
           label={t('warmDays')}
+          tooltip={t('warmDays_tooltip')}
           value={warmDays}
           min={0}
           max={365}
@@ -37,6 +44,7 @@ export function RetentionPanel() {
         />
         <Slider
           label={t('coldDays')}
+          tooltip={t('coldDays_tooltip')}
           value={coldDays}
           min={0}
           max={730}
@@ -45,6 +53,7 @@ export function RetentionPanel() {
         />
         <Slider
           label={t('frozenDays')}
+          tooltip={t('frozenDays_tooltip')}
           value={frozenDays}
           min={0}
           max={3650}

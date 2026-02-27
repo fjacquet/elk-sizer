@@ -16,6 +16,7 @@ export function PerformancePanel() {
       <div className="space-y-4">
         <Slider
           label={t('searchRate')}
+          tooltip={t('searchRate_tooltip')}
           value={searchRate}
           min={1}
           max={500}
@@ -24,6 +25,7 @@ export function PerformancePanel() {
         />
         <Slider
           label={t('indexingRate')}
+          tooltip={t('indexingRate_tooltip')}
           value={indexingRate}
           min={100}
           max={100000}
@@ -33,6 +35,7 @@ export function PerformancePanel() {
         />
         <Slider
           label={t('concurrentSearches')}
+          tooltip={t('concurrentSearches_tooltip')}
           value={concurrentSearches}
           min={1}
           max={100}

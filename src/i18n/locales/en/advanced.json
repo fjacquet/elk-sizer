@@ -1,7 +1,9 @@
 {
   "title": "Advanced Settings",
   "pue": "Power Usage Effectiveness (PUE)",
+  "pue_tooltip": "Ratio of total datacenter power to IT equipment power. 1.0 = perfect efficiency. Typical range: 1.1 (modern) to 1.8 (legacy). Used for TCO and CO2 calculations.",
   "carbonRegion": "Carbon Region",
+  "carbonRegion_tooltip": "Regional carbon intensity (gCO2/kWh) used to estimate annual CO2 emissions. Switzerland has very low carbon intensity (~12 gCO2/kWh) due to hydropower.",
   "regions": {
     "switzerland": "Switzerland",
     "france": "France",
@@ -11,11 +13,15 @@
     "uk": "United Kingdom"
   },
   "shardsPerIndex": "Shards per Index",
+  "shardsPerIndex_tooltip": "Primary shards per index. Target 10–50 GB per shard. More shards = better parallelism but higher JVM overhead. Rule: max 20 shards per GB of heap.",
   "unitSystem": "Unit System",
+  "unitSystem_tooltip": "Binary: GiB/TiB (1 GiB = 1024 MiB) — used by Elasticsearch internally. Decimal: GB/TB (1 GB = 1000 MB) — used in storage vendor specs.",
   "units": {
     "binary": "Binary (GiB/TiB)",
     "decimal": "Decimal (GB/TB)"
   },
   "electricityCost": "Electricity Cost",
-  "projectYears": "Project Duration"
+  "electricityCost_tooltip": "Cost per kWh in your region. Used for 5-year TCO energy cost calculation. Swiss average: ~0.22 CHF/kWh, EU average: ~0.30 EUR/kWh.",
+  "projectYears": "Project Duration",
+  "projectYears_tooltip": "Number of years for TCO amortization. Hardware costs are spread over this period."
 }

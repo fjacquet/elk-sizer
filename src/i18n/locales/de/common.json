@@ -3,12 +3,15 @@
   "nav": {
     "configuration": "Konfiguration",
     "report": "Bericht",
-    "guide": "Leitfaden"
+    "guide": "Leitfaden",
+    "advisor": "Berater"
   },
   "share": {
     "button": "URL teilen",
     "copied": "Konfigurations-URL in Zwischenablage kopiert",
-    "failed": "URL konnte nicht kopiert werden"
+    "failed": "URL konnte nicht kopiert werden",
+    "guideLink": "Guide-Link",
+    "guideCopied": "Guide-URL in Zwischenablage kopiert"
   },
   "reset": "Zuruecksetzen",
   "errors": {

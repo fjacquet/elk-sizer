@@ -5,9 +5,10 @@ import { copyShareableUrl, useConfigStore } from '@/store'
 
 interface HeaderProps {
   onGuideToggle?: () => void
+  onAdvisorToggle?: () => void
 }
 
-export function Header({ onGuideToggle }: HeaderProps) {
+export function Header({ onGuideToggle, onAdvisorToggle }: HeaderProps) {
   const { t, i18n } = useTranslation('common')
   const resetToDefaults = useConfigStore((s) => s.resetToDefaults)
 
@@ -16,6 +17,16 @@ export function Header({ onGuideToggle }: HeaderProps) {
     if (success) {
       toast.success(t('share.copied'))
     } else {
+      toast.error(t('share.failed'))
+    }
+  }
+
+  const handleShareGuide = async () => {
+    const guideUrl = `${window.location.origin}${window.location.pathname}#guide`
+    try {
+      await navigator.clipboard.writeText(guideUrl)
+      toast.success(t('share.guideCopied'))
+    } catch {
       toast.error(t('share.failed'))
     }
   }
@@ -41,7 +52,30 @@ export function Header({ onGuideToggle }: HeaderProps) {
           ))}
         </select>
 
+        {/* Advisor button */}
+        {onAdvisorToggle && (
+          <button
+            type="button"
+            onClick={onAdvisorToggle}
+            className="bg-surface-700 hover:bg-surface-600 text-slate-300 text-xs px-2.5 py-1.5 rounded transition-colors hidden lg:block"
+            title={t('nav.advisor')}
+          >
+            {t('nav.advisor')}
+          </button>
+        )}
+
         {/* Guide button */}
+        {onGuideToggle && (
+          <button
+            type="button"
+            onClick={handleShareGuide}
+            className="bg-surface-700 hover:bg-surface-600 text-slate-300 text-xs px-2.5 py-1.5 rounded transition-colors hidden lg:block"
+            title={t('share.guideLink')}
+          >
+            {t('share.guideLink')}
+          </button>
+        )}
+
         {onGuideToggle && (
           <button
             type="button"

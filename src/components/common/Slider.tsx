@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { Tooltip } from './Tooltip'
 
 interface SliderProps {
   label: string
@@ -7,16 +8,17 @@ interface SliderProps {
   max: number
   step?: number
   unit?: string
+  tooltip?: string
   onChange: (value: number) => void
 }
 
-export function Slider({ label, value, min, max, step = 1, unit = '', onChange }: SliderProps) {
+export function Slider({ label, value, min, max, step = 1, unit = '', tooltip, onChange }: SliderProps) {
   const id = useId()
   return (
     <div className="input-group">
       <div className="flex justify-between">
         <label htmlFor={id} className="label">
-          {label}
+          {tooltip ? <Tooltip text={tooltip}>{label}</Tooltip> : label}
         </label>
         <span className="text-sm text-primary-400 font-mono">
           {value.toLocaleString()}

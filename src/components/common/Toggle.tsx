@@ -1,10 +1,13 @@
+import { Tooltip } from './Tooltip'
+
 interface ToggleProps {
   label: string
   checked: boolean
   onChange: (checked: boolean) => void
+  tooltip?: string
 }
 
-export function Toggle({ label, checked, onChange }: ToggleProps) {
+export function Toggle({ label, checked, onChange, tooltip }: ToggleProps) {
   return (
     <label className="flex items-center gap-3 cursor-pointer">
       <div className="relative">
@@ -25,7 +28,9 @@ export function Toggle({ label, checked, onChange }: ToggleProps) {
           }`}
         />
       </div>
-      <span className="text-sm text-slate-300">{label}</span>
+      <span className="text-sm text-slate-300">
+        {tooltip ? <Tooltip text={tooltip}>{label}</Tooltip> : label}
+      </span>
     </label>
   )
 }

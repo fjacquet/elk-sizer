@@ -1,4 +1,5 @@
 import { useId } from 'react'
+import { Tooltip } from './Tooltip'
 
 interface SelectOption {
   value: string
@@ -10,14 +11,15 @@ interface SelectProps {
   value: string
   options: SelectOption[]
   onChange: (value: string) => void
+  tooltip?: string
 }
 
-export function Select({ label, value, options, onChange }: SelectProps) {
+export function Select({ label, value, options, onChange, tooltip }: SelectProps) {
   const id = useId()
   return (
     <div className="input-group">
       <label htmlFor={id} className="label">
-        {label}
+        {tooltip ? <Tooltip text={tooltip}>{label}</Tooltip> : label}
       </label>
       <select
         id={id}

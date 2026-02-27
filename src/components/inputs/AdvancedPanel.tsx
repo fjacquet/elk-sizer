@@ -21,9 +21,18 @@ export function AdvancedPanel() {
   return (
     <Card title={t('title')}>
       <div className="space-y-4">
-        <Slider label={t('pue')} value={pue} min={1.0} max={2.5} step={0.1} onChange={setPue} />
+        <Slider
+          label={t('pue')}
+          tooltip={t('pue_tooltip')}
+          value={pue}
+          min={1.0}
+          max={2.5}
+          step={0.1}
+          onChange={setPue}
+        />
         <Select
           label={t('carbonRegion')}
+          tooltip={t('carbonRegion_tooltip')}
           value={carbonRegion}
           options={[
             { value: 'switzerland', label: t('regions.switzerland') },
@@ -37,6 +46,7 @@ export function AdvancedPanel() {
         />
         <Slider
           label={t('shardsPerIndex')}
+          tooltip={t('shardsPerIndex_tooltip')}
           value={shardsPerIndex}
           min={1}
           max={20}
@@ -44,6 +54,7 @@ export function AdvancedPanel() {
         />
         <Select
           label={t('unitSystem')}
+          tooltip={t('unitSystem_tooltip')}
           value={unitSystem}
           options={[
             { value: 'binary', label: t('units.binary') },
@@ -53,6 +64,7 @@ export function AdvancedPanel() {
         />
         <Slider
           label={t('electricityCost')}
+          tooltip={t('electricityCost_tooltip')}
           value={electricityCostPerKwh}
           min={0.01}
           max={0.5}
@@ -62,6 +74,7 @@ export function AdvancedPanel() {
         />
         <Slider
           label={t('projectYears')}
+          tooltip={t('projectYears_tooltip')}
           value={projectYears}
           min={1}
           max={10}

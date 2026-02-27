@@ -1,7 +1,11 @@
 {
   "title": "Data Ingest",
   "dailyIngest": "Daily Ingest Volume",
+  "dailyIngest_tooltip": "Raw uncompressed data ingested per day. This is the primary driver of cluster sizing. Include all data sources before any Elasticsearch compression.",
   "compression": "Compression Codec",
+  "compression_tooltip": "LZ4: fast, ~1.1x compression ratio — best for hot tier. DEFLATE: ~0.85x ratio — good for warm tier. Best Compression: ~0.7x ratio — ideal for cold/frozen with low write throughput.",
   "replicas": "Replica Count",
-  "indexCount": "Number of Indices"
+  "replicas_tooltip": "Number of replica shards per primary. 1 replica doubles storage and shard count but provides high availability. 0 = no redundancy.",
+  "indexCount": "Number of Indices",
+  "indexCount_tooltip": "Total number of Elasticsearch indices. Affects shard count and JVM heap requirements. Each index has at least 1 primary shard × (1 + replicas)."
 }

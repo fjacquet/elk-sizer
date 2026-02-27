@@ -1,6 +1,9 @@
 {
   "title": "Performance",
   "searchRate": "Search Rate",
+  "searchRate_tooltip": "Number of search requests per second across the cluster. Higher values increase CPU and coordinator node requirements.",
   "indexingRate": "Indexing Rate",
-  "concurrentSearches": "Concurrent Searches"
+  "indexingRate_tooltip": "Documents indexed per second. Drives ingest node count and hot-tier node sizing. Typically 80-90% of CPU capacity on hot nodes.",
+  "concurrentSearches": "Concurrent Searches",
+  "concurrentSearches_tooltip": "Maximum simultaneous search requests. Determines coordinating node count and JVM thread pool sizing."
 }
