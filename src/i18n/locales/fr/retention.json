@@ -1,0 +1,8 @@
+{
+  "title": "Retention des donnees",
+  "ilmEnabled": "ILM active",
+  "hotDays": "Niveau Hot",
+  "warmDays": "Niveau Warm",
+  "coldDays": "Niveau Cold",
+  "frozenDays": "Niveau Frozen"
+}

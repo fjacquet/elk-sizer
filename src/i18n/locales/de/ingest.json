@@ -1,0 +1,7 @@
+{
+  "title": "Datenaufnahme",
+  "dailyIngest": "Taegliches Aufnahmevolumen",
+  "compression": "Komprimierungs-Codec",
+  "replicas": "Anzahl Replikate",
+  "indexCount": "Anzahl Indizes"
+}

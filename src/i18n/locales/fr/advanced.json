@@ -1,0 +1,21 @@
+{
+  "title": "Parametres avances",
+  "pue": "Efficacite energetique (PUE)",
+  "carbonRegion": "Region carbone",
+  "regions": {
+    "switzerland": "Suisse",
+    "france": "France",
+    "germany": "Allemagne",
+    "italy": "Italie",
+    "us_avg": "Moyenne US",
+    "uk": "Royaume-Uni"
+  },
+  "shardsPerIndex": "Shards par index",
+  "unitSystem": "Systeme d'unites",
+  "units": {
+    "binary": "Binaire (Gio/Tio)",
+    "decimal": "Decimal (Go/To)"
+  },
+  "electricityCost": "Cout de l'electricite",
+  "projectYears": "Duree du projet"
+}

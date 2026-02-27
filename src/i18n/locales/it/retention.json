@@ -1,0 +1,8 @@
+{
+  "title": "Conservazione dati",
+  "ilmEnabled": "ILM attivato",
+  "hotDays": "Livello Hot",
+  "warmDays": "Livello Warm",
+  "coldDays": "Livello Cold",
+  "frozenDays": "Livello Frozen"
+}

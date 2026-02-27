@@ -1,0 +1,82 @@
+[
+  {
+    "role": "data_hot",
+    "description": "Handles indexing and most recent search queries. Needs fast storage and high CPU.",
+    "minMemoryGB": 32,
+    "recommendedMemoryGB": 64,
+    "minCores": 8,
+    "recommendedCores": 16,
+    "storageRequired": true,
+    "jvmHeapRequired": true
+  },
+  {
+    "role": "data_warm",
+    "description": "Holds older data that is queried less frequently. Balanced storage and memory.",
+    "minMemoryGB": 32,
+    "recommendedMemoryGB": 64,
+    "minCores": 4,
+    "recommendedCores": 8,
+    "storageRequired": true,
+    "jvmHeapRequired": true
+  },
+  {
+    "role": "data_cold",
+    "description": "Holds infrequently accessed data. Optimized for storage density over performance.",
+    "minMemoryGB": 16,
+    "recommendedMemoryGB": 32,
+    "minCores": 2,
+    "recommendedCores": 4,
+    "storageRequired": true,
+    "jvmHeapRequired": true
+  },
+  {
+    "role": "data_frozen",
+    "description": "Searchable snapshots from object storage. Minimal local storage, low memory.",
+    "minMemoryGB": 16,
+    "recommendedMemoryGB": 32,
+    "minCores": 2,
+    "recommendedCores": 4,
+    "storageRequired": false,
+    "jvmHeapRequired": true
+  },
+  {
+    "role": "master",
+    "description": "Manages cluster state, index creation/deletion. No data storage needed.",
+    "minMemoryGB": 8,
+    "recommendedMemoryGB": 16,
+    "minCores": 2,
+    "recommendedCores": 4,
+    "storageRequired": false,
+    "jvmHeapRequired": true
+  },
+  {
+    "role": "ingest",
+    "description": "Pre-processes documents before indexing. CPU intensive for pipeline processing.",
+    "minMemoryGB": 16,
+    "recommendedMemoryGB": 32,
+    "minCores": 4,
+    "recommendedCores": 8,
+    "storageRequired": false,
+    "jvmHeapRequired": true
+  },
+  {
+    "role": "coordinating",
+    "description": "Routes requests and aggregates search results. Memory for result aggregation.",
+    "minMemoryGB": 16,
+    "recommendedMemoryGB": 32,
+    "minCores": 4,
+    "recommendedCores": 8,
+    "storageRequired": false,
+    "jvmHeapRequired": true
+  },
+  {
+    "role": "ml",
+    "description": "Runs machine learning jobs. Needs significant CPU and memory.",
+    "minMemoryGB": 32,
+    "recommendedMemoryGB": 64,
+    "minCores": 8,
+    "recommendedCores": 16,
+    "storageRequired": false,
+    "jvmHeapRequired": true
+  }
+]

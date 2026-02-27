@@ -1,0 +1,67 @@
+{
+  "summary": {
+    "totalNodes": "Total noeuds",
+    "totalStorage": "Stockage total",
+    "totalMemory": "Memoire totale",
+    "estimatedCost": "Cout estime"
+  },
+  "tierBreakdown": {
+    "title": "Detail par niveau",
+    "tier": "Niveau",
+    "nodes": "Noeuds",
+    "storage": "Stockage",
+    "memory": "Memoire",
+    "jvmHeap": "JVM Heap",
+    "shards": "Shards",
+    "otherNodes": "Noeuds d'infrastructure",
+    "master": "Master",
+    "ingest": "Ingest",
+    "coordinating": "Coordinating",
+    "shardUtilization": "Utilisation des shards"
+  },
+  "sankey": {
+    "title": "Flux de donnees"
+  },
+  "bom": {
+    "title": "Nomenclature materielle",
+    "servers": "Serveurs",
+    "model": "Modele",
+    "role": "Role",
+    "qty": "Qte",
+    "cpu": "CPU",
+    "ram": "RAM",
+    "sanStorage": "Stockage SAN (FC)",
+    "tier": "Niveau",
+    "capacity": "Capacite",
+    "objectStorage": "Stockage objet (S3)",
+    "backend": "Backend",
+    "nodeCount": "Noeuds",
+    "networking": "Reseau",
+    "switches": "Commutateurs",
+    "fcPorts": "Ports FC",
+    "ethPorts": "Ports Ethernet",
+    "totalRackUnits": "Unites rack totales"
+  },
+  "vmComparison": {
+    "title": "Comparaison VM vs Bare Metal",
+    "metric": "Metrique",
+    "baremetal": "Bare Metal",
+    "vm": "Machine virtuelle",
+    "totalNodes": "Total noeuds",
+    "totalStorage": "Stockage total",
+    "totalMemory": "Memoire totale",
+    "estimatedCost": "Cout estime",
+    "overhead": "Surcharge VM"
+  },
+  "sustainability": {
+    "title": "Durabilite et TCO",
+    "totalPower": "Puissance totale",
+    "annualEnergy": "Energie annuelle",
+    "annualCO2": "CO2 annuel",
+    "tco": "Cout total de possession",
+    "perYear": "par an",
+    "hardwareCost": "Materiel",
+    "energyCost": "Energie",
+    "licenseCost": "Licences (est.)"
+  }
+}

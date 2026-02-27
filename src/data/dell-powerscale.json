@@ -1,0 +1,53 @@
+[
+  {
+    "id": "pscale-f710",
+    "model": "PowerScale F710",
+    "nodeCapacityTB": 92,
+    "maxClusterCapacityPB": 1.5,
+    "s3ThroughputGBps": 5.0,
+    "networkPorts": [{ "speed": "25GbE", "count": 4, "type": "SFP28" }],
+    "powerWattsPerNode": 750,
+    "minNodes": 3,
+    "maxNodes": 252,
+    "rackUnitsPerNode": 1
+  },
+  {
+    "id": "pscale-f910",
+    "model": "PowerScale F910",
+    "nodeCapacityTB": 184,
+    "maxClusterCapacityPB": 3.0,
+    "s3ThroughputGBps": 10.0,
+    "networkPorts": [
+      { "speed": "100GbE", "count": 2, "type": "QSFP56" },
+      { "speed": "25GbE", "count": 2, "type": "SFP28" }
+    ],
+    "powerWattsPerNode": 1100,
+    "minNodes": 3,
+    "maxNodes": 252,
+    "rackUnitsPerNode": 2
+  },
+  {
+    "id": "pscale-h7000",
+    "model": "PowerScale H7000",
+    "nodeCapacityTB": 480,
+    "maxClusterCapacityPB": 10.0,
+    "s3ThroughputGBps": 3.0,
+    "networkPorts": [{ "speed": "25GbE", "count": 4, "type": "SFP28" }],
+    "powerWattsPerNode": 600,
+    "minNodes": 3,
+    "maxNodes": 252,
+    "rackUnitsPerNode": 4
+  },
+  {
+    "id": "pscale-a3100",
+    "model": "PowerScale A3100",
+    "nodeCapacityTB": 960,
+    "maxClusterCapacityPB": 50.0,
+    "s3ThroughputGBps": 2.0,
+    "networkPorts": [{ "speed": "25GbE", "count": 2, "type": "SFP28" }],
+    "powerWattsPerNode": 500,
+    "minNodes": 3,
+    "maxNodes": 252,
+    "rackUnitsPerNode": 4
+  }
+]

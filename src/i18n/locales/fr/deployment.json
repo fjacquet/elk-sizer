@@ -1,0 +1,10 @@
+{
+  "title": "Deploiement",
+  "deploymentType": "Type de deploiement",
+  "baremetal": "Bare Metal",
+  "vm": "Machine virtuelle (VMware)",
+  "serverModel": "Modele de serveur",
+  "storageModel": "Modele de stockage SAN",
+  "frozenBackend": "Backend niveau Frozen",
+  "networkSpeed": "Vitesse reseau"
+}

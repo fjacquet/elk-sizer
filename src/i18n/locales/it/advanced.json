@@ -1,0 +1,21 @@
+{
+  "title": "Impostazioni avanzate",
+  "pue": "Efficienza energetica (PUE)",
+  "carbonRegion": "Regione carbonio",
+  "regions": {
+    "switzerland": "Svizzera",
+    "france": "Francia",
+    "germany": "Germania",
+    "italy": "Italia",
+    "us_avg": "Media USA",
+    "uk": "Regno Unito"
+  },
+  "shardsPerIndex": "Shard per indice",
+  "unitSystem": "Sistema di unita",
+  "units": {
+    "binary": "Binario (GiB/TiB)",
+    "decimal": "Decimale (GB/TB)"
+  },
+  "electricityCost": "Costo elettricita",
+  "projectYears": "Durata del progetto"
+}

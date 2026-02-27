@@ -1,0 +1,21 @@
+{
+  "title": "Erweiterte Einstellungen",
+  "pue": "Energieeffizienz (PUE)",
+  "carbonRegion": "CO2-Region",
+  "regions": {
+    "switzerland": "Schweiz",
+    "france": "Frankreich",
+    "germany": "Deutschland",
+    "italy": "Italien",
+    "us_avg": "US-Durchschnitt",
+    "uk": "Vereinigtes Koenigreich"
+  },
+  "shardsPerIndex": "Shards pro Index",
+  "unitSystem": "Einheitensystem",
+  "units": {
+    "binary": "Binaer (GiB/TiB)",
+    "decimal": "Dezimal (GB/TB)"
+  },
+  "electricityCost": "Stromkosten",
+  "projectYears": "Projektdauer"
+}

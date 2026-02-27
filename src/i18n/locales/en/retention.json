@@ -1,0 +1,8 @@
+{
+  "title": "Data Retention",
+  "ilmEnabled": "ILM Enabled",
+  "hotDays": "Hot Tier",
+  "warmDays": "Warm Tier",
+  "coldDays": "Cold Tier",
+  "frozenDays": "Frozen Tier"
+}

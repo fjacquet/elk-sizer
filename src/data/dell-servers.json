@@ -1,0 +1,114 @@
+[
+  {
+    "id": "r760",
+    "model": "PowerEdge R760",
+    "generation": "16G",
+    "cpuOptions": [
+      {
+        "model": "Intel Xeon Gold 6430",
+        "cores": 32,
+        "threads": 64,
+        "baseClockGHz": 2.1,
+        "tdpWatts": 270
+      },
+      {
+        "model": "Intel Xeon Gold 6448Y",
+        "cores": 32,
+        "threads": 64,
+        "baseClockGHz": 2.1,
+        "tdpWatts": 225
+      },
+      {
+        "model": "Intel Xeon Platinum 8470",
+        "cores": 52,
+        "threads": 104,
+        "baseClockGHz": 2.0,
+        "tdpWatts": 350
+      }
+    ],
+    "maxMemoryGB": 2048,
+    "memorySlots": 32,
+    "maxDrives": 16,
+    "driveFormFactor": "2.5in",
+    "pcieSlots": 8,
+    "networkPorts": [
+      { "speed": "25GbE", "count": 2, "type": "SFP28" },
+      { "speed": "1GbE", "count": 2, "type": "RJ45" }
+    ],
+    "powerSupplyWatts": 1400,
+    "idlePowerWatts": 350,
+    "maxPowerWatts": 1200,
+    "rackUnits": 2,
+    "recommendedTier": ["hot", "warm"]
+  },
+  {
+    "id": "r660",
+    "model": "PowerEdge R660",
+    "generation": "16G",
+    "cpuOptions": [
+      {
+        "model": "Intel Xeon Gold 6430",
+        "cores": 32,
+        "threads": 64,
+        "baseClockGHz": 2.1,
+        "tdpWatts": 270
+      },
+      {
+        "model": "Intel Xeon Silver 4416+",
+        "cores": 20,
+        "threads": 40,
+        "baseClockGHz": 2.0,
+        "tdpWatts": 150
+      }
+    ],
+    "maxMemoryGB": 1024,
+    "memorySlots": 16,
+    "maxDrives": 10,
+    "driveFormFactor": "2.5in",
+    "pcieSlots": 5,
+    "networkPorts": [
+      { "speed": "25GbE", "count": 2, "type": "SFP28" },
+      { "speed": "1GbE", "count": 2, "type": "RJ45" }
+    ],
+    "powerSupplyWatts": 1100,
+    "idlePowerWatts": 250,
+    "maxPowerWatts": 900,
+    "rackUnits": 1,
+    "recommendedTier": ["master", "ingest", "coordinating"]
+  },
+  {
+    "id": "r7725",
+    "model": "PowerEdge R7725",
+    "generation": "16G",
+    "cpuOptions": [
+      {
+        "model": "AMD EPYC 9554",
+        "cores": 64,
+        "threads": 128,
+        "baseClockGHz": 3.1,
+        "tdpWatts": 360
+      },
+      {
+        "model": "AMD EPYC 9354",
+        "cores": 32,
+        "threads": 64,
+        "baseClockGHz": 3.25,
+        "tdpWatts": 280
+      }
+    ],
+    "maxMemoryGB": 4096,
+    "memorySlots": 24,
+    "maxDrives": 24,
+    "driveFormFactor": "2.5in/3.5in",
+    "pcieSlots": 12,
+    "networkPorts": [
+      { "speed": "100GbE", "count": 2, "type": "QSFP56" },
+      { "speed": "25GbE", "count": 2, "type": "SFP28" }
+    ],
+    "powerSupplyWatts": 2400,
+    "idlePowerWatts": 500,
+    "maxPowerWatts": 2000,
+    "rackUnits": 2,
+    "recommendedTier": ["hot"]
+  }
+]

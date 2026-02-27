@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ps-500t",
+    "model": "PowerStore 500T",
+    "maxRawCapacityTB": 96,
+    "maxEffectiveCapacityTB": 192,
+    "maxIOPS": 150000,
+    "latencyMs": 0.5,
+    "fcPorts": 4,
+    "fcSpeed": "32Gb",
+    "maxDrives": 24,
+    "controllerCount": 2,
+    "powerWatts": 800,
+    "rackUnits": 2
+  },
+  {
+    "id": "ps-1200t",
+    "model": "PowerStore 1200T",
+    "maxRawCapacityTB": 192,
+    "maxEffectiveCapacityTB": 384,
+    "maxIOPS": 350000,
+    "latencyMs": 0.4,
+    "fcPorts": 8,
+    "fcSpeed": "32Gb",
+    "maxDrives": 48,
+    "controllerCount": 2,
+    "powerWatts": 1200,
+    "rackUnits": 2
+  },
+  {
+    "id": "ps-3200t",
+    "model": "PowerStore 3200T",
+    "maxRawCapacityTB": 384,
+    "maxEffectiveCapacityTB": 768,
+    "maxIOPS": 600000,
+    "latencyMs": 0.3,
+    "fcPorts": 8,
+    "fcSpeed": "32Gb",
+    "maxDrives": 96,
+    "controllerCount": 2,
+    "powerWatts": 1800,
+    "rackUnits": 4
+  },
+  {
+    "id": "ps-5200t",
+    "model": "PowerStore 5200T",
+    "maxRawCapacityTB": 576,
+    "maxEffectiveCapacityTB": 1152,
+    "maxIOPS": 1000000,
+    "latencyMs": 0.25,
+    "fcPorts": 16,
+    "fcSpeed": "32Gb",
+    "maxDrives": 144,
+    "controllerCount": 2,
+    "powerWatts": 2400,
+    "rackUnits": 4
+  },
+  {
+    "id": "ps-9200t",
+    "model": "PowerStore 9200T",
+    "maxRawCapacityTB": 1152,
+    "maxEffectiveCapacityTB": 2304,
+    "maxIOPS": 2000000,
+    "latencyMs": 0.2,
+    "fcPorts": 16,
+    "fcSpeed": "32Gb",
+    "maxDrives": 288,
+    "controllerCount": 4,
+    "powerWatts": 3600,
+    "rackUnits": 8
+  }
+]

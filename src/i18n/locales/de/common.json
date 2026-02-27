@@ -1,0 +1,20 @@
+{
+  "subtitle": "Elasticsearch Cluster-Dimensionierungstool",
+  "nav": {
+    "configuration": "Konfiguration",
+    "report": "Bericht"
+  },
+  "share": {
+    "button": "URL teilen",
+    "copied": "Konfigurations-URL in Zwischenablage kopiert",
+    "failed": "URL konnte nicht kopiert werden"
+  },
+  "reset": "Zuruecksetzen",
+  "errors": {
+    "calculationError": {
+      "title": "Berechnungsfehler",
+      "message": "Bei der Dimensionierung ist ein Fehler aufgetreten. Bitte setzen Sie die Konfiguration zurueck.",
+      "resetButton": "Konfiguration zuruecksetzen"
+    }
+  }
+}

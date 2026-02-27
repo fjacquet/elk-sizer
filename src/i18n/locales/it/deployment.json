@@ -1,0 +1,10 @@
+{
+  "title": "Distribuzione",
+  "deploymentType": "Tipo di distribuzione",
+  "baremetal": "Bare Metal",
+  "vm": "Macchina virtuale (VMware)",
+  "serverModel": "Modello server",
+  "storageModel": "Modello storage SAN",
+  "frozenBackend": "Backend livello Frozen",
+  "networkSpeed": "Velocita di rete"
+}

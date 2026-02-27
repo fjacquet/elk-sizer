@@ -1,0 +1,21 @@
+{
+  "title": "Advanced Settings",
+  "pue": "Power Usage Effectiveness (PUE)",
+  "carbonRegion": "Carbon Region",
+  "regions": {
+    "switzerland": "Switzerland",
+    "france": "France",
+    "germany": "Germany",
+    "italy": "Italy",
+    "us_avg": "US Average",
+    "uk": "United Kingdom"
+  },
+  "shardsPerIndex": "Shards per Index",
+  "unitSystem": "Unit System",
+  "units": {
+    "binary": "Binary (GiB/TiB)",
+    "decimal": "Decimal (GB/TB)"
+  },
+  "electricityCost": "Electricity Cost",
+  "projectYears": "Project Duration"
+}

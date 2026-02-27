@@ -1,0 +1,20 @@
+{
+  "subtitle": "Outil de dimensionnement Elasticsearch",
+  "nav": {
+    "configuration": "Configuration",
+    "report": "Rapport"
+  },
+  "share": {
+    "button": "Partager URL",
+    "copied": "URL de configuration copiee dans le presse-papiers",
+    "failed": "Echec de la copie de l'URL"
+  },
+  "reset": "Reinitialiser",
+  "errors": {
+    "calculationError": {
+      "title": "Erreur de calcul",
+      "message": "Une erreur est survenue lors du dimensionnement. Veuillez reinitialiser la configuration.",
+      "resetButton": "Reinitialiser la configuration"
+    }
+  }
+}

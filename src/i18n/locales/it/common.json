@@ -1,0 +1,20 @@
+{
+  "subtitle": "Strumento di dimensionamento cluster Elasticsearch",
+  "nav": {
+    "configuration": "Configurazione",
+    "report": "Rapporto"
+  },
+  "share": {
+    "button": "Condividi URL",
+    "copied": "URL di configurazione copiato negli appunti",
+    "failed": "Impossibile copiare l'URL"
+  },
+  "reset": "Ripristina",
+  "errors": {
+    "calculationError": {
+      "title": "Errore di calcolo",
+      "message": "Si e verificato un errore durante il dimensionamento. Ripristinare la configurazione.",
+      "resetButton": "Ripristina configurazione"
+    }
+  }
+}

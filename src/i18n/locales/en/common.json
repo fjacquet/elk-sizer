@@ -1,0 +1,20 @@
+{
+  "subtitle": "Elasticsearch Cluster Sizing Tool",
+  "nav": {
+    "configuration": "Configuration",
+    "report": "Report"
+  },
+  "share": {
+    "button": "Share URL",
+    "copied": "Configuration URL copied to clipboard",
+    "failed": "Failed to copy URL"
+  },
+  "reset": "Reset",
+  "errors": {
+    "calculationError": {
+      "title": "Calculation Error",
+      "message": "An error occurred during sizing calculations. Please reset the configuration and try again.",
+      "resetButton": "Reset Configuration"
+    }
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "title": "Datenaufbewahrung",
+  "ilmEnabled": "ILM aktiviert",
+  "hotDays": "Hot-Stufe",
+  "warmDays": "Warm-Stufe",
+  "coldDays": "Cold-Stufe",
+  "frozenDays": "Frozen-Stufe"
+}

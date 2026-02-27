@@ -1,0 +1,7 @@
+{
+  "title": "Ingestion de donnees",
+  "dailyIngest": "Volume d'ingestion quotidien",
+  "compression": "Codec de compression",
+  "replicas": "Nombre de replicas",
+  "indexCount": "Nombre d'index"
+}
