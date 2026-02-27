@@ -41,7 +41,7 @@ export function computeTierIOPS(
     warm: SIZING.WARM_SEARCH_FRACTION,
   }
   const fraction = fractionMap[tier] ?? 0
-  const shardsHitPerQuery = shardCount / nodeCount
+  const shardsHitPerQuery = nodeCount > 0 ? shardCount / nodeCount : 0
   const estimatedReadIOPS = searchRate * fraction * shardsHitPerQuery * SIZING.IOPS_PER_SEARCH_SHARD
 
   return {
