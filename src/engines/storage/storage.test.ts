@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
-import { calculateStorage } from './index'
 import { calculateTierStorage } from './helpers/tierStorage'
+import { calculateStorage } from './index'
 
 describe('Storage Engine', () => {
   describe('calculateTierStorage', () => {

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { calculateCluster } from './index'
-import { calculateTierNodes } from './helpers/nodeCalculator'
 import type { TierStorageResult } from '@/types/results'
+import { calculateTierNodes } from './helpers/nodeCalculator'
+import { calculateCluster } from './index'
 
 describe('Cluster Engine', () => {
   describe('calculateTierNodes', () => {

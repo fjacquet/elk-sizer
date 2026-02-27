@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest'
-import { calculateSustainability } from './index'
-import { getCarbonFactor } from './helpers/carbonFactors'
 import type { HardwareResult } from '@/types/results'
+import { getCarbonFactor } from './helpers/carbonFactors'
+import { calculateSustainability } from './index'
 
 describe('Sustainability Engine', () => {
   const mockHardwareResult: HardwareResult = {
@@ -12,7 +12,13 @@ describe('Sustainability Engine', () => {
           role: 'data_hot',
           count: 4,
           config: {
-            cpu: { model: 'Xeon Gold 6430', cores: 32, threads: 64, baseClockGHz: 2.1, tdpWatts: 270 },
+            cpu: {
+              model: 'Xeon Gold 6430',
+              cores: 32,
+              threads: 64,
+              baseClockGHz: 2.1,
+              tdpWatts: 270,
+            },
             memoryGB: 64,
             driveCount: 8,
             driveCapacityTB: 2,
@@ -20,9 +26,17 @@ describe('Sustainability Engine', () => {
           powerWatts: 1200,
         },
       ],
-      sanStorage: [{ model: 'PS-1200T', count: 1, capacityTB: 384, tier: 'hot/warm', powerWatts: 1200 }],
+      sanStorage: [
+        { model: 'PS-1200T', count: 1, capacityTB: 384, tier: 'hot/warm', powerWatts: 1200 },
+      ],
       objectStorage: { backend: 'powerscale', capacityTB: 100, nodeCount: 3, powerWatts: 2250 },
-      networking: { switchCount: 2, fcPortCount: 8, ethPortCount: 12, fcSpeed: '32Gb', ethSpeed: '25GbE' },
+      networking: {
+        switchCount: 2,
+        fcPortCount: 8,
+        ethPortCount: 12,
+        fcSpeed: '32Gb',
+        ethSpeed: '25GbE',
+      },
     },
     totalRackUnits: 20,
     estimatedCostUSD: 200000,
@@ -79,7 +93,9 @@ describe('Sustainability Engine', () => {
       totalNodes: 10,
     })
 
-    expect(result.totalTCO).toBe(result.hardwareCostUSD + result.energyCostUSD + result.licenseCostUSD)
+    expect(result.totalTCO).toBe(
+      result.hardwareCostUSD + result.energyCostUSD + result.licenseCostUSD,
+    )
     expect(result.hardwareCostUSD).toBe(200000)
     expect(result.licenseCostUSD).toBe(10 * 50 * 12 * 5) // 10 nodes * $50/mo * 12 * 5yr
     expect(result.tcoYears).toBe(5)
