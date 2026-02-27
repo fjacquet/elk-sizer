@@ -3,7 +3,11 @@ import { toast } from 'sonner'
 import { LANGUAGE_LABELS, SUPPORTED_LANGUAGES } from '@/i18n/config'
 import { copyShareableUrl, useConfigStore } from '@/store'
 
-export function Header() {
+interface HeaderProps {
+  onGuideToggle?: () => void
+}
+
+export function Header({ onGuideToggle }: HeaderProps) {
   const { t, i18n } = useTranslation('common')
   const resetToDefaults = useConfigStore((s) => s.resetToDefaults)
 
@@ -36,6 +40,18 @@ export function Header() {
             </option>
           ))}
         </select>
+
+        {/* Guide button */}
+        {onGuideToggle && (
+          <button
+            type="button"
+            onClick={onGuideToggle}
+            className="bg-surface-700 hover:bg-surface-600 text-slate-300 text-xs w-7 h-7 rounded-full transition-colors font-bold"
+            title={t('nav.guide')}
+          >
+            ?
+          </button>
+        )}
 
         {/* Share button */}
         <button

@@ -2,7 +2,8 @@
   "subtitle": "Elasticsearch Cluster Sizing Tool",
   "nav": {
     "configuration": "Configuration",
-    "report": "Report"
+    "report": "Report",
+    "guide": "Guide"
   },
   "share": {
     "button": "Share URL",

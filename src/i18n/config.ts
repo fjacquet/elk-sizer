@@ -26,6 +26,7 @@ export const NAMESPACES = [
   'advanced',
   'output',
   'pdf',
+  'guide',
 ] as const
 
 export type Namespace = (typeof NAMESPACES)[number]

@@ -1,0 +1,102 @@
+{
+  "title": "Guida al dimensionamento",
+  "subtitle": "Scopri i concetti di dimensionamento dei cluster Elasticsearch e le opzioni infrastrutturali Dell.",
+
+  "dataIngestion": {
+    "title": "Ingestione dati",
+    "intro": "Il volume di ingestione dati e il principale fattore di dimensionamento del cluster. Il tasso di ingestione giornaliero determina le esigenze di storage su tutti i livelli.",
+    "compressionTitle": "Codec di compressione",
+    "bestCompression": "Codec DEFLATE, rapporto ~1.5x. Ideale per i livelli warm/cold con throughput di scrittura ridotto.",
+    "defaultCompression": "Codec LZ4, rapporto ~1.2x. Buon equilibrio velocita/compressione per il livello hot.",
+    "noCompression": "Nessun codec, rapporto 1:1. Velocita di indicizzazione massima, costo di storage piu elevato.",
+    "overheadTitle": "Overhead di indicizzazione",
+    "overheadDesc": "Elasticsearch aggiunge circa il 10% di overhead per metadati di indicizzazione, mapping e doc values.",
+    "keyPoint": "Punto chiave",
+    "keyPointDesc": "Inizia con una stima accurata dell'ingestione giornaliera. Un errore del 10% si compone su livelli e repliche, potendo sovradimensionare il cluster del 20-30%."
+  },
+
+  "tierArchitecture": {
+    "title": "Architettura a livelli",
+    "intro": "Elasticsearch utilizza un'architettura dati a livelli per bilanciare prestazioni e costi. I dati si spostano tra i livelli tramite Index Lifecycle Management (ILM).",
+    "hot": {
+      "name": "Livello Hot",
+      "desc": "Indicizzazione attiva e query frequenti. Storage SSD/NVMe veloce con rapporto memoria:storage elevato (1:30)."
+    },
+    "warm": {
+      "name": "Livello Warm",
+      "desc": "Dati in sola lettura con query occasionali. Storage piu economico con rapporto memoria inferiore (1:160)."
+    },
+    "cold": {
+      "name": "Livello Cold",
+      "desc": "Dati raramente consultati, conservati per conformita. Risorse minime con rapporto memoria 1:500."
+    },
+    "frozen": {
+      "name": "Livello Frozen",
+      "desc": "Snapshot ricercabili su storage oggetti (S3). Costo piu basso con rapporto memoria 1:1600."
+    },
+    "ilmTitle": "Index Lifecycle Management",
+    "ilmDesc": "ILM automatizza lo spostamento dei dati tra i livelli in base alle policy di eta. Abilita ILM per ottimizzare i costi.",
+    "keyPoint": "Punto chiave",
+    "keyPointDesc": "Non tutti i livelli sono necessari. Molti deployment usano solo hot + warm. Aggiungi cold/frozen solo se la retention supera i 90 giorni."
+  },
+
+  "clusterSizing": {
+    "title": "Dimensionamento del cluster",
+    "intro": "Il dimensionamento del cluster determina il numero e le specifiche dei nodi necessari per il tuo carico di lavoro.",
+    "nodeRolesTitle": "Ruoli dei nodi",
+    "masterRole": "Gestisce lo stato del cluster, la creazione degli indici, l'allocazione degli shard. Minimo 3 nodi dedicati.",
+    "dataRole": "Memorizza i dati ed esegue operazioni di ricerca/indicizzazione. Dimensionato per livello.",
+    "ingestRole": "Pre-elabora i documenti prima dell'indicizzazione. Necessario per pipeline complesse.",
+    "coordinatingRole": "Instrada le richieste, aggrega i risultati. Necessario per alta concorrenza di ricerca.",
+    "jvmTitle": "Limite JVM Heap",
+    "jvmDesc": "L'heap JVM e limitato a 31 GB per utilizzare i puntatori compressi (OOPs). L'heap e impostato al 50% della RAM disponibile.",
+    "memoryRatiosTitle": "Rapporti memoria:storage",
+    "keyPoint": "Punto chiave",
+    "keyPointDesc": "Il limite di 31 GB dell'heap JVM e una barriera rigida. Superarlo spreca ~32 GB di heap per puntatori non compressi."
+  },
+
+  "shardManagement": {
+    "title": "Gestione degli shard",
+    "intro": "Gli shard sono l'unita base di distribuzione dei dati in Elasticsearch. Un dimensionamento corretto e critico per la stabilita del cluster.",
+    "sizingTitle": "Regole di dimensionamento",
+    "targetSize": "Dimensione target degli shard: 10-50 GB (50 GB massimo raccomandato).",
+    "maxPerHeap": "Massimo 20 shard per GB di memoria heap JVM.",
+    "replicaImpact": "Ogni replica raddoppia il numero di shard. 1 primario + 1 replica = 2 shard per shard dell'indice.",
+    "calculationTitle": "Calcolo degli shard",
+    "calculationDesc": "Il numero di shard per indice e calcolato in base alla dimensione prevista dell'indice e alla dimensione target degli shard:",
+    "keyPoint": "Punto chiave",
+    "keyPointDesc": "Troppi shard piccoli sprecano risorse. Troppo pochi shard grandi limitano il parallelismo. Punta a 20-50 GB per shard."
+  },
+
+  "dellHardware": {
+    "title": "Hardware Dell",
+    "intro": "ELK Sizer e progettato per server Dell PowerEdge con storage SAN PowerStore FC e storage oggetti PowerScale/ECS.",
+    "computeTitle": "Calcolo: Server PowerEdge",
+    "computeDesc": "I server rack Dell PowerEdge serie R forniscono calcolo e memoria per i nodi Elasticsearch.",
+    "r660": "Server rack 1U, ideale per nodi master/ingest/coordinating con minor fabbisogno di storage.",
+    "r760": "Server rack 2U, ideale per nodi dati con maggiore capacita di storage e memoria.",
+    "mixed": "Le configurazioni miste usano R660 per ruoli infrastrutturali e R760 per ruoli dati.",
+    "storageTitle": "Opzioni di storage",
+    "storageDesc": "Lo storage e selezionato in base ai requisiti di prestazione del livello.",
+    "powerstore": "SAN Fibre Channel per i livelli hot/warm che richiedono IOPS elevati e bassa latenza.",
+    "powerscale": "NAS/S3 scale-out per snapshot ricercabili del livello frozen.",
+    "ecs": "Storage oggetti per il livello frozen con API compatibile S3.",
+    "keyPoint": "Punto chiave",
+    "keyPointDesc": "La scelta del modello server impatta direttamente su spazio rack e consumo energetico. R660 (1U) e il 50% piu denso del R760 (2U)."
+  },
+
+  "sustainability": {
+    "title": "Sostenibilita e TCO",
+    "intro": "Le metriche di sostenibilita aiutano a stimare l'impatto ambientale e il costo totale di proprieta del deployment Elasticsearch.",
+    "pueTitle": "Power Usage Effectiveness (PUE)",
+    "pueDesc": "Il PUE misura l'efficienza del datacenter. Un PUE di 1.5 significa il 50% di energia aggiuntiva per il raffreddamento. I datacenter moderni raggiungono 1.1-1.3.",
+    "co2Title": "Emissioni di carbonio",
+    "co2Desc": "Il CO2 annuale e calcolato dal consumo energetico e dal fattore di intensita carbonica regionale (gCO2/kWh).",
+    "tcoTitle": "Scomposizione del TCO",
+    "tcoHardware": "Hardware: Costi di server, storage e apparecchiature di rete (ammortizzati sulla durata del progetto).",
+    "tcoEnergy": "Energia: Costo elettrico annuale basato sulla potenza totale, PUE e prezzo regionale dell'elettricita.",
+    "tcoLicensing": "Licenze: Stima dei costi di licenza Elastic in base al numero di nodi e al livello.",
+    "keyPoint": "Punto chiave",
+    "keyPointDesc": "I costi energetici spesso superano quelli hardware su un TCO di 5 anni. L'ottimizzazione dei livelli e l'ILM riducono costi e impronta di carbonio."
+  }
+}

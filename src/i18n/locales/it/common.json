@@ -2,7 +2,8 @@
   "subtitle": "Strumento di dimensionamento cluster Elasticsearch",
   "nav": {
     "configuration": "Configurazione",
-    "report": "Rapporto"
+    "report": "Rapporto",
+    "guide": "Guida"
   },
   "share": {
     "button": "Condividi URL",

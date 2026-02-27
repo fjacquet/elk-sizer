@@ -53,6 +53,11 @@
     "estimatedCost": "Estimated Cost",
     "overhead": "VM Overhead"
   },
+  "export": {
+    "pdf": "PDF",
+    "pptx": "PPTX",
+    "yaml": "YAML"
+  },
   "sustainability": {
     "title": "Sustainability & TCO",
     "totalPower": "Total Power",

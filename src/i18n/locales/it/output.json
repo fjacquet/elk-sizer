@@ -53,6 +53,11 @@
     "estimatedCost": "Costo stimato",
     "overhead": "Overhead VM"
   },
+  "export": {
+    "pdf": "PDF",
+    "pptx": "PPTX",
+    "yaml": "YAML"
+  },
   "sustainability": {
     "title": "Sostenibilita e TCO",
     "totalPower": "Potenza totale",

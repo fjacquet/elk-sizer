@@ -1,0 +1,102 @@
+{
+  "title": "Dimensionierungsleitfaden",
+  "subtitle": "Erfahren Sie mehr ueber Elasticsearch-Cluster-Dimensionierung und Dell-Infrastrukturoptionen.",
+
+  "dataIngestion": {
+    "title": "Datenaufnahme",
+    "intro": "Das Datenaufnahmevolumen ist der primaere Treiber fuer die Cluster-Dimensionierung. Die taegliche Aufnahmerate bestimmt den Speicherbedarf aller Stufen.",
+    "compressionTitle": "Komprimierungscodecs",
+    "bestCompression": "DEFLATE-Codec, ~1.5x Verhaeltnis. Ideal fuer Warm/Cold-Stufen mit geringerem Schreibdurchsatz.",
+    "defaultCompression": "LZ4-Codec, ~1.2x Verhaeltnis. Gute Balance zwischen Geschwindigkeit und Komprimierung fuer Hot-Stufe.",
+    "noCompression": "Kein Codec, 1:1 Verhaeltnis. Maximale Indexierungsgeschwindigkeit, hoechste Speicherkosten.",
+    "overheadTitle": "Indexierungs-Overhead",
+    "overheadDesc": "Elasticsearch fuegt ca. 10% Overhead fuer Indexierungsmetadaten, Mappings und Doc Values hinzu.",
+    "keyPoint": "Kernpunkt",
+    "keyPointDesc": "Beginnen Sie mit einer genauen taeglichen Aufnahmeschaetzung. Ein 10%-Fehler potenziert sich ueber Stufen und Replicas und kann den Cluster um 20-30% ueberdimensionieren."
+  },
+
+  "tierArchitecture": {
+    "title": "Stufenarchitektur",
+    "intro": "Elasticsearch verwendet eine gestufte Datenarchitektur, um Leistung und Kosten auszubalancieren. Daten bewegen sich via Index Lifecycle Management (ILM) durch die Stufen.",
+    "hot": {
+      "name": "Hot-Stufe",
+      "desc": "Aktive Indexierung und haeufige Abfragen. Schneller SSD/NVMe-Speicher mit hohem Speicher-zu-Storage-Verhaeltnis (1:30)."
+    },
+    "warm": {
+      "name": "Warm-Stufe",
+      "desc": "Schreibgeschuetzte Daten mit gelegentlichen Abfragen. Guenstigerer Speicher mit niedrigerem Verhaeltnis (1:160)."
+    },
+    "cold": {
+      "name": "Cold-Stufe",
+      "desc": "Selten abgefragte Daten fuer Compliance. Minimale Ressourcen mit Verhaeltnis 1:500."
+    },
+    "frozen": {
+      "name": "Frozen-Stufe",
+      "desc": "Durchsuchbare Snapshots auf Objektspeicher (S3). Niedrigste Kosten mit Verhaeltnis 1:1600."
+    },
+    "ilmTitle": "Index Lifecycle Management",
+    "ilmDesc": "ILM automatisiert die Datenbewegung zwischen Stufen basierend auf Altersrichtlinien. Aktivieren Sie ILM zur Kostenoptimierung.",
+    "keyPoint": "Kernpunkt",
+    "keyPointDesc": "Nicht alle Stufen sind erforderlich. Viele Deployments nutzen nur Hot + Warm. Cold/Frozen nur bei Aufbewahrungspflichten ueber 90 Tage."
+  },
+
+  "clusterSizing": {
+    "title": "Cluster-Dimensionierung",
+    "intro": "Die Cluster-Dimensionierung bestimmt die Anzahl und Spezifikationen der benoetigten Knoten fuer Ihre Arbeitslast.",
+    "nodeRolesTitle": "Knotenrollen",
+    "masterRole": "Verwaltet Clusterzustand, Indexerstellung, Shard-Zuweisung. Minimum 3 dedizierte Knoten.",
+    "dataRole": "Speichert Daten und fuehrt Such-/Indexierungsoperationen aus. Pro Stufe dimensioniert.",
+    "ingestRole": "Vorverarbeitung von Dokumenten vor der Indexierung. Fuer komplexe Pipelines erforderlich.",
+    "coordinatingRole": "Leitet Anfragen weiter, aggregiert Ergebnisse. Bei hoher Suchkonkurrenz erforderlich.",
+    "jvmTitle": "JVM-Heap-Limit",
+    "jvmDesc": "Der JVM-Heap ist auf 31 GB begrenzt fuer komprimierte Zeiger (OOPs). Der Heap wird auf 50% des verfuegbaren RAM gesetzt.",
+    "memoryRatiosTitle": "Speicher:Storage-Verhaeltnisse",
+    "keyPoint": "Kernpunkt",
+    "keyPointDesc": "Das 31-GB-JVM-Heap-Limit ist eine feste Grenze. Ueberschreitung verschwendet ~32 GB Heap durch unkomprimierte Zeiger."
+  },
+
+  "shardManagement": {
+    "title": "Shard-Verwaltung",
+    "intro": "Shards sind die grundlegende Einheit der Datenverteilung in Elasticsearch. Korrekte Shard-Dimensionierung ist kritisch fuer die Clusterstabilitaet.",
+    "sizingTitle": "Dimensionierungsregeln",
+    "targetSize": "Ziel-Shard-Groesse: 10-50 GB (50 GB empfohlenes Maximum).",
+    "maxPerHeap": "Maximal 20 Shards pro GB JVM-Heap-Speicher.",
+    "replicaImpact": "Jedes Replica verdoppelt die Shard-Anzahl. 1 Primaer + 1 Replica = 2 Shards pro Index-Shard.",
+    "calculationTitle": "Shard-Berechnung",
+    "calculationDesc": "Die Anzahl der Shards pro Index basiert auf der erwarteten Indexgroesse und der Ziel-Shard-Groesse:",
+    "keyPoint": "Kernpunkt",
+    "keyPointDesc": "Zu viele kleine Shards verschwenden Ressourcen. Zu wenige grosse Shards limitieren Parallelitaet. Zielen Sie auf 20-50 GB pro Shard."
+  },
+
+  "dellHardware": {
+    "title": "Dell-Hardware",
+    "intro": "ELK Sizer zielt auf Dell PowerEdge Server mit PowerStore FC SAN und PowerScale/ECS Objektspeicher.",
+    "computeTitle": "Compute: PowerEdge Server",
+    "computeDesc": "Dell PowerEdge R-Serie Rackserver bieten Rechenleistung und Speicher fuer Elasticsearch-Knoten.",
+    "r660": "1U-Rackserver, ideal fuer Master/Ingest/Coordinating-Knoten mit geringerem Speicherbedarf.",
+    "r760": "2U-Rackserver, ideal fuer Datenknoten mit hoeherem Speicher- und Arbeitsspeicherbedarf.",
+    "mixed": "Gemischte Konfigurationen verwenden R660 fuer Infrastruktur und R760 fuer Datenrollen.",
+    "storageTitle": "Speicheroptionen",
+    "storageDesc": "Speicher wird basierend auf den Leistungsanforderungen der Stufe ausgewaehlt.",
+    "powerstore": "Fibre Channel SAN fuer Hot/Warm-Stufen mit hohen IOPS und niedriger Latenz.",
+    "powerscale": "Scale-out NAS/S3 fuer durchsuchbare Snapshots der Frozen-Stufe.",
+    "ecs": "Objektspeicher fuer Frozen-Stufe mit S3-kompatibler API.",
+    "keyPoint": "Kernpunkt",
+    "keyPointDesc": "Die Servermodellwahl beeinflusst direkt Rackplatz und Stromverbrauch. R660 (1U) ist 50% rackdichter als R760 (2U)."
+  },
+
+  "sustainability": {
+    "title": "Nachhaltigkeit und TCO",
+    "intro": "Nachhaltigkeitsmetriken helfen bei der Schaetzung der Umweltauswirkungen und Gesamtbetriebskosten Ihres Elasticsearch-Deployments.",
+    "pueTitle": "Power Usage Effectiveness (PUE)",
+    "pueDesc": "PUE misst die Datacenter-Effizienz. Ein PUE von 1.5 bedeutet 50% zusaetzliche Energie fuer Kuehlung. Moderne Datacenter erreichen 1.1-1.3.",
+    "co2Title": "CO2-Emissionen",
+    "co2Desc": "Jaehrliches CO2 wird aus Energieverbrauch und regionalem CO2-Intensitaetsfaktor (gCO2/kWh) berechnet.",
+    "tcoTitle": "TCO-Aufschluesselung",
+    "tcoHardware": "Hardware: Server-, Speicher- und Netzwerkkosten (einmalig, ueber Projektlaufzeit amortisiert).",
+    "tcoEnergy": "Energie: Jaehrliche Stromkosten basierend auf Gesamtleistung, PUE und regionalem Strompreis.",
+    "tcoLicensing": "Lizenzen: Geschaetzte Elastic-Lizenzkosten basierend auf Knotenanzahl und Stufe.",
+    "keyPoint": "Kernpunkt",
+    "keyPointDesc": "Energiekosten uebersteigen oft die Hardwarekosten ueber einen 5-Jahres-TCO. Stufenoptimierung und ILM reduzieren Kosten und CO2-Fussabdruck."
+  }
+}

@@ -1,5 +1,6 @@
 import {
   ClusterSummary,
+  ExportToolbar,
   HardwareBOMTable,
   SankeyDiagram,
   SustainabilityCards,
@@ -13,6 +14,7 @@ export function OutputDashboard() {
 
   return (
     <main className="flex-1 p-4 space-y-4 overflow-y-auto">
+      <ExportToolbar results={results} />
       <ClusterSummary results={results} />
       <TierBreakdown results={results} />
       <SankeyDiagram results={results} />

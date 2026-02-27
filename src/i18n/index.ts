@@ -12,6 +12,7 @@ import {
 import deAdvanced from './locales/de/advanced.json'
 import deCommon from './locales/de/common.json'
 import deDeployment from './locales/de/deployment.json'
+import deGuide from './locales/de/guide.json'
 import deIngest from './locales/de/ingest.json'
 import deOutput from './locales/de/output.json'
 import dePdf from './locales/de/pdf.json'
@@ -20,6 +21,7 @@ import deRetention from './locales/de/retention.json'
 import enAdvanced from './locales/en/advanced.json'
 import enCommon from './locales/en/common.json'
 import enDeployment from './locales/en/deployment.json'
+import enGuide from './locales/en/guide.json'
 import enIngest from './locales/en/ingest.json'
 import enOutput from './locales/en/output.json'
 import enPdf from './locales/en/pdf.json'
@@ -28,6 +30,7 @@ import enRetention from './locales/en/retention.json'
 import frAdvanced from './locales/fr/advanced.json'
 import frCommon from './locales/fr/common.json'
 import frDeployment from './locales/fr/deployment.json'
+import frGuide from './locales/fr/guide.json'
 import frIngest from './locales/fr/ingest.json'
 import frOutput from './locales/fr/output.json'
 import frPdf from './locales/fr/pdf.json'
@@ -36,6 +39,7 @@ import frRetention from './locales/fr/retention.json'
 import itAdvanced from './locales/it/advanced.json'
 import itCommon from './locales/it/common.json'
 import itDeployment from './locales/it/deployment.json'
+import itGuide from './locales/it/guide.json'
 import itIngest from './locales/it/ingest.json'
 import itOutput from './locales/it/output.json'
 import itPdf from './locales/it/pdf.json'
@@ -52,6 +56,7 @@ const resources = {
     advanced: enAdvanced,
     output: enOutput,
     pdf: enPdf,
+    guide: enGuide,
   },
   fr: {
     common: frCommon,
@@ -62,6 +67,7 @@ const resources = {
     advanced: frAdvanced,
     output: frOutput,
     pdf: frPdf,
+    guide: frGuide,
   },
   de: {
     common: deCommon,
@@ -72,6 +78,7 @@ const resources = {
     advanced: deAdvanced,
     output: deOutput,
     pdf: dePdf,
+    guide: deGuide,
   },
   it: {
     common: itCommon,
@@ -82,6 +89,7 @@ const resources = {
     advanced: itAdvanced,
     output: itOutput,
     pdf: itPdf,
+    guide: itGuide,
   },
 }
 

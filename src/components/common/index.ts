@@ -1,3 +1,4 @@
+export { AccordionItem } from './AccordionItem'
 export { Card } from './Card'
 export { Select } from './Select'
 export { Slider } from './Slider'

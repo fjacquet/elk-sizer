@@ -1,4 +1,5 @@
 export { ClusterSummary } from './ClusterSummary'
+export { ExportToolbar } from './ExportToolbar'
 export { HardwareBOMTable } from './HardwareBOMTable'
 export { SankeyDiagram } from './SankeyDiagram'
 export { SustainabilityCards } from './SustainabilityCards'

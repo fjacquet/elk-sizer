@@ -53,6 +53,11 @@
     "estimatedCost": "Cout estime",
     "overhead": "Surcharge VM"
   },
+  "export": {
+    "pdf": "PDF",
+    "pptx": "PPTX",
+    "yaml": "YAML"
+  },
   "sustainability": {
     "title": "Durabilite et TCO",
     "totalPower": "Puissance totale",

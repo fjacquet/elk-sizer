@@ -1,0 +1,102 @@
+{
+  "title": "Sizing Guide",
+  "subtitle": "Learn about Elasticsearch cluster sizing concepts and Dell infrastructure options.",
+
+  "dataIngestion": {
+    "title": "Data Ingestion",
+    "intro": "Data ingestion volume is the primary driver for cluster sizing. The daily ingest rate determines storage needs across all tiers.",
+    "compressionTitle": "Compression Codecs",
+    "bestCompression": "DEFLATE codec, ~1.5x ratio. Best for warm/cold tiers with lower write throughput.",
+    "defaultCompression": "LZ4 codec, ~1.2x ratio. Good balance of speed and compression for hot tier.",
+    "noCompression": "No codec, 1:1 ratio. Maximum indexing speed, highest storage cost.",
+    "overheadTitle": "Indexing Overhead",
+    "overheadDesc": "Elasticsearch adds ~10% overhead for indexing metadata, mappings, and doc values on top of raw data size.",
+    "keyPoint": "Key Point",
+    "keyPointDesc": "Start with an accurate daily ingest estimate. A 10% error compounds across tiers and replicas, potentially oversizing the cluster by 20-30%."
+  },
+
+  "tierArchitecture": {
+    "title": "Tier Architecture",
+    "intro": "Elasticsearch uses a tiered data architecture to balance performance and cost. Data moves through tiers as it ages via Index Lifecycle Management (ILM).",
+    "hot": {
+      "name": "Hot Tier",
+      "desc": "Active indexing and frequent queries. Uses fast SSD/NVMe storage with high memory-to-storage ratio (1:30)."
+    },
+    "warm": {
+      "name": "Warm Tier",
+      "desc": "Read-only data with occasional queries. Uses cheaper storage with lower memory ratio (1:160)."
+    },
+    "cold": {
+      "name": "Cold Tier",
+      "desc": "Rarely queried data kept for compliance. Minimal resources with memory ratio 1:500."
+    },
+    "frozen": {
+      "name": "Frozen Tier",
+      "desc": "Searchable snapshots on object storage (S3). Lowest cost with memory ratio 1:1600."
+    },
+    "ilmTitle": "Index Lifecycle Management",
+    "ilmDesc": "ILM automates data movement between tiers based on age policies. Enable ILM to optimize costs by moving older data to cheaper storage tiers.",
+    "keyPoint": "Key Point",
+    "keyPointDesc": "Not all tiers are required. Many deployments use only hot + warm. Add cold/frozen only if retention requirements exceed 90 days."
+  },
+
+  "clusterSizing": {
+    "title": "Cluster Sizing",
+    "intro": "Cluster sizing determines the number and specifications of nodes needed to handle your workload.",
+    "nodeRolesTitle": "Node Roles",
+    "masterRole": "Manages cluster state, index creation, shard allocation. Minimum 3 dedicated nodes.",
+    "dataRole": "Stores data and executes search/indexing operations. Sized per tier.",
+    "ingestRole": "Pre-processes documents before indexing. Needed for heavy pipeline usage.",
+    "coordinatingRole": "Routes requests, aggregates results. Needed for high search concurrency.",
+    "jvmTitle": "JVM Heap Limit",
+    "jvmDesc": "JVM heap is capped at 31 GB to use compressed ordinary object pointers (OOPs). Heap is set to 50% of available RAM, leaving the rest for OS file cache.",
+    "memoryRatiosTitle": "Memory:Storage Ratios",
+    "keyPoint": "Key Point",
+    "keyPointDesc": "The 31 GB JVM heap limit is a hard boundary. Exceeding it wastes ~32 GB of heap due to uncompressed pointers."
+  },
+
+  "shardManagement": {
+    "title": "Shard Management",
+    "intro": "Shards are the basic unit of data distribution in Elasticsearch. Proper shard sizing is critical for cluster stability and performance.",
+    "sizingTitle": "Shard Sizing Rules",
+    "targetSize": "Target shard size: 10-50 GB (50 GB recommended maximum).",
+    "maxPerHeap": "Maximum 20 shards per GB of JVM heap memory.",
+    "replicaImpact": "Each replica doubles the shard count. 1 primary + 1 replica = 2 total shards per index shard.",
+    "calculationTitle": "Shard Calculation",
+    "calculationDesc": "The number of shards per index is calculated based on expected index size and the target shard size:",
+    "keyPoint": "Key Point",
+    "keyPointDesc": "Too many small shards waste resources on overhead. Too few large shards limit parallelism and recovery speed. Aim for 20-50 GB per shard."
+  },
+
+  "dellHardware": {
+    "title": "Dell Hardware",
+    "intro": "ELK Sizer targets Dell PowerEdge servers with PowerStore FC SAN and PowerScale/ECS object storage.",
+    "computeTitle": "Compute: PowerEdge Servers",
+    "computeDesc": "Dell PowerEdge R-series rack servers provide the compute and memory for Elasticsearch nodes.",
+    "r660": "1U rack server, ideal for master/ingest/coordinating nodes with lower storage needs.",
+    "r760": "2U rack server, ideal for data nodes with higher storage and memory capacity.",
+    "mixed": "Mixed configurations use R660 for infrastructure roles and R760 for data roles.",
+    "storageTitle": "Storage Options",
+    "storageDesc": "Storage is selected based on tier performance requirements.",
+    "powerstore": "Fibre Channel SAN for hot/warm tiers requiring high IOPS and low latency.",
+    "powerscale": "Scale-out NAS/S3 for frozen tier searchable snapshots.",
+    "ecs": "Object storage for frozen tier with S3-compatible API.",
+    "keyPoint": "Key Point",
+    "keyPointDesc": "Server model selection directly impacts rack space and power. R660 (1U) is 50% more rack-dense than R760 (2U) but has less expansion capacity."
+  },
+
+  "sustainability": {
+    "title": "Sustainability & TCO",
+    "intro": "Sustainability metrics help estimate the environmental impact and total cost of ownership for your Elasticsearch deployment.",
+    "pueTitle": "Power Usage Effectiveness (PUE)",
+    "pueDesc": "PUE measures datacenter efficiency. A PUE of 1.5 means 50% additional power for cooling/infrastructure. Modern datacenters achieve 1.1-1.3.",
+    "co2Title": "Carbon Emissions",
+    "co2Desc": "Annual CO2 is calculated from energy consumption and the regional carbon intensity factor (gCO2/kWh). Regions with more renewable energy have lower factors.",
+    "tcoTitle": "TCO Breakdown",
+    "tcoHardware": "Hardware: Server, storage, and networking equipment costs (one-time, amortized over project years).",
+    "tcoEnergy": "Energy: Annual electricity cost based on total power draw, PUE, and regional electricity price.",
+    "tcoLicensing": "Licensing: Estimated Elastic license costs based on node count and tier.",
+    "keyPoint": "Key Point",
+    "keyPointDesc": "Energy costs often exceed hardware costs over a 5-year TCO. Optimizing tier usage and enabling ILM can reduce both cost and carbon footprint."
+  }
+}

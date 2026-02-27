@@ -2,7 +2,8 @@
   "subtitle": "Outil de dimensionnement Elasticsearch",
   "nav": {
     "configuration": "Configuration",
-    "report": "Rapport"
+    "report": "Rapport",
+    "guide": "Guide"
   },
   "share": {
     "button": "Partager URL",

@@ -2,7 +2,8 @@
   "subtitle": "Elasticsearch Cluster-Dimensionierungstool",
   "nav": {
     "configuration": "Konfiguration",
-    "report": "Bericht"
+    "report": "Bericht",
+    "guide": "Leitfaden"
   },
   "share": {
     "button": "URL teilen",
