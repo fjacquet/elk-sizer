@@ -17,7 +17,8 @@
     "master": "Master",
     "ingest": "Ingest",
     "coordinating": "Coordinating",
-    "shardUtilization": "Shard Utilization"
+    "shardUtilization": "Shard Utilization",
+    "iops": "IOPS"
   },
   "sankey": {
     "title": "Data Flow"
@@ -40,7 +41,9 @@
     "switches": "Switches",
     "fcPorts": "FC Ports",
     "ethPorts": "Ethernet Ports",
-    "totalRackUnits": "Total Rack Units"
+    "totalRackUnits": "Total Rack Units",
+    "maxIOPS": "Max IOPS",
+    "totalIOPS": "Total Available IOPS"
   },
   "vmComparison": {
     "title": "VM vs Bare Metal Comparison",

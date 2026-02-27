@@ -17,10 +17,11 @@ export interface HardwareEngineInput {
   frozenBackend: FrozenBackend
   serverModel?: string
   cpuOption?: string
+  storageModel?: string
 }
 
 export function calculateHardware(input: HardwareEngineInput): HardwareResult {
-  const { clusterResult, deploymentType, frozenBackend, serverModel, cpuOption } = input
+  const { clusterResult, deploymentType, frozenBackend, serverModel, cpuOption, storageModel } = input
   const isVM = deploymentType === 'vm'
 
   const bomServers: BOMServerEntry[] = []
@@ -71,7 +72,7 @@ export function calculateHardware(input: HardwareEngineInput): HardwareResult {
     .reduce((sum, t) => sum + t.storageGB / 1024, 0)
 
   if (hotWarmStorageTB > 0) {
-    const { model, count } = selectPowerStore(hotWarmStorageTB)
+    const { model, count } = selectPowerStore(hotWarmStorageTB, storageModel)
     bomStorage.push({
       model: model.model,
       count,

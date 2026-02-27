@@ -1,6 +1,7 @@
 import { useMemo } from 'react'
 import { useConfigStore } from '@/store'
 import type { CalculationResults } from '@/types/results'
+import { SIZING } from '@/types/sizing'
 
 export type Severity = 'error' | 'warning' | 'info'
 
@@ -171,6 +172,22 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
         title: 'Long Retention Without Cold/Frozen',
         message: `${totalRetentionDays} days of retention on hot/warm tiers only. Adding a frozen tier (searchable snapshots) could reduce storage costs by 60–80% for data older than ${hotDays + warmDays} days.`,
       })
+    }
+
+    if (results.performance.totalAvailableIOPS > 0) {
+      if (results.performance.iopsUtilization > SIZING.IOPS_CRITICAL_THRESHOLD) {
+        warnings.push({
+          severity: 'error',
+          title: 'IOPS Saturation',
+          message: `Estimated IOPS load (${Math.round(results.performance.totalRequiredIOPS * SIZING.IOPS_HEADROOM).toLocaleString()}) exceeds ${Math.round(results.performance.iopsUtilization * 100)}% of the selected PowerStore capacity. Upgrade to a higher-tier model to avoid latency spikes.`,
+        })
+      } else if (results.performance.iopsUtilization > SIZING.IOPS_WARNING_THRESHOLD) {
+        warnings.push({
+          severity: 'warning',
+          title: 'High IOPS Load',
+          message: `IOPS utilization is ${Math.round(results.performance.iopsUtilization * 100)}% of the selected PowerStore capacity. Monitor storage performance at peak ingest and consider upgrading if sustained above 75%.`,
+        })
+      }
     }
 
     // Generate optimizations

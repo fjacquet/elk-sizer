@@ -59,12 +59,28 @@ export interface VMComparisonResult {
   }
 }
 
+export interface TierIOPSResult {
+  tier: ElasticTier
+  estimatedWriteIOPS: number
+  estimatedReadIOPS: number
+  totalIOPS: number
+}
+
+export interface PerformanceResult {
+  perTier: TierIOPSResult[]
+  totalRequiredIOPS: number
+  totalAvailableIOPS: number
+  iopsUtilization: number
+  isIOPSBottleneck: boolean
+}
+
 export interface CalculationResults {
   storage: StorageResult
   cluster: ClusterResult
   hardware: HardwareResult
   sustainability: SustainabilityResult
   vmComparison: VMComparisonResult | null
+  performance: PerformanceResult
 }
 
 export interface SankeyData {

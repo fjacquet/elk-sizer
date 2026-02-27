@@ -4,6 +4,7 @@ import type { CalculationResults, VMComparisonResult } from '@/types/results'
 import { SIZING } from '@/types/sizing'
 import { useClusterCalc } from './useClusterCalc'
 import { useHardwareCalc } from './useHardwareCalc'
+import { usePerformanceCalc } from './usePerformanceCalc'
 import { useStorageCalc } from './useStorageCalc'
 import { useSustainabilityCalc } from './useSustainabilityCalc'
 
@@ -14,6 +15,7 @@ export function useCalculations(): CalculationResults {
   const cluster = useClusterCalc(storage)
   const hardware = useHardwareCalc(cluster)
   const sustainability = useSustainabilityCalc(hardware, cluster.totalNodes)
+  const performance = usePerformanceCalc(cluster, hardware)
 
   const vmComparison = useMemo((): VMComparisonResult | null => {
     if (deploymentType !== 'vm') return null
@@ -42,5 +44,6 @@ export function useCalculations(): CalculationResults {
     hardware,
     sustainability,
     vmComparison,
+    performance,
   }
 }

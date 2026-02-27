@@ -24,8 +24,8 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 - ILM (Index Lifecycle Management) toggle
 
 ### 3. Performance Parameters
-- Search rate (queries/second)
-- Indexing rate (docs/second)
+- Search rate (queries/second) — drives IOPS estimation
+- Indexing rate (docs/second) — drives write IOPS estimation
 - Concurrent searches
 
 ### 4. Deployment Configuration
@@ -37,9 +37,9 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 
 ### 5. Sizing Results
 - **Cluster Summary**: Total nodes, storage, memory, estimated cost
-- **Tier Breakdown**: Per-tier node count, storage, memory, JVM heap, shards
+- **Tier Breakdown**: Per-tier node count, storage, memory, JVM heap, shards, estimated IOPS
 - **Data Flow Sankey Diagram**: Visual flow from raw ingest through tiers
-- **Hardware BOM**: Dell server/storage bill of materials with rack units
+- **Hardware BOM**: Dell server/storage bill of materials with rack units; Max IOPS per PowerStore unit and total available IOPS
 - **VM vs BM Comparison**: Side-by-side showing overhead factors
 - **Sustainability**: Power, CO2, TCO over project lifetime
 
@@ -62,6 +62,13 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 - VM overhead: 22% performance, 14% storage
 - Shard limit: 20 per GB of JVM heap
 - Target shard size: 50 GB
+
+### 9. IOPS Health Monitoring
+- Estimated indexing IOPS per hot tier node (Lucene write amplification ×4)
+- Estimated search IOPS per tier using a per-shard model (hot: 75% of queries, warm: 20%)
+- Total required vs available IOPS with 30% safety headroom
+- IOPS utilization as a percentage of selected PowerStore capacity
+- Architecture Advisor warning at >60% utilization; critical error at >80%
 
 ## Non-Functional Requirements
 - Client-side SPA (no backend required)

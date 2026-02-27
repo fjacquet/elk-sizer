@@ -3,11 +3,25 @@ import type { PowerStoreModel } from '@/types/hardware'
 
 const models = powerstoreData as PowerStoreModel[]
 
-export function selectPowerStore(requiredCapacityTB: number): {
+export function selectPowerStore(
+  requiredCapacityTB: number,
+  preferredModelId?: string,
+): {
   model: PowerStoreModel
   count: number
 } {
-  // Sort by capacity ascending, pick the smallest that fits
+  // Use the user-selected model if provided and found
+  if (preferredModelId) {
+    const preferred = models.find((m) => m.id === preferredModelId)
+    if (preferred) {
+      return {
+        model: preferred,
+        count: Math.max(1, Math.ceil(requiredCapacityTB / preferred.maxEffectiveCapacityTB)),
+      }
+    }
+  }
+
+  // Auto-select: sort by capacity ascending, pick the smallest that fits
   const sorted = [...models].sort((a, b) => a.maxEffectiveCapacityTB - b.maxEffectiveCapacityTB)
 
   for (const model of sorted) {

@@ -17,7 +17,8 @@
     "master": "Master",
     "ingest": "Ingest",
     "coordinating": "Coordinating",
-    "shardUtilization": "Utilisation des shards"
+    "shardUtilization": "Utilisation des shards",
+    "iops": "IOPS"
   },
   "sankey": {
     "title": "Flux de donnees"
@@ -40,7 +41,9 @@
     "switches": "Commutateurs",
     "fcPorts": "Ports FC",
     "ethPorts": "Ports Ethernet",
-    "totalRackUnits": "Unites rack totales"
+    "totalRackUnits": "Unites rack totales",
+    "maxIOPS": "IOPS max",
+    "totalIOPS": "Total IOPS disponibles"
   },
   "vmComparison": {
     "title": "Comparaison VM vs Bare Metal",

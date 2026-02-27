@@ -1,5 +1,7 @@
 import { useTranslation } from 'react-i18next'
+import { lookupPowerStoreMaxIOPS } from '@/engines/performance/helpers/iopsCalculator'
 import type { CalculationResults } from '@/types/results'
+import { formatNumber } from '@/utils/units'
 
 interface Props {
   results: CalculationResults
@@ -54,6 +56,7 @@ export function HardwareBOMTable({ results }: Props) {
                   <th className="text-left py-1 text-slate-400">{t('bom.tier')}</th>
                   <th className="text-right py-1 text-slate-400">{t('bom.qty')}</th>
                   <th className="text-right py-1 text-slate-400">{t('bom.capacity')}</th>
+                  <th className="text-right py-1 text-slate-400">{t('bom.maxIOPS')}</th>
                 </tr>
               </thead>
               <tbody>
@@ -63,9 +66,20 @@ export function HardwareBOMTable({ results }: Props) {
                     <td className="py-1 text-slate-400">{s.tier}</td>
                     <td className="text-right py-1">{s.count}</td>
                     <td className="text-right py-1">{s.capacityTB.toFixed(1)} TB</td>
+                    <td className="text-right py-1 text-slate-300">
+                      {formatNumber(lookupPowerStoreMaxIOPS(s.model) * s.count)}
+                    </td>
                   </tr>
                 ))}
               </tbody>
+              <tfoot>
+                <tr className="border-t border-surface-700 font-medium">
+                  <td colSpan={4} className="py-1 text-slate-400">{t('bom.totalIOPS')}</td>
+                  <td className="text-right py-1 text-primary-400">
+                    {formatNumber(results.performance.totalAvailableIOPS)}
+                  </td>
+                </tr>
+              </tfoot>
             </table>
           </div>
         </>

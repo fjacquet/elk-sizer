@@ -1,6 +1,8 @@
+import { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useConfigStore } from '@/store'
 import type { CalculationResults } from '@/types/results'
+import type { ElasticTier } from '@/types/sizing'
 import { formatNumber, formatStorageGB } from '@/utils/units'
 
 interface Props {
@@ -20,6 +22,14 @@ export function TierBreakdown({ results }: Props) {
 
   const activeTiers = results.cluster.tiers.filter((tier) => tier.nodeCount > 0)
 
+  const iopsMap = useMemo(() => {
+    const map: Partial<Record<ElasticTier, number>> = {}
+    for (const entry of results.performance.perTier) {
+      map[entry.tier] = entry.totalIOPS
+    }
+    return map
+  }, [results.performance.perTier])
+
   return (
     <div className="panel">
       <h3 className="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">
@@ -35,6 +45,7 @@ export function TierBreakdown({ results }: Props) {
               <th className="text-right py-2 text-slate-400">{t('tierBreakdown.memory')}</th>
               <th className="text-right py-2 text-slate-400">{t('tierBreakdown.jvmHeap')}</th>
               <th className="text-right py-2 text-slate-400">{t('tierBreakdown.shards')}</th>
+              <th className="text-right py-2 text-slate-400">{t('tierBreakdown.iops')}</th>
             </tr>
           </thead>
           <tbody>
@@ -48,6 +59,9 @@ export function TierBreakdown({ results }: Props) {
                 <td className="text-right py-2">{tier.memoryPerNodeGB} GB/node</td>
                 <td className="text-right py-2">{tier.jvmHeapGB} GB</td>
                 <td className="text-right py-2">{formatNumber(tier.shardCount)}</td>
+                <td className="text-right py-2 text-slate-300">
+                  {iopsMap[tier.tier] ? formatNumber(Math.round(iopsMap[tier.tier])) : '—'}
+                </td>
               </tr>
             ))}
           </tbody>
