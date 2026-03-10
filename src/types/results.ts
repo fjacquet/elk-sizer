@@ -63,6 +63,8 @@ export interface TierIOPSResult {
   tier: ElasticTier
   estimatedWriteIOPS: number
   estimatedReadIOPS: number
+  dashboardIOPS: number
+  backgroundIOPS: number
   totalIOPS: number
 }
 
@@ -72,6 +74,10 @@ export interface PerformanceResult {
   totalAvailableIOPS: number
   iopsUtilization: number
   isIOPSBottleneck: boolean
+  dashboardIOPS: number
+  backgroundIOPS: number
+  estimatedLatencyMs: number
+  fcUtilization: number
 }
 
 export interface CalculationResults {

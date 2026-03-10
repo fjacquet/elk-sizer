@@ -18,7 +18,8 @@
     "ingest": "Ingest",
     "coordinating": "Coordinating",
     "shardUtilization": "Shard-Auslastung",
-    "iops": "IOPS"
+    "iops": "IOPS",
+    "backgroundIOPS": "Hgr. IOPS"
   },
   "sankey": {
     "title": "Datenfluss"
@@ -43,7 +44,12 @@
     "ethPorts": "Ethernet-Ports",
     "totalRackUnits": "Gesamte Rackeinheiten",
     "maxIOPS": "Max. IOPS",
-    "totalIOPS": "Gesamt verfügbare IOPS"
+    "totalIOPS": "Gesamt verfuegbare IOPS",
+    "requiredIOPS": "Benoetigte IOPS",
+    "iopsUtilization": "IOPS-Auslastung",
+    "estimatedLatency": "Geschaetzte Latenz",
+    "fcUtilization": "FC-Bandbreitenauslastung",
+    "s3Throughput": "S3-Durchsatz"
   },
   "vmComparison": {
     "title": "VM vs Bare Metal Vergleich",
@@ -54,7 +60,8 @@
     "totalStorage": "Gesamtspeicher",
     "totalMemory": "Gesamtarbeitsspeicher",
     "estimatedCost": "Geschaetzte Kosten",
-    "overhead": "VM-Overhead"
+    "overhead": "VM-Overhead",
+    "ece": "ECE"
   },
   "export": {
     "pdf": "PDF",

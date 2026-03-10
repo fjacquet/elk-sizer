@@ -3,6 +3,8 @@
   "deploymentType": "Tipo di distribuzione",
   "baremetal": "Bare Metal",
   "vm": "Macchina virtuale (VMware)",
+  "ece": "ECE (Elastic Cloud Enterprise)",
+  "ece_tooltip": "Elastic Cloud Enterprise: orchestrazione container su hardware Dell. Applica fattori di overhead (CPU x0.72, storage x0.82).",
   "serverModel": "Modello server",
   "storageModel": "Modello storage SAN",
   "frozenBackend": "Backend livello Frozen",

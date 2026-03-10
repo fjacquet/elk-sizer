@@ -23,9 +23,9 @@ export function TierBreakdown({ results }: Props) {
   const activeTiers = results.cluster.tiers.filter((tier) => tier.nodeCount > 0)
 
   const iopsMap = useMemo(() => {
-    const map: Partial<Record<ElasticTier, number>> = {}
+    const map: Partial<Record<ElasticTier, { total: number; background: number }>> = {}
     for (const entry of results.performance.perTier) {
-      map[entry.tier] = entry.totalIOPS
+      map[entry.tier] = { total: entry.totalIOPS, background: entry.backgroundIOPS }
     }
     return map
   }, [results.performance.perTier])
@@ -46,6 +46,9 @@ export function TierBreakdown({ results }: Props) {
               <th className="text-right py-2 text-slate-400">{t('tierBreakdown.jvmHeap')}</th>
               <th className="text-right py-2 text-slate-400">{t('tierBreakdown.shards')}</th>
               <th className="text-right py-2 text-slate-400">{t('tierBreakdown.iops')}</th>
+              <th className="text-right py-2 text-slate-400">
+                {t('tierBreakdown.backgroundIOPS')}
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -60,7 +63,14 @@ export function TierBreakdown({ results }: Props) {
                 <td className="text-right py-2">{tier.jvmHeapGB} GB</td>
                 <td className="text-right py-2">{formatNumber(tier.shardCount)}</td>
                 <td className="text-right py-2 text-slate-300">
-                  {iopsMap[tier.tier] ? formatNumber(Math.round(iopsMap[tier.tier])) : '—'}
+                  {iopsMap[tier.tier] != null
+                    ? formatNumber(Math.round(iopsMap[tier.tier]?.total ?? 0))
+                    : '—'}
+                </td>
+                <td className="text-right py-2 text-slate-400">
+                  {iopsMap[tier.tier] != null
+                    ? formatNumber(Math.round(iopsMap[tier.tier]?.background ?? 0))
+                    : '—'}
                 </td>
               </tr>
             ))}

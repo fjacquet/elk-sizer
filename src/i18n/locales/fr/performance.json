@@ -1,6 +1,23 @@
 {
   "title": "Performance",
   "searchRate": "Taux de recherche",
+  "searchRate_tooltip": "Nombre de requetes de recherche par seconde sur le cluster. Des valeurs elevees augmentent les besoins en CPU et en noeuds coordinateurs.",
   "indexingRate": "Taux d'indexation",
-  "concurrentSearches": "Recherches simultanees"
+  "indexingRate_tooltip": "Documents indexes par seconde. Dimensionne les noeuds d'ingestion et la capacite du tier hot.",
+  "concurrentSearches": "Recherches simultanees",
+  "concurrentSearches_tooltip": "Requetes de recherche simultanees maximales. Determine le nombre de noeuds coordinateurs.",
+  "concurrentUsers": "Utilisateurs simultanes",
+  "concurrentUsers_tooltip": "Nombre d'utilisateurs Kibana actifs visualisant simultanement des tableaux de bord. Multiplie la charge de requetes.",
+  "users_unit": "utilisateurs",
+  "dashboardCount": "Nombre de tableaux de bord",
+  "dashboardCount_tooltip": "Nombre total d'objets tableau de bord Kibana. Chaque tableau de bord genere des requetes en arriere-plan a intervalles reguliers.",
+  "logSourceCount": "Nombre de sources de logs",
+  "logSourceCount_tooltip": "Nombre de sources de logs distinctes alimentant le cluster. Influence le nombre d'index et la complexite ILM.",
+  "workloadProfile": "Profil de charge",
+  "workloadProfile_tooltip": "Selectionnez le cas d'usage principal pour ajuster automatiquement les fractions de recherche et les facteurs d'amplification.",
+  "profile_logging": "Journalisation",
+  "profile_observability": "Observabilite",
+  "profile_siem": "SIEM / Securite",
+  "profile_search": "Recherche",
+  "profile_mixed": "Mixte (tous usages)"
 }

@@ -10,6 +10,7 @@ import {
   SUPPORTED_LANGUAGES,
 } from './config'
 import deAdvanced from './locales/de/advanced.json'
+import deAdvisor from './locales/de/advisor.json'
 import deCommon from './locales/de/common.json'
 import deDeployment from './locales/de/deployment.json'
 import deGuide from './locales/de/guide.json'
@@ -19,6 +20,7 @@ import dePdf from './locales/de/pdf.json'
 import dePerformance from './locales/de/performance.json'
 import deRetention from './locales/de/retention.json'
 import enAdvanced from './locales/en/advanced.json'
+import enAdvisor from './locales/en/advisor.json'
 import enCommon from './locales/en/common.json'
 import enDeployment from './locales/en/deployment.json'
 import enGuide from './locales/en/guide.json'
@@ -28,6 +30,7 @@ import enPdf from './locales/en/pdf.json'
 import enPerformance from './locales/en/performance.json'
 import enRetention from './locales/en/retention.json'
 import frAdvanced from './locales/fr/advanced.json'
+import frAdvisor from './locales/fr/advisor.json'
 import frCommon from './locales/fr/common.json'
 import frDeployment from './locales/fr/deployment.json'
 import frGuide from './locales/fr/guide.json'
@@ -37,6 +40,7 @@ import frPdf from './locales/fr/pdf.json'
 import frPerformance from './locales/fr/performance.json'
 import frRetention from './locales/fr/retention.json'
 import itAdvanced from './locales/it/advanced.json'
+import itAdvisor from './locales/it/advisor.json'
 import itCommon from './locales/it/common.json'
 import itDeployment from './locales/it/deployment.json'
 import itGuide from './locales/it/guide.json'
@@ -57,6 +61,7 @@ const resources = {
     output: enOutput,
     pdf: enPdf,
     guide: enGuide,
+    advisor: enAdvisor,
   },
   fr: {
     common: frCommon,
@@ -68,6 +73,7 @@ const resources = {
     output: frOutput,
     pdf: frPdf,
     guide: frGuide,
+    advisor: frAdvisor,
   },
   de: {
     common: deCommon,
@@ -79,6 +85,7 @@ const resources = {
     output: deOutput,
     pdf: dePdf,
     guide: deGuide,
+    advisor: deAdvisor,
   },
   it: {
     common: itCommon,
@@ -90,6 +97,7 @@ const resources = {
     output: itOutput,
     pdf: itPdf,
     guide: itGuide,
+    advisor: itAdvisor,
   },
 }
 

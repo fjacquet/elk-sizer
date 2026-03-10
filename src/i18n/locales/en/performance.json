@@ -5,5 +5,19 @@
   "indexingRate": "Indexing Rate",
   "indexingRate_tooltip": "Documents indexed per second. Drives ingest node count and hot-tier node sizing. Typically 80-90% of CPU capacity on hot nodes.",
   "concurrentSearches": "Concurrent Searches",
-  "concurrentSearches_tooltip": "Maximum simultaneous search requests. Determines coordinating node count and JVM thread pool sizing."
+  "concurrentSearches_tooltip": "Maximum simultaneous search requests. Determines coordinating node count and JVM thread pool sizing.",
+  "concurrentUsers": "Concurrent Users",
+  "concurrentUsers_tooltip": "Number of active Kibana users simultaneously viewing dashboards. Multiplies dashboard query load.",
+  "users_unit": "users",
+  "dashboardCount": "Dashboard Count",
+  "dashboardCount_tooltip": "Total number of Kibana dashboard objects. Each dashboard generates background queries at regular intervals per active user.",
+  "logSourceCount": "Log Source Count",
+  "logSourceCount_tooltip": "Number of distinct log sources feeding the cluster. Influences index count and ILM pipeline complexity.",
+  "workloadProfile": "Workload Profile",
+  "workloadProfile_tooltip": "Select the primary use case to auto-tune search fractions, document sizes, and write amplification factors.",
+  "profile_logging": "Logging",
+  "profile_observability": "Observability",
+  "profile_siem": "SIEM / Security",
+  "profile_search": "Search",
+  "profile_mixed": "Mixed (All Use Cases)"
 }

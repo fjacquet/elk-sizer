@@ -1,0 +1,159 @@
+{
+  "title": "Consulente architettura",
+  "subtitle": "Raccomandazioni in tempo reale basate sulla configurazione attuale.",
+  "architectureScore": "Punteggio architettura",
+  "scoreGood": "Buono",
+  "scoreFair": "Accettabile",
+  "scoreNeedsAttention": "Attenzione necessaria",
+  "sectionCritical": "Problemi critici ({{count}})",
+  "sectionWarnings": "Avvertimenti ({{count}})",
+  "sectionOptimizations": "Ottimizzazioni ({{count}})",
+  "sectionBestPractices": "Best practice ({{count}})",
+  "sectionReferenceArchitectures": "Architetture di riferimento",
+  "sectionDocumentation": "Documentazione",
+  "badgeCritical": "CRITICO",
+  "badgeWarning": "ATTENZIONE",
+  "badgeInfo": "INFO",
+  "impactLabel": "impatto {{impact}}",
+  "yourConfig": "← la tua config",
+  "allClear": "L'architettura è corretta!",
+  "allClearDesc": "Nessun avvertimento o problema critico rilevato per la configurazione attuale.",
+  "metricTotalNodes": "Nodi totali",
+  "metricTotalShards": "Shard totali",
+  "metricShardUtilization": "Utilizzo shard",
+  "docUserGuide": "Guida utente",
+  "docSizingMethodology": "Metodologia di dimensionamento",
+  "docHardwareReference": "Riferimento hardware",
+  "pattern": {
+    "hotOnly": {
+      "name": "Solo Hot",
+      "description": "Singolo livello hot per dati recenti e attivamente indicizzati. Adatto a carichi di lavoro a breve conservazione o basso volume senza requisiti di archiviazione."
+    },
+    "hotWarm": {
+      "name": "Hot-Warm",
+      "description": "Pattern standard a 2 livelli. Hot per l'indicizzazione attiva, warm per dati in sola lettura. Miglior equilibrio tra prestazioni e costi."
+    },
+    "hotWarmCold": {
+      "name": "Hot-Warm-Cold",
+      "description": "Architettura a 3 livelli orientata alla conformità. Hot + warm per dati attivi, cold per dati di conformità raramente consultati con risorse minime."
+    },
+    "full4Tier": {
+      "name": "4 livelli completi (TCO ottimale)",
+      "description": "Massima efficienza dei costi tramite snapshot interrogabili su object storage per dati a lunga conservazione. Raccomandato per conservazione > 90 giorni e grandi volumi."
+    },
+    "custom": {
+      "name": "Personalizzato",
+      "description": "Configurazione dei livelli personalizzata in base ai requisiti di conservazione specifici."
+    }
+  },
+  "warning": {
+    "noHA": {
+      "title": "Nessuna alta disponibilità",
+      "message": "Il numero di repliche è 0. Qualsiasi guasto di nodo causerà perdita di dati e downtime del cluster. Impostare le repliche ≥ 1 per i cluster di produzione."
+    },
+    "criticalShardPressure": {
+      "title": "Pressione critica sugli shard",
+      "message": "L'utilizzo degli shard è al {{pct}}% (limite: 20 shard/GB heap). Ridurre il numero di indici, aumentare la dimensione degli shard o aggiungere nodi."
+    },
+    "highShardCount": {
+      "title": "Numero elevato di shard",
+      "message": "L'utilizzo degli shard è al {{pct}}%. Si avvicina al limite di 20 shard/GB heap. Monitorare la crescita degli shard."
+    },
+    "shortHotTier": {
+      "title": "Livello hot molto breve",
+      "message": "Il livello hot è inferiore a 3 giorni con alto volume di ingestione. Ciò può causare colli di bottiglia ILM. Considerare ≥ 7 giorni."
+    },
+    "vmOverhead": {
+      "title": "Overhead VM applicato",
+      "message": "L'esecuzione di Elasticsearch in VM aggiunge il 22% di overhead CPU e il 14% di overhead storage. Il bare metal è fortemente raccomandato per i nodi dati hot."
+    },
+    "eceOverhead": {
+      "title": "Overhead ECE applicato",
+      "message": "L'orchestrazione dei container ECE aggiunge il 28% di overhead CPU e il 18% di overhead storage. Per i nodi hot ad alto volume, considerare allocatori bare metal."
+    },
+    "largeCluster": {
+      "title": "Cluster grande — Considerare zone",
+      "message": "I cluster con >100 nodi dovrebbero utilizzare zone di disponibilità e consapevolezza dell'allocazione degli shard per prevenire guasti correlati."
+    },
+    "lowMemory": {
+      "title": "Poca memoria per nodo",
+      "message": "{{memoryPerNode}} GB per nodo con {{dailyIngestGB}} GB/giorno di ingestione potrebbe richiedere molti nodi. Considerare 256–512 GB per una migliore efficienza JVM."
+    },
+    "largeNuma": {
+      "title": "Grande configurazione NUMA",
+      "message": "{{memoryPerNode}} GB per nodo si estende su più domini NUMA. Verificare i tempi di pausa GC JVM in produzione. CPU Xeon Platinum raccomandate."
+    },
+    "longRetentionNoCold": {
+      "title": "Lunga conservazione senza Cold/Frozen",
+      "message": "{{totalRetentionDays}} giorni di conservazione solo sui livelli hot/warm. Un livello frozen potrebbe ridurre i costi di storage del 60–80% per dati più vecchi di {{hotWarmDays}} giorni."
+    },
+    "iopsSaturation": {
+      "title": "Saturazione IOPS",
+      "message": "Il carico IOPS stimato ({{iops}}) supera il {{pct}}% della capacità PowerStore selezionata. Passare a un modello superiore per evitare picchi di latenza."
+    },
+    "highIops": {
+      "title": "Carico IOPS elevato",
+      "message": "L'utilizzo IOPS è al {{pct}}% della capacità PowerStore. Monitorare le prestazioni storage durante i picchi di ingestione."
+    },
+    "fcSaturation": {
+      "title": "Saturazione banda FC",
+      "message": "L'utilizzo Fibre Channel è al {{pct}}%. Aggiungere array PowerStore o passare a un modello con più porte FC."
+    },
+    "highFc": {
+      "title": "Banda FC elevata",
+      "message": "L'utilizzo della banda FC è al {{pct}}%. Monitorare durante i picchi di ingestione."
+    },
+    "highLatency": {
+      "title": "Latenza storage elevata",
+      "message": "La latenza storage stimata è di {{latency}} ms. Ciò impatterà le prestazioni di ricerca e indicizzazione. Aggiornare il modello PowerStore o aggiungere array."
+    },
+    "elevatedLatency": {
+      "title": "Latenza storage aumentata",
+      "message": "La latenza storage stimata è di {{latency}} ms. Considerare un aggiornamento PowerStore per latenza sub-millisecondo."
+    }
+  },
+  "optimization": {
+    "enableFrozen": {
+      "title": "Abilitare il livello Frozen",
+      "message": "Abilitare un livello frozen per dati più vecchi di {{hotWarmDays}} giorni. Gli snapshot interrogabili su PowerScale/ECS costano ~80% in meno dello storage SAN."
+    },
+    "reduceColdReplicas": {
+      "title": "Ridurre le repliche sul livello Cold",
+      "message": "I dati cold sono raramente interrogati. Considerare 1 replica (invece di {{replicaCount}}) per gli indici cold — configurabile per fase ILM."
+    },
+    "increaseShardSize": {
+      "title": "Aumentare la dimensione degli shard",
+      "message": "L'utilizzo degli shard è basso ma il numero è alto. Shard più grandi riducono l'overhead e migliorano l'efficienza dei merge."
+    },
+    "useBareMetal": {
+      "title": "Usare bare metal per i nodi Hot",
+      "message": "Alti tassi di ingestione beneficiano dei nodi hot bare metal. L'overhead VM riduce il throughput effettivo di circa il 22%."
+    }
+  },
+  "reference": {
+    "small": {
+      "name": "Piccolo",
+      "desc": "< 10 GB/giorno · < 30 giorni di conservazione",
+      "pattern": "Solo Hot",
+      "nodes": "2 hot + 3 master + 2 ingest"
+    },
+    "medium": {
+      "name": "Medio",
+      "desc": "10–100 GB/giorno · 30–90 giorni di conservazione",
+      "pattern": "Hot-Warm",
+      "nodes": "4–8 hot + 2–4 warm + 3 master + 2 ingest"
+    },
+    "large": {
+      "name": "Grande",
+      "desc": "100–500 GB/giorno · 90–365 giorni di conservazione",
+      "pattern": "Hot-Warm-Frozen",
+      "nodes": "8–16 hot + 4–8 warm + 3 master + 4 ingest + PowerScale"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "desc": "> 500 GB/giorno · > 1 anno di conservazione",
+      "pattern": "4 livelli completi",
+      "nodes": "16+ hot + 8+ warm + 4+ cold + PowerScale/ECS frozen"
+    }
+  }
+}

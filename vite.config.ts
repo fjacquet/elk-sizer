@@ -29,7 +29,6 @@ export default defineConfig({
       output: {
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
-          'vendor-pdf': ['jspdf', 'jspdf-autotable'],
           'vendor-state': ['zustand'],
         },
       },

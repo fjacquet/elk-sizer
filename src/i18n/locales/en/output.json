@@ -18,7 +18,8 @@
     "ingest": "Ingest",
     "coordinating": "Coordinating",
     "shardUtilization": "Shard Utilization",
-    "iops": "IOPS"
+    "iops": "IOPS",
+    "backgroundIOPS": "Bg IOPS"
   },
   "sankey": {
     "title": "Data Flow"
@@ -43,7 +44,12 @@
     "ethPorts": "Ethernet Ports",
     "totalRackUnits": "Total Rack Units",
     "maxIOPS": "Max IOPS",
-    "totalIOPS": "Total Available IOPS"
+    "totalIOPS": "Total Available IOPS",
+    "requiredIOPS": "Required IOPS",
+    "iopsUtilization": "IOPS Utilization",
+    "estimatedLatency": "Estimated Latency",
+    "fcUtilization": "FC Bandwidth Utilization",
+    "s3Throughput": "S3 Throughput"
   },
   "vmComparison": {
     "title": "VM vs Bare Metal Comparison",
@@ -54,7 +60,8 @@
     "totalStorage": "Total Storage",
     "totalMemory": "Total Memory",
     "estimatedCost": "Estimated Cost",
-    "overhead": "VM Overhead"
+    "overhead": "VM Overhead",
+    "ece": "ECE"
   },
   "export": {
     "pdf": "PDF",

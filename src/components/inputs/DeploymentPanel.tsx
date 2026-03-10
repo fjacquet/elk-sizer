@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
-import dellServers from '@/data/dell-servers.json'
 import { Card, Select } from '@/components/common'
+import dellServers from '@/data/dell-servers.json'
 import { useConfigStore } from '@/store'
 import type { DellServer } from '@/types/hardware'
 import type { DeploymentType, FrozenBackend, NetworkSpeed } from '@/types/sizing'
@@ -35,12 +35,12 @@ export function DeploymentPanel() {
       }))
     : []
 
-  const memoryOptions = MEMORY_STEPS.filter(
-    (v) => v <= (selectedServer?.maxMemoryGB ?? 256),
-  ).map((v) => ({
-    value: String(v),
-    label: `${v} GB`,
-  }))
+  const memoryOptions = MEMORY_STEPS.filter((v) => v <= (selectedServer?.maxMemoryGB ?? 256)).map(
+    (v) => ({
+      value: String(v),
+      label: `${v} GB`,
+    }),
+  )
 
   function handleServerChange(newModel: string) {
     setServerModel(newModel)
@@ -65,6 +65,7 @@ export function DeploymentPanel() {
           options={[
             { value: 'baremetal', label: t('baremetal') },
             { value: 'vm', label: t('vm') },
+            { value: 'ece', label: t('ece') },
           ]}
           onChange={(v) => setDeploymentType(v as DeploymentType)}
         />

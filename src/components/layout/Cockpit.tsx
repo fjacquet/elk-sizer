@@ -48,9 +48,7 @@ export function Cockpit() {
           <InputSidebar />
         </div>
 
-        <div
-          className={`${activeView === 'report' ? 'block' : 'hidden'} flex-1 overflow-y-auto`}
-        >
+        <div className={`${activeView === 'report' ? 'block' : 'hidden'} flex-1 overflow-y-auto`}>
           <OutputDashboard />
         </div>
 
@@ -58,9 +56,7 @@ export function Cockpit() {
           <GuideView />
         </div>
 
-        <div
-          className={`${activeView === 'advisor' ? 'block' : 'hidden'} flex-1 overflow-y-auto`}
-        >
+        <div className={`${activeView === 'advisor' ? 'block' : 'hidden'} flex-1 overflow-y-auto`}>
           <AdvisorView />
         </div>
       </div>

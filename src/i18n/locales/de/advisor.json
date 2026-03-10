@@ -1,0 +1,159 @@
+{
+  "title": "Architektur-Berater",
+  "subtitle": "Echtzeitempfehlungen basierend auf Ihrer aktuellen Konfiguration.",
+  "architectureScore": "Architektur-Score",
+  "scoreGood": "Gut",
+  "scoreFair": "Akzeptabel",
+  "scoreNeedsAttention": "Aufmerksamkeit erforderlich",
+  "sectionCritical": "Kritische Probleme ({{count}})",
+  "sectionWarnings": "Warnungen ({{count}})",
+  "sectionOptimizations": "Optimierungen ({{count}})",
+  "sectionBestPractices": "Best Practices ({{count}})",
+  "sectionReferenceArchitectures": "Referenzarchitekturen",
+  "sectionDocumentation": "Dokumentation",
+  "badgeCritical": "KRITISCH",
+  "badgeWarning": "WARNUNG",
+  "badgeInfo": "INFO",
+  "impactLabel": "{{impact}} Auswirkung",
+  "yourConfig": "← Ihre Konfiguration",
+  "allClear": "Architektur sieht gut aus!",
+  "allClearDesc": "Keine Warnungen oder kritischen Probleme für Ihre aktuelle Konfiguration erkannt.",
+  "metricTotalNodes": "Knoten gesamt",
+  "metricTotalShards": "Shards gesamt",
+  "metricShardUtilization": "Shard-Auslastung",
+  "docUserGuide": "Benutzerhandbuch",
+  "docSizingMethodology": "Dimensionierungsmethodik",
+  "docHardwareReference": "Hardware-Referenz",
+  "pattern": {
+    "hotOnly": {
+      "name": "Nur Hot",
+      "description": "Einzelne Hot-Ebene für aktuelle, aktiv indexierte Daten. Geeignet für Workloads mit kurzer Aufbewahrung oder geringem Volumen ohne Archivierungsbedarf."
+    },
+    "hotWarm": {
+      "name": "Hot-Warm",
+      "description": "Standard-2-Ebenen-Muster. Hot für aktive Indexierung, Warm für schreibgeschützte ältere Daten. Bestes Gleichgewicht zwischen Leistung und Kosten."
+    },
+    "hotWarmCold": {
+      "name": "Hot-Warm-Cold",
+      "description": "Compliance-orientierte 3-Ebenen-Architektur. Hot + Warm für aktive Daten, Cold für selten abgefragte Compliance-Daten mit minimalen Ressourcen."
+    },
+    "full4Tier": {
+      "name": "Vollständige 4 Ebenen (Optimale TCO)",
+      "description": "Maximale Kosteneffizienz durch durchsuchbare Snapshots auf Objektspeicher für Daten mit langer Aufbewahrung. Empfohlen für Aufbewahrung > 90 Tage und grosse Datenmengen."
+    },
+    "custom": {
+      "name": "Benutzerdefiniert",
+      "description": "Benutzerdefinierte Ebenenkonfiguration basierend auf Ihren spezifischen Aufbewahrungsanforderungen."
+    }
+  },
+  "warning": {
+    "noHA": {
+      "title": "Keine Hochverfügbarkeit",
+      "message": "Replikat-Anzahl ist 0. Jeder Knotenausfall verursacht Datenverlust und Cluster-Ausfallzeit. Setzen Sie Replikate ≥ 1 für Produktionscluster."
+    },
+    "criticalShardPressure": {
+      "title": "Kritischer Shard-Druck",
+      "message": "Shard-Auslastung beträgt {{pct}}% (Limit: 20 Shards/GB Heap). Reduzieren Sie die Indexanzahl, erhöhen Sie die Shard-Grösse oder fügen Sie Knoten hinzu."
+    },
+    "highShardCount": {
+      "title": "Hohe Shard-Anzahl",
+      "message": "Shard-Auslastung beträgt {{pct}}%. Nähert sich dem Limit von 20 Shards/GB Heap. Überwachen Sie das Shard-Wachstum."
+    },
+    "shortHotTier": {
+      "title": "Sehr kurze Hot-Ebene",
+      "message": "Hot-Ebene ist unter 3 Tagen bei hohem Ingestion-Volumen. Dies kann ILM-Rollover-Engpässe verursachen. Erwägen Sie ≥ 7 Tage."
+    },
+    "vmOverhead": {
+      "title": "VM-Overhead angewendet",
+      "message": "Elasticsearch in VMs fügt 22% CPU-Overhead und 14% Speicher-Overhead hinzu. Bare Metal wird für Hot-Datenknoten dringend empfohlen."
+    },
+    "eceOverhead": {
+      "title": "ECE-Overhead angewendet",
+      "message": "ECE-Container-Orchestrierung fügt 28% CPU-Overhead und 18% Speicher-Overhead hinzu. Erwägen Sie Bare-Metal-Allokatoren für Hot-Knoten."
+    },
+    "largeCluster": {
+      "title": "Grosser Cluster — Zonen erwägen",
+      "message": "Cluster mit >100 Knoten sollten Verfügbarkeitszonen und Shard-Allokationsbewusstsein verwenden, um korrelierte Ausfälle zu vermeiden."
+    },
+    "lowMemory": {
+      "title": "Wenig Speicher pro Knoten",
+      "message": "{{memoryPerNode}} GB pro Knoten mit {{dailyIngestGB}} GB/Tag Ingestion erfordert möglicherweise viele Knoten. Erwägen Sie 256–512 GB für bessere JVM-Effizienz."
+    },
+    "largeNuma": {
+      "title": "Grosse NUMA-Konfiguration",
+      "message": "{{memoryPerNode}} GB pro Knoten erstreckt sich über mehrere NUMA-Domänen. Überprüfen Sie JVM-GC-Pausenzeiten in Produktion. Xeon Platinum CPUs empfohlen."
+    },
+    "longRetentionNoCold": {
+      "title": "Lange Aufbewahrung ohne Cold/Frozen",
+      "message": "{{totalRetentionDays}} Tage Aufbewahrung nur auf Hot/Warm-Ebenen. Ein Frozen-Tier könnte die Speicherkosten um 60–80% für Daten älter als {{hotWarmDays}} Tage senken."
+    },
+    "iopsSaturation": {
+      "title": "IOPS-Sättigung",
+      "message": "Geschätzte IOPS-Last ({{iops}}) übersteigt {{pct}}% der PowerStore-Kapazität. Upgraden Sie auf ein höheres Modell, um Latenzspitzen zu vermeiden."
+    },
+    "highIops": {
+      "title": "Hohe IOPS-Last",
+      "message": "IOPS-Auslastung beträgt {{pct}}% der PowerStore-Kapazität. Überwachen Sie die Speicherleistung bei Spitzenaufnahme."
+    },
+    "fcSaturation": {
+      "title": "FC-Bandbreitensättigung",
+      "message": "Fibre-Channel-Auslastung beträgt {{pct}}%. Fügen Sie PowerStore-Arrays hinzu oder upgraden Sie auf ein Modell mit mehr FC-Ports."
+    },
+    "highFc": {
+      "title": "Hohe FC-Bandbreite",
+      "message": "FC-Bandbreitenauslastung beträgt {{pct}}%. Überwachen Sie bei Spitzenaufnahme."
+    },
+    "highLatency": {
+      "title": "Hohe Speicherlatenz",
+      "message": "Geschätzte Speicherlatenz beträgt {{latency}} ms. Dies beeinträchtigt Such- und Indexierungsleistung. PowerStore upgraden oder Arrays hinzufügen."
+    },
+    "elevatedLatency": {
+      "title": "Erhöhte Speicherlatenz",
+      "message": "Geschätzte Speicherlatenz beträgt {{latency}} ms. Erwägen Sie ein PowerStore-Upgrade für Sub-Millisekunden-Latenz."
+    }
+  },
+  "optimization": {
+    "enableFrozen": {
+      "title": "Frozen-Ebene aktivieren",
+      "message": "Aktivieren Sie eine Frozen-Ebene für Daten älter als {{hotWarmDays}} Tage. Durchsuchbare Snapshots auf PowerScale/ECS kosten ~80% weniger als SAN-Speicher."
+    },
+    "reduceColdReplicas": {
+      "title": "Replikate auf Cold-Ebene reduzieren",
+      "message": "Cold-Daten werden selten abgefragt. Erwägen Sie 1 Replikat (statt {{replicaCount}}) für Cold-Indizes — pro ILM-Phase konfigurierbar."
+    },
+    "increaseShardSize": {
+      "title": "Shard-Grösse erhöhen",
+      "message": "Shard-Auslastung ist niedrig, aber die Anzahl hoch. Grössere Shards reduzieren den Overhead und verbessern die Merge-Effizienz."
+    },
+    "useBareMetal": {
+      "title": "Bare Metal für Hot-Knoten verwenden",
+      "message": "Hohe Ingestion-Raten profitieren von Bare-Metal-Hot-Knoten. VM-Overhead reduziert den effektiven Durchsatz um ~22%."
+    }
+  },
+  "reference": {
+    "small": {
+      "name": "Klein",
+      "desc": "< 10 GB/Tag · < 30 Tage Aufbewahrung",
+      "pattern": "Nur Hot",
+      "nodes": "2 Hot + 3 Master + 2 Ingest"
+    },
+    "medium": {
+      "name": "Mittel",
+      "desc": "10–100 GB/Tag · 30–90 Tage Aufbewahrung",
+      "pattern": "Hot-Warm",
+      "nodes": "4–8 Hot + 2–4 Warm + 3 Master + 2 Ingest"
+    },
+    "large": {
+      "name": "Gross",
+      "desc": "100–500 GB/Tag · 90–365 Tage Aufbewahrung",
+      "pattern": "Hot-Warm-Frozen",
+      "nodes": "8–16 Hot + 4–8 Warm + 3 Master + 4 Ingest + PowerScale"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "desc": "> 500 GB/Tag · > 1 Jahr Aufbewahrung",
+      "pattern": "Vollständige 4 Ebenen",
+      "nodes": "16+ Hot + 8+ Warm + 4+ Cold + PowerScale/ECS Frozen"
+    }
+  }
+}

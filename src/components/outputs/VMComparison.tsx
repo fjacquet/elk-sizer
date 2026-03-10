@@ -10,6 +10,7 @@ interface Props {
 export function VMComparison({ comparison }: Props) {
   const { t } = useTranslation('output')
   const unitSystem = useConfigStore((s) => s.unitSystem)
+  const deploymentType = useConfigStore((s) => s.deploymentType)
 
   const rows = [
     {
@@ -45,7 +46,9 @@ export function VMComparison({ comparison }: Props) {
             <tr className="border-b border-surface-700">
               <th className="text-left py-2 text-slate-400">{t('vmComparison.metric')}</th>
               <th className="text-right py-2 text-primary-400">{t('vmComparison.baremetal')}</th>
-              <th className="text-right py-2 text-warm">{t('vmComparison.vm')}</th>
+              <th className="text-right py-2 text-warm">
+                {deploymentType === 'ece' ? t('vmComparison.ece') : t('vmComparison.vm')}
+              </th>
             </tr>
           </thead>
           <tbody>

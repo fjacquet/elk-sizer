@@ -101,8 +101,10 @@ export interface BOMStorageEntry {
 
 export interface BOMObjectStorageEntry {
   backend: string
+  model?: string
   capacityTB: number
   nodeCount: number
+  s3ThroughputGBps?: number
   powerWatts: number
 }
 

@@ -12,7 +12,16 @@ interface SliderProps {
   onChange: (value: number) => void
 }
 
-export function Slider({ label, value, min, max, step = 1, unit = '', tooltip, onChange }: SliderProps) {
+export function Slider({
+  label,
+  value,
+  min,
+  max,
+  step = 1,
+  unit = '',
+  tooltip,
+  onChange,
+}: SliderProps) {
   const id = useId()
   return (
     <div className="input-group">

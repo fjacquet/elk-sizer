@@ -1,6 +1,23 @@
 {
   "title": "Leistung",
   "searchRate": "Suchrate",
+  "searchRate_tooltip": "Anzahl der Suchanfragen pro Sekunde im Cluster. Hoehere Werte erhoehen CPU- und Koordinatorknoten-Anforderungen.",
   "indexingRate": "Indexierungsrate",
-  "concurrentSearches": "Gleichzeitige Suchen"
+  "indexingRate_tooltip": "Dokumente pro Sekunde indexiert. Bestimmt die Anzahl der Ingest-Knoten und die Hot-Tier-Kapazitaet.",
+  "concurrentSearches": "Gleichzeitige Suchen",
+  "concurrentSearches_tooltip": "Maximale gleichzeitige Suchanfragen. Bestimmt die Anzahl der Koordinatorknoten.",
+  "concurrentUsers": "Gleichzeitige Benutzer",
+  "concurrentUsers_tooltip": "Anzahl aktiver Kibana-Benutzer, die gleichzeitig Dashboards anzeigen. Multipliziert die Dashboard-Abfragelast.",
+  "users_unit": "Benutzer",
+  "dashboardCount": "Anzahl Dashboards",
+  "dashboardCount_tooltip": "Gesamtzahl der Kibana-Dashboard-Objekte. Jedes Dashboard erzeugt regelmaessige Hintergrundabfragen pro aktivem Benutzer.",
+  "logSourceCount": "Anzahl Logquellen",
+  "logSourceCount_tooltip": "Anzahl verschiedener Logquellen, die den Cluster speisen. Beeinflusst die Indexanzahl und ILM-Komplexitaet.",
+  "workloadProfile": "Lastprofil",
+  "workloadProfile_tooltip": "Waehlen Sie den primaeren Anwendungsfall, um Suchfraktionen und Schreibverstaerkungsfaktoren automatisch anzupassen.",
+  "profile_logging": "Protokollierung",
+  "profile_observability": "Observability",
+  "profile_siem": "SIEM / Sicherheit",
+  "profile_search": "Suche",
+  "profile_mixed": "Gemischt (alle Anwendungsfaelle)"
 }

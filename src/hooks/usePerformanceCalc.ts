@@ -9,9 +9,35 @@ export function usePerformanceCalc(
 ): PerformanceResult {
   const searchRate = useConfigStore((s) => s.searchRate)
   const indexingRate = useConfigStore((s) => s.indexingRate)
+  const concurrentUsers = useConfigStore((s) => s.concurrentUsers)
+  const dashboardCount = useConfigStore((s) => s.dashboardCount)
+  const workloadProfile = useConfigStore((s) => s.workloadProfile)
+  const indexCount = useConfigStore((s) => s.indexCount)
+  const ilmEnabled = useConfigStore((s) => s.ilmEnabled)
 
   return useMemo(
-    () => calculatePerformance({ searchRate, indexingRate, clusterResult, hardwareResult }),
-    [searchRate, indexingRate, clusterResult, hardwareResult],
+    () =>
+      calculatePerformance({
+        searchRate,
+        indexingRate,
+        concurrentUsers,
+        dashboardCount,
+        workloadProfile,
+        indexCount,
+        ilmEnabled,
+        clusterResult,
+        hardwareResult,
+      }),
+    [
+      searchRate,
+      indexingRate,
+      concurrentUsers,
+      dashboardCount,
+      workloadProfile,
+      indexCount,
+      ilmEnabled,
+      clusterResult,
+      hardwareResult,
+    ],
   )
 }

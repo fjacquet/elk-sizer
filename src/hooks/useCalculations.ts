@@ -18,9 +18,13 @@ export function useCalculations(): CalculationResults {
   const performance = usePerformanceCalc(cluster, hardware)
 
   const vmComparison = useMemo((): VMComparisonResult | null => {
-    if (deploymentType !== 'vm') return null
+    if (deploymentType === 'baremetal') return null
 
-    const vmOverhead = 1 - SIZING.VM_PERF_FACTOR
+    const perfFactor = deploymentType === 'ece' ? SIZING.ECE_PERF_FACTOR : SIZING.VM_PERF_FACTOR
+    const storageFactor =
+      deploymentType === 'ece' ? SIZING.ECE_STORAGE_FACTOR : SIZING.VM_STORAGE_FACTOR
+    const overhead = 1 - perfFactor
+
     return {
       baremetal: {
         totalNodes: cluster.totalNodes,
@@ -29,11 +33,11 @@ export function useCalculations(): CalculationResults {
         estimatedCostUSD: hardware.estimatedCostUSD,
       },
       vm: {
-        totalNodes: Math.ceil(cluster.totalNodes / SIZING.VM_PERF_FACTOR),
-        totalStorageTB: cluster.totalStorageTB / SIZING.VM_STORAGE_FACTOR,
-        totalMemoryTB: cluster.totalMemoryTB / SIZING.VM_PERF_FACTOR,
-        estimatedCostUSD: hardware.estimatedCostUSD * (1 + vmOverhead),
-        overheadPercent: vmOverhead * 100,
+        totalNodes: Math.ceil(cluster.totalNodes / perfFactor),
+        totalStorageTB: cluster.totalStorageTB / storageFactor,
+        totalMemoryTB: cluster.totalMemoryTB / perfFactor,
+        estimatedCostUSD: hardware.estimatedCostUSD * (1 + overhead),
+        overheadPercent: overhead * 100,
       },
     }
   }, [deploymentType, cluster, hardware])

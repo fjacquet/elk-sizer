@@ -1,5 +1,6 @@
 export type ElasticTier = 'hot' | 'warm' | 'cold' | 'frozen'
-export type DeploymentType = 'vm' | 'baremetal'
+export type DeploymentType = 'vm' | 'baremetal' | 'ece'
+export type WorkloadProfile = 'logging' | 'observability' | 'siem' | 'search' | 'mixed'
 export type FrozenBackend = 'powerscale' | 'ecs'
 export type CompressionCodec = 'lz4' | 'deflate' | 'best_compression'
 export type NodeRole =
@@ -65,7 +66,6 @@ export const SIZING = {
   MAX_SHARDS_PER_GB_HEAP: 20,
   VM_PERF_FACTOR: 0.78,
   VM_STORAGE_FACTOR: 0.86,
-  RAID_WRITE_PENALTY: { raid5: 4, raid6: 6, raid10: 2 } as Record<string, number>,
   SHARD_SIZE_TARGET_GB: {
     hot: 50,
     warm: 50,
@@ -80,9 +80,64 @@ export const SIZING = {
   IOPS_WRITE_AMPLIFICATION: 4,
   IOPS_PER_SEARCH_SHARD: 20,
   AVG_DOC_SIZE_KB: 1,
-  IOPS_HEADROOM: 1.30,
+  IOPS_HEADROOM: 1.3,
   HOT_SEARCH_FRACTION: 0.75,
-  WARM_SEARCH_FRACTION: 0.20,
-  IOPS_WARNING_THRESHOLD: 0.60,
-  IOPS_CRITICAL_THRESHOLD: 0.80,
+  WARM_SEARCH_FRACTION: 0.2,
+  IOPS_WARNING_THRESHOLD: 0.6,
+  IOPS_CRITICAL_THRESHOLD: 0.8,
+  ECE_PERF_FACTOR: 0.72,
+  ECE_STORAGE_FACTOR: 0.82,
+  ILM_ROLLOVER_IOPS_PER_INDEX: 50,
+  SEGMENT_MERGE_FACTOR: 0.15,
+  SNAPSHOT_IOPS_PER_TB: 500,
+  CACHE_HIT_RATIO: 0.3,
+  DASHBOARD_QUERIES_PER_REFRESH: 5,
+  DASHBOARD_REFRESH_SEC: 30,
+  FC_PORT_SPEED_GBPS: 32,
 } as const
+
+export interface WorkloadProfileConfig {
+  searchFractionHot: number
+  searchFractionWarm: number
+  avgDocSizeKB: number
+  writeAmplification: number
+  dashboardMultiplier: number
+}
+
+export const WORKLOAD_PROFILES: Record<WorkloadProfile, WorkloadProfileConfig> = {
+  logging: {
+    searchFractionHot: 0.6,
+    searchFractionWarm: 0.15,
+    avgDocSizeKB: 1,
+    writeAmplification: 4,
+    dashboardMultiplier: 1.0,
+  },
+  observability: {
+    searchFractionHot: 0.8,
+    searchFractionWarm: 0.25,
+    avgDocSizeKB: 0.5,
+    writeAmplification: 4,
+    dashboardMultiplier: 1.5,
+  },
+  siem: {
+    searchFractionHot: 0.9,
+    searchFractionWarm: 0.3,
+    avgDocSizeKB: 2,
+    writeAmplification: 6,
+    dashboardMultiplier: 2.0,
+  },
+  search: {
+    searchFractionHot: 0.95,
+    searchFractionWarm: 0.4,
+    avgDocSizeKB: 3,
+    writeAmplification: 3,
+    dashboardMultiplier: 0.5,
+  },
+  mixed: {
+    searchFractionHot: 0.75,
+    searchFractionWarm: 0.2,
+    avgDocSizeKB: 1,
+    writeAmplification: 4,
+    dashboardMultiplier: 1.2,
+  },
+}

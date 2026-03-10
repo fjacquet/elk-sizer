@@ -3,6 +3,8 @@
   "deploymentType": "Type de deploiement",
   "baremetal": "Bare Metal",
   "vm": "Machine virtuelle (VMware)",
+  "ece": "ECE (Elastic Cloud Enterprise)",
+  "ece_tooltip": "Elastic Cloud Enterprise : orchestration conteneurisee sur materiel Dell. Applique des facteurs de surcharge (CPU x0.72, stockage x0.82).",
   "serverModel": "Modele de serveur",
   "storageModel": "Modele de stockage SAN",
   "frozenBackend": "Backend niveau Frozen",

@@ -1,0 +1,159 @@
+{
+  "title": "Architecture Advisor",
+  "subtitle": "Real-time recommendations based on your current configuration.",
+  "architectureScore": "Architecture Score",
+  "scoreGood": "Good",
+  "scoreFair": "Fair",
+  "scoreNeedsAttention": "Needs Attention",
+  "sectionCritical": "Critical Issues ({{count}})",
+  "sectionWarnings": "Warnings ({{count}})",
+  "sectionOptimizations": "Optimizations ({{count}})",
+  "sectionBestPractices": "Best Practices ({{count}})",
+  "sectionReferenceArchitectures": "Reference Architectures",
+  "sectionDocumentation": "Documentation",
+  "badgeCritical": "CRITICAL",
+  "badgeWarning": "WARNING",
+  "badgeInfo": "INFO",
+  "impactLabel": "{{impact}} impact",
+  "yourConfig": "← your config",
+  "allClear": "Architecture looks good!",
+  "allClearDesc": "No warnings or critical issues detected for your current configuration.",
+  "metricTotalNodes": "Total Nodes",
+  "metricTotalShards": "Total Shards",
+  "metricShardUtilization": "Shard Utilization",
+  "docUserGuide": "User Guide",
+  "docSizingMethodology": "Sizing Methodology",
+  "docHardwareReference": "Hardware Reference",
+  "pattern": {
+    "hotOnly": {
+      "name": "Hot-Only",
+      "description": "Single hot tier for recent, actively-indexed data. Suitable for short-retention or low-volume workloads with no archival requirements."
+    },
+    "hotWarm": {
+      "name": "Hot-Warm",
+      "description": "Standard 2-tier pattern. Hot for active indexing, warm for read-only aged data. Best balance of performance and cost for most enterprise workloads."
+    },
+    "hotWarmCold": {
+      "name": "Hot-Warm-Cold",
+      "description": "Compliance-oriented 3-tier architecture. Hot + warm for active data, cold for rarely-accessed compliance data with minimal resources."
+    },
+    "full4Tier": {
+      "name": "Full 4-Tier (Optimal TCO)",
+      "description": "Maximum cost efficiency using searchable snapshots on object storage for long-retention data. Recommended for retention > 90 days and large data volumes."
+    },
+    "custom": {
+      "name": "Custom",
+      "description": "Custom tier configuration based on your specific retention requirements."
+    }
+  },
+  "warning": {
+    "noHA": {
+      "title": "No High Availability",
+      "message": "Replica count is 0. Any node failure will cause data loss and cluster downtime. Set replicas ≥ 1 for production clusters."
+    },
+    "criticalShardPressure": {
+      "title": "Critical Shard Pressure",
+      "message": "Shard utilization is {{pct}}% (limit: 20 shards/GB heap). Reduce index count, increase shard size, or add more nodes to avoid cluster instability."
+    },
+    "highShardCount": {
+      "title": "High Shard Count",
+      "message": "Shard utilization is {{pct}}%. Approaching the 20 shards/GB heap limit. Monitor shard count growth."
+    },
+    "shortHotTier": {
+      "title": "Very Short Hot Tier",
+      "message": "Hot tier is under 3 days with high ingest volume. This may cause ILM rollover bottlenecks and insufficient time for segment merges. Consider ≥ 7 days."
+    },
+    "vmOverhead": {
+      "title": "VM Overhead Applied",
+      "message": "Running Elasticsearch in VMs adds 22% CPU overhead and 14% storage overhead. Bare metal is strongly recommended for hot-tier data nodes for best latency."
+    },
+    "eceOverhead": {
+      "title": "ECE Overhead Applied",
+      "message": "ECE container orchestration adds 28% CPU overhead and 18% storage overhead. For high-ingest hot-tier nodes, consider bare metal allocators."
+    },
+    "largeCluster": {
+      "title": "Large Cluster — Consider Zones",
+      "message": "Clusters with >100 nodes should use availability zones and shard allocation awareness to prevent correlated failures."
+    },
+    "lowMemory": {
+      "title": "Low Memory per Node",
+      "message": "{{memoryPerNode}} GB per node with {{dailyIngestGB}} GB/day ingest may require many nodes. Consider 256–512 GB nodes for better JVM efficiency and fewer network hops."
+    },
+    "largeNuma": {
+      "title": "Large NUMA Configuration",
+      "message": "{{memoryPerNode}} GB per node spans multiple NUMA domains. Elasticsearch is NUMA-aware, but verify JVM gc pause times in production. Consider Xeon Platinum CPUs for best NUMA performance."
+    },
+    "longRetentionNoCold": {
+      "title": "Long Retention Without Cold/Frozen",
+      "message": "{{totalRetentionDays}} days of retention on hot/warm tiers only. Adding a frozen tier (searchable snapshots) could reduce storage costs by 60–80% for data older than {{hotWarmDays}} days."
+    },
+    "iopsSaturation": {
+      "title": "IOPS Saturation",
+      "message": "Estimated IOPS load ({{iops}}) exceeds {{pct}}% of the selected PowerStore capacity. Upgrade to a higher-tier model to avoid latency spikes."
+    },
+    "highIops": {
+      "title": "High IOPS Load",
+      "message": "IOPS utilization is {{pct}}% of the selected PowerStore capacity. Monitor storage performance at peak ingest and consider upgrading if sustained above 75%."
+    },
+    "fcSaturation": {
+      "title": "FC Bandwidth Saturation",
+      "message": "Fibre Channel utilization is {{pct}}%. Add more PowerStore arrays or upgrade to a model with more FC ports."
+    },
+    "highFc": {
+      "title": "High FC Bandwidth",
+      "message": "FC bandwidth utilization is {{pct}}%. Monitor at peak ingest."
+    },
+    "highLatency": {
+      "title": "High Storage Latency",
+      "message": "Estimated storage latency is {{latency}} ms. This will impact search and indexing performance. Upgrade PowerStore model or add arrays."
+    },
+    "elevatedLatency": {
+      "title": "Elevated Storage Latency",
+      "message": "Estimated storage latency is {{latency}} ms. Consider upgrading PowerStore for sub-millisecond latency."
+    }
+  },
+  "optimization": {
+    "enableFrozen": {
+      "title": "Enable Frozen Tier",
+      "message": "Enable a frozen tier for data older than {{hotWarmDays}} days. Searchable snapshots on PowerScale/ECS cost ~80% less than SAN storage with only moderate query latency."
+    },
+    "reduceColdReplicas": {
+      "title": "Reduce Replicas on Cold Tier",
+      "message": "Cold tier data is rarely queried. Consider 1 replica (instead of {{replicaCount}}) for cold indices — Elasticsearch can be configured per-ILM-phase to change replica count."
+    },
+    "increaseShardSize": {
+      "title": "Increase Shard Size",
+      "message": "Shard utilization is low but shard count is high. Increase target shard size (fewer, larger shards) to reduce per-shard overhead and improve merge efficiency."
+    },
+    "useBareMetal": {
+      "title": "Use Bare Metal for Hot Nodes",
+      "message": "High ingest rates benefit from bare metal hot nodes. VM overhead reduces effective throughput by ~22%, requiring more hardware to achieve the same performance."
+    }
+  },
+  "reference": {
+    "small": {
+      "name": "Small",
+      "desc": "< 10 GB/day · < 30 day retention",
+      "pattern": "Hot-Only",
+      "nodes": "2 hot + 3 master + 2 ingest"
+    },
+    "medium": {
+      "name": "Medium",
+      "desc": "10–100 GB/day · 30–90 day retention",
+      "pattern": "Hot-Warm",
+      "nodes": "4–8 hot + 2–4 warm + 3 master + 2 ingest"
+    },
+    "large": {
+      "name": "Large",
+      "desc": "100–500 GB/day · 90–365 day retention",
+      "pattern": "Hot-Warm-Frozen",
+      "nodes": "8–16 hot + 4–8 warm + 3 master + 4 ingest + PowerScale"
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "desc": "> 500 GB/day · > 1 year retention",
+      "pattern": "Full 4-Tier",
+      "nodes": "16+ hot + 8+ warm + 4+ cold + PowerScale/ECS frozen"
+    }
+  }
+}

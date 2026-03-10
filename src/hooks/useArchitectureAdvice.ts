@@ -1,4 +1,5 @@
 import { useMemo } from 'react'
+import { useTranslation } from 'react-i18next'
 import { useConfigStore } from '@/store'
 import type { CalculationResults } from '@/types/results'
 import { SIZING } from '@/types/sizing'
@@ -33,6 +34,7 @@ export interface ArchitectureAdvice {
 }
 
 export function useArchitectureAdvice(results: CalculationResults): ArchitectureAdvice {
+  const { t } = useTranslation('advisor')
   const hotDays = useConfigStore((s) => s.hotDays)
   const warmDays = useConfigStore((s) => s.warmDays)
   const coldDays = useConfigStore((s) => s.coldDays)
@@ -44,8 +46,8 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
 
   return useMemo(() => {
     const { cluster } = results
-    const activeTiers = cluster.tiers.filter((t) => t.nodeCount > 0)
-    const activeTierNames = activeTiers.map((t) => t.tier)
+    const activeTiers = cluster.tiers.filter((ti) => ti.nodeCount > 0)
+    const activeTierNames = activeTiers.map((ti) => ti.tier)
     const activeTierCount = activeTiers.length
     const hasFrozen = activeTierNames.includes('frozen')
     const hasCold = activeTierNames.includes('cold')
@@ -55,40 +57,36 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
     let pattern: ArchPattern
     if (activeTierCount === 1) {
       pattern = {
-        name: 'Hot-Only',
-        description:
-          'Single hot tier for recent, actively-indexed data. Suitable for short-retention or low-volume workloads with no archival requirements.',
+        name: t('pattern.hotOnly.name'),
+        description: t('pattern.hotOnly.description'),
         tiers: ['hot'],
         icon: '🔥',
       }
     } else if (activeTierCount === 2 && hasWarm && !hasCold && !hasFrozen) {
       pattern = {
-        name: 'Hot-Warm',
-        description:
-          'Standard 2-tier pattern. Hot for active indexing, warm for read-only aged data. Best balance of performance and cost for most enterprise workloads.',
+        name: t('pattern.hotWarm.name'),
+        description: t('pattern.hotWarm.description'),
         tiers: ['hot', 'warm'],
         icon: '🔥🌡️',
       }
     } else if (activeTierCount === 3 && hasWarm && hasCold && !hasFrozen) {
       pattern = {
-        name: 'Hot-Warm-Cold',
-        description:
-          'Compliance-oriented 3-tier architecture. Hot + warm for active data, cold for rarely-accessed compliance data with minimal resources.',
+        name: t('pattern.hotWarmCold.name'),
+        description: t('pattern.hotWarmCold.description'),
         tiers: ['hot', 'warm', 'cold'],
         icon: '🔥🌡️❄️',
       }
     } else if (hasFrozen) {
       pattern = {
-        name: 'Full 4-Tier (Optimal TCO)',
-        description:
-          'Maximum cost efficiency using searchable snapshots on object storage for long-retention data. Recommended for retention > 90 days and large data volumes.',
+        name: t('pattern.full4Tier.name'),
+        description: t('pattern.full4Tier.description'),
         tiers: ['hot', 'warm', 'cold', 'frozen'],
         icon: '🔥🌡️❄️🧊',
       }
     } else {
       pattern = {
-        name: 'Custom',
-        description: 'Custom tier configuration based on your specific retention requirements.',
+        name: t('pattern.custom.name'),
+        description: t('pattern.custom.description'),
         tiers: activeTierNames,
         icon: '⚙️',
       }
@@ -100,68 +98,74 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
     if (replicaCount === 0) {
       warnings.push({
         severity: 'error',
-        title: 'No High Availability',
-        message:
-          'Replica count is 0. Any node failure will cause data loss and cluster downtime. Set replicas ≥ 1 for production clusters.',
+        title: t('warning.noHA.title'),
+        message: t('warning.noHA.message'),
       })
     }
 
     if (cluster.shardUtilization > 0.8) {
       warnings.push({
         severity: 'error',
-        title: 'Critical Shard Pressure',
-        message: `Shard utilization is ${Math.round(cluster.shardUtilization * 100)}% (limit: 20 shards/GB heap). Reduce index count, increase shard size, or add more nodes to avoid cluster instability.`,
+        title: t('warning.criticalShardPressure.title'),
+        message: t('warning.criticalShardPressure.message', {
+          pct: Math.round(cluster.shardUtilization * 100),
+        }),
       })
     } else if (cluster.shardUtilization > 0.6) {
       warnings.push({
         severity: 'warning',
-        title: 'High Shard Count',
-        message: `Shard utilization is ${Math.round(cluster.shardUtilization * 100)}%. Approaching the 20 shards/GB heap limit. Monitor shard count growth.`,
+        title: t('warning.highShardCount.title'),
+        message: t('warning.highShardCount.message', {
+          pct: Math.round(cluster.shardUtilization * 100),
+        }),
       })
     }
 
     if (hotDays < 3 && dailyIngestGB > 50) {
       warnings.push({
         severity: 'warning',
-        title: 'Very Short Hot Tier',
-        message:
-          'Hot tier is under 3 days with high ingest volume. This may cause ILM rollover bottlenecks and insufficient time for segment merges. Consider ≥ 7 days.',
+        title: t('warning.shortHotTier.title'),
+        message: t('warning.shortHotTier.message'),
       })
     }
 
     if (deploymentType === 'vm') {
       warnings.push({
         severity: 'warning',
-        title: 'VM Overhead Applied',
-        message:
-          'Running Elasticsearch in VMs adds 22% CPU overhead and 14% storage overhead. Bare metal is strongly recommended for hot-tier data nodes for best latency.',
+        title: t('warning.vmOverhead.title'),
+        message: t('warning.vmOverhead.message'),
+      })
+    }
+
+    if (deploymentType === 'ece') {
+      warnings.push({
+        severity: 'warning',
+        title: t('warning.eceOverhead.title'),
+        message: t('warning.eceOverhead.message'),
       })
     }
 
     if (cluster.totalNodes > 100) {
       warnings.push({
         severity: 'info',
-        title: 'Large Cluster — Consider Zones',
-        message:
-          'Clusters with >100 nodes should use availability zones and shard allocation awareness to prevent correlated failures.',
+        title: t('warning.largeCluster.title'),
+        message: t('warning.largeCluster.message'),
       })
     }
 
     if (memoryPerNode < 64 && dailyIngestGB > 500) {
       warnings.push({
         severity: 'warning',
-        title: 'Low Memory per Node',
-        message:
-          `${memoryPerNode} GB per node with ${dailyIngestGB} GB/day ingest may require many nodes. Consider 256–512 GB nodes for better JVM efficiency and fewer network hops.`,
+        title: t('warning.lowMemory.title'),
+        message: t('warning.lowMemory.message', { memoryPerNode, dailyIngestGB }),
       })
     }
 
     if (memoryPerNode > 512) {
       warnings.push({
         severity: 'info',
-        title: 'Large NUMA Configuration',
-        message:
-          `${memoryPerNode} GB per node spans multiple NUMA domains. Elasticsearch is NUMA-aware, but verify JVM gc pause times in production. Consider Xeon Platinum CPUs for best NUMA performance.`,
+        title: t('warning.largeNuma.title'),
+        message: t('warning.largeNuma.message', { memoryPerNode }),
       })
     }
 
@@ -169,8 +173,11 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
     if (totalRetentionDays > 90 && !hasFrozen && !hasCold) {
       warnings.push({
         severity: 'info',
-        title: 'Long Retention Without Cold/Frozen',
-        message: `${totalRetentionDays} days of retention on hot/warm tiers only. Adding a frozen tier (searchable snapshots) could reduce storage costs by 60–80% for data older than ${hotDays + warmDays} days.`,
+        title: t('warning.longRetentionNoCold.title'),
+        message: t('warning.longRetentionNoCold.message', {
+          totalRetentionDays,
+          hotWarmDays: hotDays + warmDays,
+        }),
       })
     }
 
@@ -178,16 +185,59 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
       if (results.performance.iopsUtilization > SIZING.IOPS_CRITICAL_THRESHOLD) {
         warnings.push({
           severity: 'error',
-          title: 'IOPS Saturation',
-          message: `Estimated IOPS load (${Math.round(results.performance.totalRequiredIOPS * SIZING.IOPS_HEADROOM).toLocaleString()}) exceeds ${Math.round(results.performance.iopsUtilization * 100)}% of the selected PowerStore capacity. Upgrade to a higher-tier model to avoid latency spikes.`,
+          title: t('warning.iopsSaturation.title'),
+          message: t('warning.iopsSaturation.message', {
+            iops: Math.round(
+              results.performance.totalRequiredIOPS * SIZING.IOPS_HEADROOM,
+            ).toLocaleString(),
+            pct: Math.round(results.performance.iopsUtilization * 100),
+          }),
         })
       } else if (results.performance.iopsUtilization > SIZING.IOPS_WARNING_THRESHOLD) {
         warnings.push({
           severity: 'warning',
-          title: 'High IOPS Load',
-          message: `IOPS utilization is ${Math.round(results.performance.iopsUtilization * 100)}% of the selected PowerStore capacity. Monitor storage performance at peak ingest and consider upgrading if sustained above 75%.`,
+          title: t('warning.highIops.title'),
+          message: t('warning.highIops.message', {
+            pct: Math.round(results.performance.iopsUtilization * 100),
+          }),
         })
       }
+    }
+
+    if (results.performance.fcUtilization > 0.8) {
+      warnings.push({
+        severity: 'error',
+        title: t('warning.fcSaturation.title'),
+        message: t('warning.fcSaturation.message', {
+          pct: Math.round(results.performance.fcUtilization * 100),
+        }),
+      })
+    } else if (results.performance.fcUtilization > 0.6) {
+      warnings.push({
+        severity: 'warning',
+        title: t('warning.highFc.title'),
+        message: t('warning.highFc.message', {
+          pct: Math.round(results.performance.fcUtilization * 100),
+        }),
+      })
+    }
+
+    if (results.performance.estimatedLatencyMs > 5) {
+      warnings.push({
+        severity: 'error',
+        title: t('warning.highLatency.title'),
+        message: t('warning.highLatency.message', {
+          latency: results.performance.estimatedLatencyMs.toFixed(1),
+        }),
+      })
+    } else if (results.performance.estimatedLatencyMs > 2) {
+      warnings.push({
+        severity: 'warning',
+        title: t('warning.elevatedLatency.title'),
+        message: t('warning.elevatedLatency.message', {
+          latency: results.performance.estimatedLatencyMs.toFixed(1),
+        }),
+      })
     }
 
     // Generate optimizations
@@ -195,37 +245,32 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
 
     if (!hasFrozen && frozenDays === 0 && totalRetentionDays > 60) {
       optimizations.push({
-        title: 'Enable Frozen Tier',
-        message: `Enable a frozen tier for data older than ${hotDays + warmDays} days. Searchable snapshots on PowerScale/ECS cost ~80% less than SAN storage with only moderate query latency.`,
+        title: t('optimization.enableFrozen.title'),
+        message: t('optimization.enableFrozen.message', { hotWarmDays: hotDays + warmDays }),
         impact: 'high',
       })
     }
 
     if (replicaCount > 1 && activeTierNames.includes('cold')) {
       optimizations.push({
-        title: 'Reduce Replicas on Cold Tier',
-        message:
-          'Cold tier data is rarely queried. Consider 1 replica (instead of ' +
-          replicaCount +
-          ') for cold indices — Elasticsearch can be configured per-ILM-phase to change replica count.',
+        title: t('optimization.reduceColdReplicas.title'),
+        message: t('optimization.reduceColdReplicas.message', { replicaCount }),
         impact: 'medium',
       })
     }
 
     if (cluster.shardUtilization < 0.3 && cluster.totalShards > 1000) {
       optimizations.push({
-        title: 'Increase Shard Size',
-        message:
-          'Shard utilization is low but shard count is high. Increase target shard size (fewer, larger shards) to reduce per-shard overhead and improve merge efficiency.',
+        title: t('optimization.increaseShardSize.title'),
+        message: t('optimization.increaseShardSize.message'),
         impact: 'medium',
       })
     }
 
     if (dailyIngestGB > 200 && !deploymentType.includes('baremetal')) {
       optimizations.push({
-        title: 'Use Bare Metal for Hot Nodes',
-        message:
-          'High ingest rates benefit from bare metal hot nodes. VM overhead reduces effective throughput by ~22%, requiring more hardware to achieve the same performance.',
+        title: t('optimization.useBareMetal.title'),
+        message: t('optimization.useBareMetal.message'),
         impact: 'high',
       })
     }
@@ -241,6 +286,7 @@ export function useArchitectureAdvice(results: CalculationResults): Architecture
 
     return { pattern, warnings, optimizations, activeTierCount, advisorScore: score }
   }, [
+    t,
     results,
     hotDays,
     warmDays,

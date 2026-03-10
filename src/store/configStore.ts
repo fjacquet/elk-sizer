@@ -35,6 +35,10 @@ const getDefaultState = () => ({
   searchRate: 50,
   indexingRate: 10000,
   concurrentSearches: 10,
+  concurrentUsers: 10,
+  dashboardCount: 0,
+  logSourceCount: 1,
+  workloadProfile: 'mixed' as const,
   deploymentType: 'baremetal' as const,
   serverModel: 'r760',
   cpuOption: 'Intel Xeon Gold 6430',
@@ -64,7 +68,17 @@ export const useConfigStore = create<ConfigStore>()(
     {
       name: 'elk-sizer',
       storage: createJSONStorage(() => urlHashStorage),
-      version: 1,
+      version: 2,
+      migrate: (persisted, version) => {
+        const state = persisted as Record<string, unknown>
+        if (version < 2) {
+          state.concurrentUsers ??= 10
+          state.dashboardCount ??= 0
+          state.logSourceCount ??= 1
+          state.workloadProfile ??= 'mixed'
+        }
+        return state
+      },
       partialize: (state) => ({
         dailyIngestGB: state.dailyIngestGB,
         compressionCodec: state.compressionCodec,
@@ -78,6 +92,10 @@ export const useConfigStore = create<ConfigStore>()(
         searchRate: state.searchRate,
         indexingRate: state.indexingRate,
         concurrentSearches: state.concurrentSearches,
+        concurrentUsers: state.concurrentUsers,
+        dashboardCount: state.dashboardCount,
+        logSourceCount: state.logSourceCount,
+        workloadProfile: state.workloadProfile,
         deploymentType: state.deploymentType,
         serverModel: state.serverModel,
         cpuOption: state.cpuOption,

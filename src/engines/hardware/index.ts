@@ -1,8 +1,10 @@
+import powerstoreData from '@/data/dell-powerstore.json'
 import type {
   BOMObjectStorageEntry,
   BOMServerEntry,
   BOMStorageEntry,
   HardwareBOM,
+  PowerStoreModel,
 } from '@/types/hardware'
 import type { ClusterResult, HardwareResult } from '@/types/results'
 import type { DeploymentType, FrozenBackend } from '@/types/sizing'
@@ -10,6 +12,8 @@ import { SIZING } from '@/types/sizing'
 import { selectServerForRole, selectServerForTier } from './helpers/serverSelector'
 import { selectPowerScale } from './strategies/powerscaleStrategy'
 import { selectPowerStore } from './strategies/powerstoreStrategy'
+
+const powerstoreModels = powerstoreData as PowerStoreModel[]
 
 export interface HardwareEngineInput {
   clusterResult: ClusterResult
@@ -20,9 +24,16 @@ export interface HardwareEngineInput {
   storageModel?: string
 }
 
+const getOverhead = (dt: DeploymentType) => ({
+  perf: dt === 'vm' ? SIZING.VM_PERF_FACTOR : dt === 'ece' ? SIZING.ECE_PERF_FACTOR : 1,
+  storage: dt === 'vm' ? SIZING.VM_STORAGE_FACTOR : dt === 'ece' ? SIZING.ECE_STORAGE_FACTOR : 1,
+})
+
 export function calculateHardware(input: HardwareEngineInput): HardwareResult {
-  const { clusterResult, deploymentType, frozenBackend, serverModel, cpuOption, storageModel } = input
-  const isVM = deploymentType === 'vm'
+  const { clusterResult, deploymentType, frozenBackend, serverModel, cpuOption, storageModel } =
+    input
+  const overhead = getOverhead(deploymentType)
+  const hasOverhead = deploymentType !== 'baremetal'
 
   const bomServers: BOMServerEntry[] = []
   const bomStorage: BOMStorageEntry[] = []
@@ -31,11 +42,11 @@ export function calculateHardware(input: HardwareEngineInput): HardwareResult {
   for (const tier of clusterResult.tiers) {
     if (tier.nodeCount <= 0) continue
 
-    const adjustedTier = isVM
+    const adjustedTier = hasOverhead
       ? {
           ...tier,
-          nodeCount: Math.ceil(tier.nodeCount / SIZING.VM_PERF_FACTOR),
-          storageGB: tier.storageGB / SIZING.VM_STORAGE_FACTOR,
+          nodeCount: Math.ceil(tier.nodeCount / overhead.perf),
+          storageGB: tier.storageGB / overhead.storage,
         }
       : tier
 
@@ -99,8 +110,10 @@ export function calculateHardware(input: HardwareEngineInput): HardwareResult {
       const { model, nodeCount } = selectPowerScale(coldFrozenStorageTB)
       objectStorage = {
         backend: 'powerscale',
+        model: model.model,
         capacityTB: model.nodeCapacityTB * nodeCount,
         nodeCount,
+        s3ThroughputGBps: model.s3ThroughputGBps * nodeCount,
         powerWatts: model.powerWattsPerNode * nodeCount,
       }
     } else {
@@ -114,10 +127,10 @@ export function calculateHardware(input: HardwareEngineInput): HardwareResult {
     }
   }
 
-  // Network
+  // Network — look up FC ports from BOM model names (not re-selecting)
   const totalFcPorts = bomStorage.reduce((sum, s) => {
-    const psModel = selectPowerStore(s.capacityTB)
-    return sum + psModel.model.fcPorts * s.count
+    const psModel = powerstoreModels.find((m) => m.model === s.model)
+    return sum + (psModel?.fcPorts ?? 0) * s.count
   }, 0)
 
   const totalEthPorts = bomServers.reduce((sum, s) => sum + s.count * 2, 0)

@@ -4,6 +4,8 @@
   "deploymentType_tooltip": "Bare Metal: direct hardware sizing. Virtual Machine: applies VM overhead factors (CPU ×0.78, storage ×0.86) requiring more physical nodes.",
   "baremetal": "Bare Metal",
   "vm": "Virtual Machine (VMware)",
+  "ece": "ECE (Elastic Cloud Enterprise)",
+  "ece_tooltip": "Elastic Cloud Enterprise: container-based orchestration on Dell hardware. Applies overhead factors (CPU x0.72, storage x0.82) for container and allocator overhead.",
   "serverModel": "Server Model",
   "serverModel_tooltip": "Dell PowerEdge server for data nodes. R760 (2U) suits data-heavy tiers. R660 (1U) is used for infrastructure roles. R7725 (AMD EPYC) offers maximum memory for large hot tiers.",
   "cpuOption": "CPU Option",

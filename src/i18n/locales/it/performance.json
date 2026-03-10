@@ -1,6 +1,23 @@
 {
   "title": "Prestazioni",
   "searchRate": "Tasso di ricerca",
+  "searchRate_tooltip": "Numero di richieste di ricerca al secondo nel cluster. Valori piu alti aumentano i requisiti CPU e dei nodi coordinatori.",
   "indexingRate": "Tasso di indicizzazione",
-  "concurrentSearches": "Ricerche simultanee"
+  "indexingRate_tooltip": "Documenti indicizzati al secondo. Dimensiona i nodi di ingestione e la capacita del tier hot.",
+  "concurrentSearches": "Ricerche simultanee",
+  "concurrentSearches_tooltip": "Richieste di ricerca simultanee massime. Determina il numero di nodi coordinatori.",
+  "concurrentUsers": "Utenti simultanei",
+  "concurrentUsers_tooltip": "Numero di utenti Kibana attivi che visualizzano dashboard contemporaneamente. Moltiplica il carico delle query.",
+  "users_unit": "utenti",
+  "dashboardCount": "Numero di dashboard",
+  "dashboardCount_tooltip": "Numero totale di oggetti dashboard Kibana. Ogni dashboard genera query in background a intervalli regolari per utente attivo.",
+  "logSourceCount": "Numero di sorgenti log",
+  "logSourceCount_tooltip": "Numero di sorgenti log distinte che alimentano il cluster. Influenza il numero di indici e la complessita ILM.",
+  "workloadProfile": "Profilo di carico",
+  "workloadProfile_tooltip": "Selezionare il caso d'uso principale per regolare automaticamente le frazioni di ricerca e i fattori di amplificazione.",
+  "profile_logging": "Registrazione log",
+  "profile_observability": "Osservabilita",
+  "profile_siem": "SIEM / Sicurezza",
+  "profile_search": "Ricerca",
+  "profile_mixed": "Misto (tutti gli usi)"
 }

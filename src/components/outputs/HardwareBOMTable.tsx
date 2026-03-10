@@ -74,9 +74,55 @@ export function HardwareBOMTable({ results }: Props) {
               </tbody>
               <tfoot>
                 <tr className="border-t border-surface-700 font-medium">
-                  <td colSpan={4} className="py-1 text-slate-400">{t('bom.totalIOPS')}</td>
+                  <td colSpan={4} className="py-1 text-slate-400">
+                    {t('bom.totalIOPS')}
+                  </td>
                   <td className="text-right py-1 text-primary-400">
                     {formatNumber(results.performance.totalAvailableIOPS)}
+                  </td>
+                </tr>
+                <tr className="border-t border-surface-700/50 font-medium">
+                  <td colSpan={4} className="py-1 text-slate-400">
+                    {t('bom.requiredIOPS')}
+                  </td>
+                  <td className="text-right py-1 text-slate-200">
+                    {formatNumber(Math.round(results.performance.totalRequiredIOPS))}
+                  </td>
+                </tr>
+                <tr className="border-t border-surface-700/50 font-medium">
+                  <td colSpan={4} className="py-1 text-slate-400">
+                    {t('bom.iopsUtilization')}
+                  </td>
+                  <td
+                    className={`text-right py-1 font-semibold ${
+                      results.performance.iopsUtilization > 0.8
+                        ? 'text-hot'
+                        : results.performance.iopsUtilization > 0.6
+                          ? 'text-warm'
+                          : 'text-safe'
+                    }`}
+                  >
+                    {(results.performance.iopsUtilization * 100).toFixed(1)}%
+                  </td>
+                </tr>
+                <tr className="border-t border-surface-700/50">
+                  <td colSpan={4} className="py-1 text-slate-400">
+                    {t('bom.estimatedLatency')}
+                  </td>
+                  <td
+                    className={`text-right py-1 ${results.performance.estimatedLatencyMs > 2 ? 'text-warm' : 'text-safe'}`}
+                  >
+                    {results.performance.estimatedLatencyMs.toFixed(1)} ms
+                  </td>
+                </tr>
+                <tr className="border-t border-surface-700/50">
+                  <td colSpan={4} className="py-1 text-slate-400">
+                    {t('bom.fcUtilization')}
+                  </td>
+                  <td
+                    className={`text-right py-1 ${results.performance.fcUtilization > 0.8 ? 'text-hot' : results.performance.fcUtilization > 0.6 ? 'text-warm' : 'text-safe'}`}
+                  >
+                    {(results.performance.fcUtilization * 100).toFixed(1)}%
                   </td>
                 </tr>
               </tfoot>
@@ -94,6 +140,12 @@ export function HardwareBOMTable({ results }: Props) {
               <span className="text-slate-400">{t('bom.backend')}</span>
               <span className="capitalize">{bom.objectStorage.backend}</span>
             </div>
+            {bom.objectStorage.model && (
+              <div className="flex justify-between">
+                <span className="text-slate-400">{t('bom.model')}</span>
+                <span>{bom.objectStorage.model}</span>
+              </div>
+            )}
             <div className="flex justify-between">
               <span className="text-slate-400">{t('bom.capacity')}</span>
               <span>{bom.objectStorage.capacityTB.toFixed(1)} TB</span>
@@ -102,6 +154,15 @@ export function HardwareBOMTable({ results }: Props) {
               <span className="text-slate-400">{t('bom.nodeCount')}</span>
               <span>{bom.objectStorage.nodeCount}</span>
             </div>
+            {bom.objectStorage.s3ThroughputGBps != null &&
+              bom.objectStorage.s3ThroughputGBps > 0 && (
+                <div className="flex justify-between">
+                  <span className="text-slate-400">{t('bom.s3Throughput')}</span>
+                  <span className="text-primary-400">
+                    {bom.objectStorage.s3ThroughputGBps.toFixed(1)} GB/s
+                  </span>
+                </div>
+              )}
           </div>
         </>
       )}

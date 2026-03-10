@@ -1,11 +1,36 @@
 import { useTranslation } from 'react-i18next'
+import { toast } from 'sonner'
 import type { CalculationResults } from '@/types/results'
-import { exportPDF } from '@/utils/export/pdfExport'
-import { exportPPTX } from '@/utils/export/pptxExport'
-import { exportYAML } from '@/utils/export/yamlExport'
 
 interface ExportToolbarProps {
   results: CalculationResults
+}
+
+async function handleExportPDF(results: CalculationResults) {
+  try {
+    const { exportPDF } = await import('@/utils/export/pdfExport')
+    exportPDF(results, 'ELK Sizer Report')
+  } catch {
+    toast.error('Failed to load PDF export module')
+  }
+}
+
+async function handleExportPPTX(results: CalculationResults) {
+  try {
+    const { exportPPTX } = await import('@/utils/export/pptxExport')
+    exportPPTX(results, 'ELK Sizer Report')
+  } catch {
+    toast.error('Failed to load PowerPoint export module')
+  }
+}
+
+async function handleExportYAML(results: CalculationResults) {
+  try {
+    const { exportYAML } = await import('@/utils/export/yamlExport')
+    exportYAML(results)
+  } catch {
+    toast.error('Failed to load YAML export module')
+  }
 }
 
 export function ExportToolbar({ results }: ExportToolbarProps) {
@@ -15,7 +40,7 @@ export function ExportToolbar({ results }: ExportToolbarProps) {
     <div className="flex items-center gap-2">
       <button
         type="button"
-        onClick={() => exportPDF(results, 'ELK Sizer Report')}
+        onClick={() => handleExportPDF(results)}
         className="bg-surface-700 hover:bg-surface-600 text-slate-300 text-xs px-3 py-1.5 rounded transition-colors flex items-center gap-1.5"
       >
         <svg
@@ -39,7 +64,7 @@ export function ExportToolbar({ results }: ExportToolbarProps) {
 
       <button
         type="button"
-        onClick={() => exportPPTX(results, 'ELK Sizer Report')}
+        onClick={() => handleExportPPTX(results)}
         className="bg-surface-700 hover:bg-surface-600 text-slate-300 text-xs px-3 py-1.5 rounded transition-colors flex items-center gap-1.5"
       >
         <svg
@@ -63,7 +88,7 @@ export function ExportToolbar({ results }: ExportToolbarProps) {
 
       <button
         type="button"
-        onClick={() => exportYAML(results)}
+        onClick={() => handleExportYAML(results)}
         className="bg-surface-700 hover:bg-surface-600 text-slate-300 text-xs px-3 py-1.5 rounded transition-colors flex items-center gap-1.5"
       >
         <svg
