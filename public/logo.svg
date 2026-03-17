@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 260 64">
+  <!-- Icon background -->
+  <rect x="0" y="2" width="60" height="60" rx="10" fill="#0077C8"/>
+  <!-- Cluster connection lines -->
+  <line x1="30" y1="13" x2="14" y2="43" stroke="white" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="30" y1="13" x2="46" y2="43" stroke="white" stroke-width="1.5" stroke-opacity="0.5"/>
+  <line x1="14" y1="43" x2="46" y2="43" stroke="white" stroke-width="1.5" stroke-opacity="0.5"/>
+  <!-- Cluster nodes -->
+  <circle cx="30" cy="13" r="6" fill="#FEC514"/>
+  <circle cx="14" cy="43" r="5.5" fill="white"/>
+  <circle cx="46" cy="43" r="5.5" fill="white"/>
+  <!-- Title text -->
+  <text x="72" y="36" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="26" font-weight="700" fill="#0077C8">ELK Sizer</text>
+  <!-- Subtitle text -->
+  <text x="73" y="53" font-family="'Segoe UI', Helvetica, Arial, sans-serif" font-size="12" fill="#666666" letter-spacing="0.5">Elasticsearch Cluster Sizing</text>
+</svg>
