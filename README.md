@@ -5,6 +5,8 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4.x-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![Vite](https://img.shields.io/badge/Vite-7.x-646CFF?logo=vite&logoColor=white)](https://vite.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
+[![CI](https://github.com/fjacquet/elk-sizer/actions/workflows/ci.yml/badge.svg)](https://github.com/fjacquet/elk-sizer/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/fjacquet/elk-sizer?sort=semver)](https://github.com/fjacquet/elk-sizer/releases/latest)
 
 Browser-based Elasticsearch cluster sizing tool for on-premise Dell infrastructure. Helps engineers size Elastic clusters using Dell PowerEdge servers, PowerStore FC (SAN), and PowerScale/ECS (S3).
 
