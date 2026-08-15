@@ -31,8 +31,8 @@ export function HardwareBOMTable({ results }: Props) {
             </tr>
           </thead>
           <tbody>
-            {bom.servers.map((s, i) => (
-              <tr key={`${s.model}-${s.role}-${i}`} className="border-b border-surface-700/50">
+            {bom.servers.map((s) => (
+              <tr key={`${s.model}-${s.role}`} className="border-b border-surface-700/50">
                 <td className="py-1">{s.model}</td>
                 <td className="py-1 text-slate-400">{s.role}</td>
                 <td className="text-right py-1">{s.count}</td>
@@ -60,8 +60,8 @@ export function HardwareBOMTable({ results }: Props) {
                 </tr>
               </thead>
               <tbody>
-                {bom.sanStorage.map((s, i) => (
-                  <tr key={`${s.model}-${i}`} className="border-b border-surface-700/50">
+                {bom.sanStorage.map((s) => (
+                  <tr key={s.model} className="border-b border-surface-700/50">
                     <td className="py-1">{s.model}</td>
                     <td className="py-1 text-slate-400">{s.tier}</td>
                     <td className="text-right py-1">{s.count}</td>
