@@ -1,4 +1,4 @@
-import yaml from 'js-yaml'
+import { dump } from 'js-yaml'
 import { toast } from 'sonner'
 import type { CalculationResults } from '@/types/results'
 
@@ -55,7 +55,7 @@ export function exportYAML(results: CalculationResults): void {
       },
     }
 
-    const yamlStr = yaml.dump(data, { lineWidth: 120, noRefs: true })
+    const yamlStr = dump(data, { lineWidth: 120, noRefs: true })
     const blob = new Blob([yamlStr], { type: 'text/yaml' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
