@@ -1,12 +1,7 @@
-import { ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
+import { type FallbackProps, ErrorBoundary as ReactErrorBoundary } from 'react-error-boundary'
 import { useTranslation } from 'react-i18next'
 
-interface ErrorFallbackProps {
-  error: Error
-  resetErrorBoundary: () => void
-}
-
-function ErrorFallback({ error: _error, resetErrorBoundary }: ErrorFallbackProps) {
+function ErrorFallback({ resetErrorBoundary }: FallbackProps) {
   const { t } = useTranslation('common')
 
   return (
