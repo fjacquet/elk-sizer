@@ -161,16 +161,16 @@ Add English first — other languages fall back to English if a key is missing.
 
 Namespaces and their source files:
 
-| Namespace | File | Used by |
-|---|---|---|
-| `common` | `common.json` | Header, nav, shared labels |
-| `ingest` | `ingest.json` | IngestPanel |
-| `retention` | `retention.json` | RetentionPanel |
-| `performance` | `performance.json` | PerformancePanel |
-| `deployment` | `deployment.json` | DeploymentPanel |
-| `advanced` | `advanced.json` | AdvancedPanel |
-| `output` | `output.json` | Report dashboard |
-| `guide` | `guide.json` | GuideView sections |
+| Namespace     | File               | Used by                    |
+| ------------- | ------------------ | -------------------------- |
+| `common`      | `common.json`      | Header, nav, shared labels |
+| `ingest`      | `ingest.json`      | IngestPanel                |
+| `retention`   | `retention.json`   | RetentionPanel             |
+| `performance` | `performance.json` | PerformancePanel           |
+| `deployment`  | `deployment.json`  | DeploymentPanel            |
+| `advanced`    | `advanced.json`    | AdvancedPanel              |
+| `output`      | `output.json`      | Report dashboard           |
+| `guide`       | `guide.json`       | GuideView sections         |
 
 Tooltip keys follow `{fieldKey}_tooltip` convention:
 ```json

@@ -33,13 +33,13 @@ Store → useStorageCalc → useClusterCalc → useHardwareCalc → useSustainab
 
 Orchestrated in `src/hooks/useCalculations.ts`. Each engine is a pure function (no React imports):
 
-| Engine | File | Input | Output |
-|--------|------|-------|--------|
-| Storage | `src/engines/storage/` | Ingest + retention config | Per-tier GB (raw, effective, buffered) |
-| Cluster | `src/engines/cluster/` | StorageResult | Nodes, shards, JVM heap per tier |
-| Hardware | `src/engines/hardware/` | ClusterResult + deployment config | Dell server/storage BOM |
-| Sustainability | `src/engines/sustainability/` | HardwareResult | Power, CO2, TCO |
-| Performance | `src/engines/performance/` | ClusterResult + HardwareResult | IOPS, latency, FC utilization |
+| Engine         | File                          | Input                             | Output                                 |
+| -------------- | ----------------------------- | --------------------------------- | -------------------------------------- |
+| Storage        | `src/engines/storage/`        | Ingest + retention config         | Per-tier GB (raw, effective, buffered) |
+| Cluster        | `src/engines/cluster/`        | StorageResult                     | Nodes, shards, JVM heap per tier       |
+| Hardware       | `src/engines/hardware/`       | ClusterResult + deployment config | Dell server/storage BOM                |
+| Sustainability | `src/engines/sustainability/` | HardwareResult                    | Power, CO2, TCO                        |
+| Performance    | `src/engines/performance/`    | ClusterResult + HardwareResult    | IOPS, latency, FC utilization          |
 
 ### Zustand Store (5 Slices)
 
@@ -57,11 +57,11 @@ Store version is currently **2**. Bump version when changing persisted field nam
 
 `DeploymentType: 'baremetal' | 'vm' | 'ece'` — affects node count and storage via overhead factors:
 
-| Type | Perf Factor | Storage Factor |
-|------|-------------|----------------|
-| baremetal | 1.0 | 1.0 |
-| vm | 0.78 | 0.86 |
-| ece | 0.72 | 0.82 |
+| Type      | Perf Factor | Storage Factor |
+| --------- | ----------- | -------------- |
+| baremetal | 1.0         | 1.0            |
+| vm        | 0.78        | 0.86           |
+| ece       | 0.72        | 0.82           |
 
 ### Data Layer
 

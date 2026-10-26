@@ -8,18 +8,18 @@ This document describes the formulas, constants, and decision logic used by ELK 
 
 Defined in `src/types/sizing.ts` under the `SIZING` object:
 
-| Constant | Value | Purpose |
-|---|---|---|
-| `JVM_HEAP_MAX_GB` | 31 GB | Hard cap on JVM heap (compressed OOPs threshold) |
-| `JVM_HEAP_RATIO` | 0.50 | Heap is 50% of node RAM |
-| `MAX_SHARDS_PER_GB_HEAP` | 20 | Elasticsearch recommended shard density limit |
-| `WATERMARK_BUFFER` | 1.25 | 25% headroom above Elasticsearch disk watermark |
-| `VM_PERF_FACTOR` | 0.78 | VM effective CPU vs bare metal |
-| `VM_STORAGE_FACTOR` | 0.86 | VM effective storage vs bare metal |
-| `MIN_NODES_PER_TIER` | 2 | Minimum data nodes per active tier |
-| `MASTER_NODE_COUNT_SMALL` | 3 | Master nodes for clusters ≤ 20 data nodes |
-| `MASTER_NODE_COUNT_LARGE` | 5 | Master nodes for clusters > 20 data nodes |
-| `LARGE_CLUSTER_THRESHOLD` | 20 | Data node count that triggers large-cluster rules |
+| Constant                  | Value | Purpose                                           |
+| ------------------------- | ----- | ------------------------------------------------- |
+| `JVM_HEAP_MAX_GB`         | 31 GB | Hard cap on JVM heap (compressed OOPs threshold)  |
+| `JVM_HEAP_RATIO`          | 0.50  | Heap is 50% of node RAM                           |
+| `MAX_SHARDS_PER_GB_HEAP`  | 20    | Elasticsearch recommended shard density limit     |
+| `WATERMARK_BUFFER`        | 1.25  | 25% headroom above Elasticsearch disk watermark   |
+| `VM_PERF_FACTOR`          | 0.78  | VM effective CPU vs bare metal                    |
+| `VM_STORAGE_FACTOR`       | 0.86  | VM effective storage vs bare metal                |
+| `MIN_NODES_PER_TIER`      | 2     | Minimum data nodes per active tier                |
+| `MASTER_NODE_COUNT_SMALL` | 3     | Master nodes for clusters ≤ 20 data nodes         |
+| `MASTER_NODE_COUNT_LARGE` | 5     | Master nodes for clusters > 20 data nodes         |
+| `LARGE_CLUSTER_THRESHOLD` | 20    | Data node count that triggers large-cluster rules |
 
 ---
 
@@ -29,11 +29,11 @@ Calculates required storage per tier before hardware selection.
 
 ### Compression Ratios
 
-| Codec | Ratio applied |
-|---|---|
-| `lz4` | 1.10 (10% size increase vs raw — fast indexing) |
-| `deflate` | 0.85 (15% reduction) |
-| `best_compression` | 0.70 (30% reduction) |
+| Codec              | Ratio applied                                   |
+| ------------------ | ----------------------------------------------- |
+| `lz4`              | 1.10 (10% size increase vs raw — fast indexing) |
+| `deflate`          | 0.85 (15% reduction)                            |
+| `best_compression` | 0.70 (30% reduction)                            |
 
 ### Per-Tier Storage Formula
 
@@ -57,12 +57,12 @@ Calculates node count, JVM heap, and shard count for each tier and infrastructur
 
 These ratios determine how much RAM is needed per unit of stored data:
 
-| Tier | Ratio | Rationale |
-|---|---|---|
-| Hot | 1 : 30 | Active indexing and frequent queries need large OS page cache |
-| Warm | 1 : 160 | Read-only; less active caching required |
-| Cold | 1 : 500 | Rarely queried; minimal memory footprint |
-| Frozen | 1 : 1600 | Searchable snapshots; data lives on object storage |
+| Tier   | Ratio    | Rationale                                                     |
+| ------ | -------- | ------------------------------------------------------------- |
+| Hot    | 1 : 30   | Active indexing and frequent queries need large OS page cache |
+| Warm   | 1 : 160  | Read-only; less active caching required                       |
+| Cold   | 1 : 500  | Rarely queried; minimal memory footprint                      |
+| Frozen | 1 : 1600 | Searchable snapshots; data lives on object storage            |
 
 ### Data Node Count
 
@@ -97,11 +97,11 @@ shardCount = max(
 
 These are fixed-formula, not data-driven:
 
-| Role | Count | Memory | CPU cores |
-|---|---|---|---|
-| Master | 3 (small) or 5 (large) | 16 GB | 4 |
-| Ingest | max(2, ceil(dataNodes / 10)) | 32 GB | 8 |
-| Coordinating | max(2, ceil(dataNodes / 15)) | 32 GB | 8 |
+| Role         | Count                        | Memory | CPU cores |
+| ------------ | ---------------------------- | ------ | --------- |
+| Master       | 3 (small) or 5 (large)       | 16 GB  | 4         |
+| Ingest       | max(2, ceil(dataNodes / 10)) | 32 GB  | 8         |
+| Coordinating | max(2, ceil(dataNodes / 15)) | 32 GB  | 8         |
 
 ### Shard Utilization
 
@@ -157,12 +157,12 @@ The engine selects the user-chosen PowerStore model and calculates how many unit
 
 Rough order-of-magnitude estimates (not list prices):
 
-| Component | Unit cost |
-|---|---|
-| PowerEdge server | $15,000 |
-| PowerStore unit | $50,000 |
-| PowerScale / ECS node | $30,000 |
-| Ethernet switch | $10,000 |
+| Component             | Unit cost |
+| --------------------- | --------- |
+| PowerEdge server      | $15,000   |
+| PowerStore unit       | $50,000   |
+| PowerScale / ECS node | $30,000   |
+| Ethernet switch       | $10,000   |
 
 ---
 
@@ -186,14 +186,14 @@ annualCO2Kg = annualEnergyKWh × carbonIntensity[region]   # gCO2/kWh ÷ 1000
 
 Carbon intensity by region (gCO2/kWh):
 
-| Region | gCO2/kWh |
-|---|---|
-| Switzerland | 12 |
-| France | 58 |
-| Germany | 350 |
-| Italy | 233 |
-| UK | 233 |
-| US Average | 420 |
+| Region      | gCO2/kWh |
+| ----------- | -------- |
+| Switzerland | 12       |
+| France      | 58       |
+| Germany     | 350      |
+| Italy       | 233      |
+| UK          | 233      |
+| US Average  | 420      |
 
 ### TCO (5-year default)
 

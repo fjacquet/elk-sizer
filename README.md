@@ -51,27 +51,27 @@ npm run test:coverage # Tests with coverage report
 
 ## Tech Stack
 
-| Category | Technology |
-|---|---|
-| Framework | React 19 + TypeScript 5.x (strict mode) |
-| State | Zustand 5.x with LZ-String URL persistence |
-| Styling | Tailwind CSS 4.x (dark mode default) |
-| Build | Vite 7.x |
-| Testing | Vitest + Testing Library + fast-check |
-| Linting | Biome (formatter + linter) |
-| Visualization | D3-Sankey, Recharts |
-| Export | jsPDF, PptxGenJS, js-yaml |
-| i18n | react-i18next (EN, FR, DE, IT) |
+| Category      | Technology                                 |
+| ------------- | ------------------------------------------ |
+| Framework     | React 19 + TypeScript 5.x (strict mode)    |
+| State         | Zustand 5.x with LZ-String URL persistence |
+| Styling       | Tailwind CSS 4.x (dark mode default)       |
+| Build         | Vite 7.x                                   |
+| Testing       | Vitest + Testing Library + fast-check      |
+| Linting       | Biome (formatter + linter)                 |
+| Visualization | D3-Sankey, Recharts                        |
+| Export        | jsPDF, PptxGenJS, js-yaml                  |
+| i18n          | react-i18next (EN, FR, DE, IT)             |
 
 ## Project Documentation
 
-| Document | Description |
-|---|---|
-| [User Guide](docs/user-guide.md) | How to use every panel, view, and feature |
-| [Sizing Methodology](docs/sizing-methodology.md) | Formulas, constants, and calculation logic |
-| [Architecture](docs/architecture.md) | Code structure, engines, store, and data flow |
-| [Hardware Reference](docs/hardware-reference.md) | Dell hardware catalog and BOM logic |
-| [Contributing](docs/contributing.md) | Development setup, conventions, testing |
+| Document                                         | Description                                   |
+| ------------------------------------------------ | --------------------------------------------- |
+| [User Guide](docs/user-guide.md)                 | How to use every panel, view, and feature     |
+| [Sizing Methodology](docs/sizing-methodology.md) | Formulas, constants, and calculation logic    |
+| [Architecture](docs/architecture.md)             | Code structure, engines, store, and data flow |
+| [Hardware Reference](docs/hardware-reference.md) | Dell hardware catalog and BOM logic           |
+| [Contributing](docs/contributing.md)             | Development setup, conventions, testing       |
 
 ## Architecture Overview
 
