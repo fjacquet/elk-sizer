@@ -27,9 +27,12 @@ export default defineConfig({
     chunkSizeWarningLimit: 700,
     rollupOptions: {
       output: {
-        manualChunks: {
-          'vendor-react': ['react', 'react-dom'],
-          'vendor-state': ['zustand'],
+        // Vite 8 dropped the object form; the function form is deprecated but still supported.
+        manualChunks(id) {
+          if (id.includes('node_modules/react-dom') || id.includes('node_modules/react/')) {
+            return 'vendor-react'
+          }
+          if (id.includes('node_modules/zustand')) return 'vendor-state'
         },
       },
     },
