@@ -91,20 +91,20 @@ Frozen tier always uses `replicaCount = 0` (object storage handles durability).
 
 ### 3.2 Compression Ratios
 
-| Codec            | Ratio | Effect                     |
-|------------------|-------|----------------------------|
-| LZ4              | 1.10  | +10% (fast, default)       |
-| DEFLATE          | 0.85  | −15%                       |
-| Best Compression | 0.70  | −30%                       |
+| Codec            | Ratio | Effect               |
+| ---------------- | ----- | -------------------- |
+| LZ4              | 1.10  | +10% (fast, default) |
+| DEFLATE          | 0.85  | −15%                 |
+| Best Compression | 0.70  | −30%                 |
 
 ### 3.3 Memory:Storage Ratios per Tier
 
-| Tier   | Ratio       | Numeric  | Rationale                                       |
-|--------|-------------|----------|-------------------------------------------------|
-| Hot    | 1:30        | 0.0333   | Active indexing + frequent queries, large cache |
-| Warm   | 1:160       | 0.00625  | Read-only, less active caching                  |
-| Cold   | 1:500       | 0.002    | Rarely queried, minimal memory footprint        |
-| Frozen | 1:1600      | 0.000625 | Searchable snapshots on object store            |
+| Tier   | Ratio  | Numeric  | Rationale                                       |
+| ------ | ------ | -------- | ----------------------------------------------- |
+| Hot    | 1:30   | 0.0333   | Active indexing + frequent queries, large cache |
+| Warm   | 1:160  | 0.00625  | Read-only, less active caching                  |
+| Cold   | 1:500  | 0.002    | Rarely queried, minimal memory footprint        |
+| Frozen | 1:1600 | 0.000625 | Searchable snapshots on object store            |
 
 ### 3.4 Cluster Sizing Formulas
 
@@ -121,16 +121,16 @@ shardCount        = max(ceil(watermarkBufferedGB / targetShardSizeGB), nodeCount
 
 ### 3.5 Infrastructure Node Rules
 
-| Role          | Count formula                        | Memory | CPU Cores |
-|---------------|--------------------------------------|--------|-----------|
-| Master        | 3 (≤20 data nodes) / 5 (>20)         | 16 GB  | 4         |
-| Ingest        | max(2, ceil(dataNodes / 10))          | 32 GB  | 8         |
-| Coordinating  | max(2, ceil(dataNodes / 15))          | 32 GB  | 8         |
+| Role         | Count formula                | Memory | CPU Cores |
+| ------------ | ---------------------------- | ------ | --------- |
+| Master       | 3 (≤20 data nodes) / 5 (>20) | 16 GB  | 4         |
+| Ingest       | max(2, ceil(dataNodes / 10)) | 32 GB  | 8         |
+| Coordinating | max(2, ceil(dataNodes / 15)) | 32 GB  | 8         |
 
 ### 3.6 CPU Cores per Tier
 
 | Tier   | Cores/Node |
-|--------|-----------|
+| ------ | ---------- |
 | Hot    | 16         |
 | Warm   | 8          |
 | Cold   | 4          |
@@ -151,18 +151,18 @@ shardUtilization     = totalShards / maxShardsCapacity
 ### 3.8 Key Constants
 
 ```typescript
-WATERMARK_BUFFER      = 1.25   // 25% free space headroom
-FILESYSTEM_OVERHEAD   = 0.05   // doc values, mappings, segment overhead
-JVM_HEAP_MAX_GB       = 31     // compressed OOPs threshold (not 30 GB)
-JVM_HEAP_RATIO        = 0.50   // 50% of node RAM
+WATERMARK_BUFFER = 1.25 // 25% free space headroom
+FILESYSTEM_OVERHEAD = 0.05 // doc values, mappings, segment overhead
+JVM_HEAP_MAX_GB = 31 // compressed OOPs threshold (not 30 GB)
+JVM_HEAP_RATIO = 0.5 // 50% of node RAM
 MAX_SHARDS_PER_GB_HEAP = 20
-VM_PERF_FACTOR        = 0.78   // VMware CPU/perf overhead (~22%)
-VM_STORAGE_FACTOR     = 0.86   // VMware storage overhead (~14%)
-MIN_NODES_PER_TIER    = 2
-MASTER_NODE_SMALL     = 3      // clusters ≤ 20 data nodes
-MASTER_NODE_LARGE     = 5      // clusters > 20 data nodes
+VM_PERF_FACTOR = 0.78 // VMware CPU/perf overhead (~22%)
+VM_STORAGE_FACTOR = 0.86 // VMware storage overhead (~14%)
+MIN_NODES_PER_TIER = 2
+MASTER_NODE_SMALL = 3 // clusters ≤ 20 data nodes
+MASTER_NODE_LARGE = 5 // clusters > 20 data nodes
 LARGE_CLUSTER_THRESHOLD = 20
-SHARD_SIZE_TARGET_GB  = 50
+SHARD_SIZE_TARGET_GB = 50
 ```
 
 ---
@@ -214,13 +214,13 @@ searchIOPS = searchRate × avgShardsHit × IOPS_PER_SHARD
 
 ### 4.3 PowerStore IOPS Specifications
 
-| Model          | Max IOPS    | Latency   | Notes                                 |
-|----------------|-------------|-----------|---------------------------------------|
-| PowerStore 500T  | 150,000   | 0.5 ms    | Suitable for small clusters           |
-| PowerStore 1200T | 350,000   | 0.4 ms    | Medium clusters, heavy ingest         |
-| PowerStore 3200T | 600,000   | 0.3 ms    | Large clusters                        |
-| PowerStore 5200T | 1,000,000 | 0.25 ms   | Enterprise hot+warm combined          |
-| PowerStore 9200T | 2,000,000 | 0.2 ms    | Largest deployments                   |
+| Model            | Max IOPS  | Latency | Notes                         |
+| ---------------- | --------- | ------- | ----------------------------- |
+| PowerStore 500T  | 150,000   | 0.5 ms  | Suitable for small clusters   |
+| PowerStore 1200T | 350,000   | 0.4 ms  | Medium clusters, heavy ingest |
+| PowerStore 3200T | 600,000   | 0.3 ms  | Large clusters                |
+| PowerStore 5200T | 1,000,000 | 0.25 ms | Enterprise hot+warm combined  |
+| PowerStore 9200T | 2,000,000 | 0.2 ms  | Largest deployments           |
 
 ### 4.4 IOPS Sizing Rules
 
@@ -243,7 +243,7 @@ warmSearchIOPS = searchRate × 0.3 × 15   // 30% of searches hit warm, ~15 IOPS
 ### 4.5 IOPS Health Indicators (Proposed)
 
 | Utilisation | Status   | Action                                          |
-|-------------|----------|-------------------------------------------------|
+| ----------- | -------- | ----------------------------------------------- |
 | < 50%       | Healthy  | —                                               |
 | 50–75%      | Warning  | Monitor — approaching saturation at peak        |
 | > 75%       | Critical | Upgrade PowerStore tier or reduce hot retention |
@@ -262,38 +262,38 @@ warmSearchIOPS = searchRate × 0.3 × 15   // 30% of searches hit warm, ~15 IOPS
 
 **PowerEdge R760** — Hot & Warm data tiers (2U, Gen 16G, Intel)
 
-| Spec          | Value                                          |
-|---------------|------------------------------------------------|
-| Max RAM       | 2,048 GB (32 DIMM slots)                       |
-| Drive bays    | up to 16 × 2.5"                               |
-| Network       | 2 × 25GbE SFP28 + 2 × 1GbE RJ45               |
-| Max power     | 1,200 W / Idle: 350 W                          |
-| PSU           | 1,400 W                                        |
-| CPU options   | Xeon Gold 6430 (32c/2.1 GHz), Xeon Platinum 8470 (52c/2.0 GHz) |
+| Spec        | Value                                                          |
+| ----------- | -------------------------------------------------------------- |
+| Max RAM     | 2,048 GB (32 DIMM slots)                                       |
+| Drive bays  | up to 16 × 2.5"                                                |
+| Network     | 2 × 25GbE SFP28 + 2 × 1GbE RJ45                                |
+| Max power   | 1,200 W / Idle: 350 W                                          |
+| PSU         | 1,400 W                                                        |
+| CPU options | Xeon Gold 6430 (32c/2.1 GHz), Xeon Platinum 8470 (52c/2.0 GHz) |
 
 **PowerEdge R660** — Master, Ingest, Coordinating nodes (1U, Gen 16G, Intel)
 
-| Spec          | Value                                          |
-|---------------|------------------------------------------------|
-| Max RAM       | 1,024 GB (16 DIMM slots)                       |
-| Drive bays    | up to 10 × 2.5"                               |
-| Network       | 2 × 25GbE SFP28 + 2 × 1GbE RJ45               |
-| Max power     | 900 W / Idle: 250 W                            |
-| PSU           | 1,100 W                                        |
-| CPU options   | Xeon Gold 6430 (32c), Xeon Silver 4416+ (20c)  |
+| Spec        | Value                                         |
+| ----------- | --------------------------------------------- |
+| Max RAM     | 1,024 GB (16 DIMM slots)                      |
+| Drive bays  | up to 10 × 2.5"                               |
+| Network     | 2 × 25GbE SFP28 + 2 × 1GbE RJ45               |
+| Max power   | 900 W / Idle: 250 W                           |
+| PSU         | 1,100 W                                       |
+| CPU options | Xeon Gold 6430 (32c), Xeon Silver 4416+ (20c) |
 
 **Key design rule**: R660 always used for infrastructure roles (master/ingest/coordinating) regardless of user's data node choice. 1U density is optimal for these low-storage roles.
 
 **PowerEdge R7725** — Memory-intensive Hot tier (2U, Gen 16G, AMD EPYC)
 
-| Spec          | Value                                          |
-|---------------|------------------------------------------------|
-| Max RAM       | 4,096 GB (24 DIMM slots)                       |
-| Drive bays    | up to 24 × 2.5" or 3.5"                       |
-| Network       | 2 × 100GbE QSFP56 + 2 × 25GbE SFP28           |
-| Max power     | 2,000 W / Idle: 500 W                          |
-| PSU           | 2,400 W                                        |
-| CPU options   | EPYC 9554 (64c/3.1 GHz), EPYC 9354 (32c/3.25 GHz) |
+| Spec        | Value                                             |
+| ----------- | ------------------------------------------------- |
+| Max RAM     | 4,096 GB (24 DIMM slots)                          |
+| Drive bays  | up to 24 × 2.5" or 3.5"                           |
+| Network     | 2 × 100GbE QSFP56 + 2 × 25GbE SFP28               |
+| Max power   | 2,000 W / Idle: 500 W                             |
+| PSU         | 2,400 W                                           |
+| CPU options | EPYC 9554 (64c/3.1 GHz), EPYC 9354 (32c/3.25 GHz) |
 
 **Key insight**: RAM above 62 GB (the 2× JVM heap hard cap) goes entirely to the OS page cache, which Lucene uses heavily for segment caching. More RAM → larger Lucene cache → faster queries.
 
@@ -301,24 +301,24 @@ warmSearchIOPS = searchRate × 0.3 × 15   // 30% of searches hit warm, ~15 IOPS
 
 NVMe/FC protocol, 32 Gb Fibre Channel.
 
-| Model            | Max Raw  | Max Effective | Max IOPS  | Latency  | FC Ports    | Power   | Rack U |
-|------------------|----------|---------------|-----------|----------|-------------|---------|--------|
-| PowerStore 500T  | 96 TB    | 192 TB        | 150,000   | 0.5 ms   | 4 × 32Gb FC | 800 W   | 2U     |
-| PowerStore 1200T | 192 TB   | 384 TB        | 350,000   | 0.4 ms   | 8 × 32Gb FC | 1,200 W | 2U     |
-| PowerStore 3200T | 384 TB   | 768 TB        | 600,000   | 0.3 ms   | 8 × 32Gb FC | 1,800 W | 4U     |
-| PowerStore 5200T | 576 TB   | 1,152 TB      | 1,000,000 | 0.25 ms  | 16 × 32Gb FC| 2,400 W | 4U     |
-| PowerStore 9200T | 1,152 TB | 2,304 TB      | 2,000,000 | 0.2 ms   | 16 × 32Gb FC| 3,600 W | 8U     |
+| Model            | Max Raw  | Max Effective | Max IOPS  | Latency | FC Ports     | Power   | Rack U |
+| ---------------- | -------- | ------------- | --------- | ------- | ------------ | ------- | ------ |
+| PowerStore 500T  | 96 TB    | 192 TB        | 150,000   | 0.5 ms  | 4 × 32Gb FC  | 800 W   | 2U     |
+| PowerStore 1200T | 192 TB   | 384 TB        | 350,000   | 0.4 ms  | 8 × 32Gb FC  | 1,200 W | 2U     |
+| PowerStore 3200T | 384 TB   | 768 TB        | 600,000   | 0.3 ms  | 8 × 32Gb FC  | 1,800 W | 4U     |
+| PowerStore 5200T | 576 TB   | 1,152 TB      | 1,000,000 | 0.25 ms | 16 × 32Gb FC | 2,400 W | 4U     |
+| PowerStore 9200T | 1,152 TB | 2,304 TB      | 2,000,000 | 0.2 ms  | 16 × 32Gb FC | 3,600 W | 8U     |
 
 ### 5.3 PowerScale Object Storage (Frozen tier, S3)
 
 Scale-out NAS with S3 Object Protocol. Path-style S3 access required.
 
-| Model             | Node Capacity | Max Cluster | S3 Throughput | Network                     | Power/Node | Rack U |
-|-------------------|---------------|-------------|---------------|-----------------------------|------------|--------|
-| PowerScale F710   | 92 TB         | 1.5 PB      | 5 GB/s        | 4 × 25GbE SFP28             | 750 W      | 1U     |
-| PowerScale F910   | 184 TB        | 3 PB        | 10 GB/s       | 2 × 100GbE + 2 × 25GbE      | 1,100 W    | 2U     |
-| PowerScale H7000  | 480 TB        | 10 PB       | 3 GB/s        | 4 × 25GbE SFP28             | 600 W      | 4U     |
-| PowerScale A3100  | 960 TB        | 50 PB       | 2 GB/s        | 2 × 25GbE SFP28             | 500 W      | 4U     |
+| Model            | Node Capacity | Max Cluster | S3 Throughput | Network                | Power/Node | Rack U |
+| ---------------- | ------------- | ----------- | ------------- | ---------------------- | ---------- | ------ |
+| PowerScale F710  | 92 TB         | 1.5 PB      | 5 GB/s        | 4 × 25GbE SFP28        | 750 W      | 1U     |
+| PowerScale F910  | 184 TB        | 3 PB        | 10 GB/s       | 2 × 100GbE + 2 × 25GbE | 1,100 W    | 2U     |
+| PowerScale H7000 | 480 TB        | 10 PB       | 3 GB/s        | 4 × 25GbE SFP28        | 600 W      | 4U     |
+| PowerScale A3100 | 960 TB        | 50 PB       | 2 GB/s        | 2 × 25GbE SFP28        | 500 W      | 4U     |
 
 ### 5.4 Dell ECS (Alternative to PowerScale for Frozen tier)
 
@@ -328,12 +328,12 @@ Scale-out NAS with S3 Object Protocol. Path-style S3 access required.
 
 ### 5.5 Network Connectivity Model
 
-| Connection              | Spec                                                   |
-|-------------------------|--------------------------------------------------------|
-| Server → TOR switch     | 25 GbE standard / 100 GbE for R7725/high ingest        |
-| TOR switch count        | max(2, ceil(totalEthPorts / 48))                       |
-| Server → PowerStore     | 32 Gb Fibre Channel                                    |
-| HA paths per server     | 2 Ethernet (active/active bonding or ECMP)             |
+| Connection          | Spec                                            |
+| ------------------- | ----------------------------------------------- |
+| Server → TOR switch | 25 GbE standard / 100 GbE for R7725/high ingest |
+| TOR switch count    | max(2, ceil(totalEthPorts / 48))                |
+| Server → PowerStore | 32 Gb Fibre Channel                             |
+| HA paths per server | 2 Ethernet (active/active bonding or ECMP)      |
 
 ---
 
@@ -341,12 +341,12 @@ Scale-out NAS with S3 Object Protocol. Path-style S3 access required.
 
 ### 6.1 ILM Tier Architecture
 
-| Tier   | Storage     | Role                                      | Memory Ratio | Replicas |
-|--------|-------------|-------------------------------------------|--------------|----------|
-| Hot    | PowerStore  | Active indexing + recent search           | 1:30         | ≥1       |
-| Warm   | PowerStore  | Read-only, aged data                      | 1:160        | ≥1       |
-| Cold   | PowerStore  | Infrequent access, compliance             | 1:500        | ≥1       |
-| Frozen | PowerScale/ECS | Searchable snapshots on object store  | 1:1600       | 0        |
+| Tier   | Storage        | Role                                 | Memory Ratio | Replicas |
+| ------ | -------------- | ------------------------------------ | ------------ | -------- |
+| Hot    | PowerStore     | Active indexing + recent search      | 1:30         | ≥1       |
+| Warm   | PowerStore     | Read-only, aged data                 | 1:160        | ≥1       |
+| Cold   | PowerStore     | Infrequent access, compliance        | 1:500        | ≥1       |
+| Frozen | PowerScale/ECS | Searchable snapshots on object store | 1:1600       | 0        |
 
 ### 6.2 Searchable Snapshots (Frozen Tier)
 
@@ -367,7 +367,7 @@ node.attr.san_id: powerstore-01
 ### 6.4 Node Roles Summary
 
 | Role         | Storage | JVM | Min RAM | Rec RAM | Min Cores | Rec Cores |
-|--------------|---------|-----|---------|---------|-----------|-----------|
+| ------------ | ------- | --- | ------- | ------- | --------- | --------- |
 | data_hot     | Yes     | Yes | 32 GB   | 64 GB   | 8         | 16        |
 | data_warm    | Yes     | Yes | 32 GB   | 64 GB   | 4         | 8         |
 | data_cold    | Yes     | Yes | 16 GB   | 32 GB   | 2         | 4         |
@@ -400,19 +400,19 @@ failback=immediate
 
 ### 7.1 Recommendation
 
-| Tier              | Recommendation       | Reason                                          |
-|-------------------|---------------------|-------------------------------------------------|
-| Hot               | **Bare metal**       | Latency-sensitive, active indexing              |
-| Warm / Cold       | VM acceptable        | Read-only, throughput more important than latency |
-| Frozen            | VM acceptable        | Data on object store, local node is thin        |
-| Infrastructure    | VM acceptable        | Master/ingest/coordinating — not storage-bound  |
+| Tier           | Recommendation | Reason                                            |
+| -------------- | -------------- | ------------------------------------------------- |
+| Hot            | **Bare metal** | Latency-sensitive, active indexing                |
+| Warm / Cold    | VM acceptable  | Read-only, throughput more important than latency |
+| Frozen         | VM acceptable  | Data on object store, local node is thin          |
+| Infrastructure | VM acceptable  | Master/ingest/coordinating — not storage-bound    |
 
 ### 7.2 Overhead Factors (VMware, tuned vSphere)
 
-| Factor        | Value | Impact                      |
-|---------------|-------|-----------------------------|
-| VM_PERF_FACTOR | 0.78 | 22% CPU/performance overhead |
-| VM_STORAGE_FACTOR | 0.86 | 14% storage overhead (VMDKs on PowerStore FC) |
+| Factor            | Value | Impact                                        |
+| ----------------- | ----- | --------------------------------------------- |
+| VM_PERF_FACTOR    | 0.78  | 22% CPU/performance overhead                  |
+| VM_STORAGE_FACTOR | 0.86  | 14% storage overhead (VMDKs on PowerStore FC) |
 
 When VM deployment selected, the tool adjusts:
 ```
@@ -427,13 +427,13 @@ adjustedStorageGB  = storageGB / 0.86          // +16% more storage
 ### 8.1 Carbon Intensity by Region
 
 | Region      | gCO2/kWh |
-|-------------|-----------|
-| Switzerland | 30        |
-| France      | 55        |
-| Germany     | 350       |
-| Italy       | 250       |
-| UK          | 200       |
-| US Average  | 400       |
+| ----------- | -------- |
+| Switzerland | 30       |
+| France      | 55       |
+| Germany     | 350      |
+| Italy       | 250      |
+| UK          | 200      |
+| US Average  | 400      |
 
 ### 8.2 Power Formula
 
@@ -456,13 +456,13 @@ totalTCO         = hardwareCostUSD + energyCostUSD + licenseCostUSD
 
 ### 8.4 Rough Unit Costs
 
-| Component             | Unit Cost   |
-|-----------------------|-------------|
-| PowerEdge server      | $15,000     |
-| PowerStore unit       | $50,000     |
-| PowerScale/ECS node   | $30,000     |
-| Ethernet switch       | $10,000     |
-| Elastic license       | $50/node/month |
+| Component           | Unit Cost      |
+| ------------------- | -------------- |
+| PowerEdge server    | $15,000        |
+| PowerStore unit     | $50,000        |
+| PowerScale/ECS node | $30,000        |
+| Ethernet switch     | $10,000        |
+| Elastic license     | $50/node/month |
 
 ---
 
@@ -472,14 +472,14 @@ totalTCO         = hardwareCostUSD + energyCostUSD + licenseCostUSD
 
 Chose the same stack as the existing "raidy" project for consistency:
 
-| Layer      | Choice                            | Rationale                         |
-|------------|-----------------------------------|-----------------------------------|
-| UI         | React 19 + TypeScript strict      | Type-safe, familiar to team       |
-| State      | Zustand 5 + LZ-String URL persist | No backend, shareable URLs        |
-| Styling    | Tailwind CSS 4, dark mode default | Fast iteration, design system     |
-| Build      | Vite 7                            | Fast dev + HMR                    |
-| Test       | Vitest + Testing Library + fast-check | Fast, browser-like, property-based |
-| Lint/Format| Biome                             | Single tool, single quotes, no semicolons |
+| Layer       | Choice                                | Rationale                                 |
+| ----------- | ------------------------------------- | ----------------------------------------- |
+| UI          | React 19 + TypeScript strict          | Type-safe, familiar to team               |
+| State       | Zustand 5 + LZ-String URL persist     | No backend, shareable URLs                |
+| Styling     | Tailwind CSS 4, dark mode default     | Fast iteration, design system             |
+| Build       | Vite 7                                | Fast dev + HMR                            |
+| Test        | Vitest + Testing Library + fast-check | Fast, browser-like, property-based        |
+| Lint/Format | Biome                                 | Single tool, single quotes, no semicolons |
 
 ### 9.2 Engine Strategy Pattern
 
@@ -493,12 +493,12 @@ Orchestration: React hooks with `useMemo`.
 
 ### 9.3 Five Zustand Slices
 
-| Slice            | Key fields                                               |
-|------------------|----------------------------------------------------------|
-| IngestSlice      | dailyIngestGB, compressionCodec, replicaCount, indexCount |
-| RetentionSlice   | hotDays, warmDays, coldDays, frozenDays, ilmEnabled      |
-| PerformanceSlice | searchRate, indexingRate, concurrentSearches             |
-| DeploymentSlice  | deploymentType, serverModel, cpuOption, memoryPerNode, storageModel, frozenBackend, networkSpeed |
+| Slice            | Key fields                                                                                          |
+| ---------------- | --------------------------------------------------------------------------------------------------- |
+| IngestSlice      | dailyIngestGB, compressionCodec, replicaCount, indexCount                                           |
+| RetentionSlice   | hotDays, warmDays, coldDays, frozenDays, ilmEnabled                                                 |
+| PerformanceSlice | searchRate, indexingRate, concurrentSearches                                                        |
+| DeploymentSlice  | deploymentType, serverModel, cpuOption, memoryPerNode, storageModel, frozenBackend, networkSpeed    |
 | AdvancedSlice    | pue, carbonRegion, jvmHeapOverride, shardsPerIndex, unitSystem, electricityCostPerKwh, projectYears |
 
 All state serialised to URL hash via LZ-String.
@@ -519,12 +519,12 @@ Trade-off: Manual update required for new Dell models.
 
 ### 10.1 Layout — Cockpit Split-Screen
 
-| View        | Hash        | Content                          |
-|-------------|-------------|----------------------------------|
-| Config      | `#config`   | All 5 input panels               |
-| Report      | `#report`   | Calculation results dashboard    |
-| Advisor     | `#advisor`  | Architecture Advisor             |
-| Guide       | `#guide`    | Sizing reference guide           |
+| View    | Hash       | Content                       |
+| ------- | ---------- | ----------------------------- |
+| Config  | `#config`  | All 5 input panels            |
+| Report  | `#report`  | Calculation results dashboard |
+| Advisor | `#advisor` | Architecture Advisor          |
+| Guide   | `#guide`   | Sizing reference guide        |
 
 Desktop: InputSidebar (left) + OutputDashboard (right) always visible.
 Mobile: Stacked layout with bottom navigation bar.
@@ -548,11 +548,11 @@ Mobile: Stacked layout with bottom navigation bar.
 
 ### 10.4 Export Formats
 
-| Format | Tool                 | Content                              |
-|--------|----------------------|--------------------------------------|
-| PDF    | jsPDF + autotable    | Full report                          |
-| PPTX   | pptxgenjs            | 5-slide deck (title, summary, tiers, BOM, sustainability) |
-| YAML   | js-yaml              | Machine-readable config snapshot     |
+| Format | Tool              | Content                                                   |
+| ------ | ----------------- | --------------------------------------------------------- |
+| PDF    | jsPDF + autotable | Full report                                               |
+| PPTX   | pptxgenjs         | 5-slide deck (title, summary, tiers, BOM, sustainability) |
+| YAML   | js-yaml           | Machine-readable config snapshot                          |
 
 ### 10.5 Tooltip Convention
 
@@ -564,32 +564,32 @@ All input fields have `ⓘ` tooltips. Key: `{fieldKey}_tooltip`. Fallback to Eng
 
 ### 11.1 Topology Patterns Detected
 
-| Pattern              | Criteria                  |
-|----------------------|---------------------------|
-| Hot-Only             | 1 active tier             |
-| Hot-Warm             | 2 tiers (hot + warm)      |
-| Hot-Warm-Cold        | 3 tiers, no frozen        |
-| Full 4-Tier (Optimal)| Includes frozen           |
+| Pattern               | Criteria             |
+| --------------------- | -------------------- |
+| Hot-Only              | 1 active tier        |
+| Hot-Warm              | 2 tiers (hot + warm) |
+| Hot-Warm-Cold         | 3 tiers, no frozen   |
+| Full 4-Tier (Optimal) | Includes frozen      |
 
 ### 11.2 Warning Categories
 
-| Severity | Condition                        | Message                                                      |
-|----------|----------------------------------|--------------------------------------------------------------|
-| Critical | Zero replicas                    | No HA — set replicas ≥ 1 for production                      |
-| Critical | Shard utilisation > 80%          | Reduce index count, increase shard size, or add nodes        |
-| Warning  | Shard utilisation 60–80%         | Approaching limit — monitor closely                          |
-| Warning  | VM overhead in use               | Bare metal recommended for hot tier                          |
-| Info     | Frozen not enabled, long retention| Enable frozen tier for cost efficiency                       |
-| Info     | Cluster > 3 nodes                | Enable zone awareness                                        |
+| Severity | Condition                          | Message                                               |
+| -------- | ---------------------------------- | ----------------------------------------------------- |
+| Critical | Zero replicas                      | No HA — set replicas ≥ 1 for production               |
+| Critical | Shard utilisation > 80%            | Reduce index count, increase shard size, or add nodes |
+| Warning  | Shard utilisation 60–80%           | Approaching limit — monitor closely                   |
+| Warning  | VM overhead in use                 | Bare metal recommended for hot tier                   |
+| Info     | Frozen not enabled, long retention | Enable frozen tier for cost efficiency                |
+| Info     | Cluster > 3 nodes                  | Enable zone awareness                                 |
 
 ### 11.3 Reference Architecture Scale
 
-| Pattern    | Scale             | Data Nodes | Retention  |
-|------------|-------------------|------------|------------|
-| Small      | < 100 GB/day      | 4–6        | Short      |
-| Medium     | 100–1,000 GB/day  | 10–20      | Medium     |
-| Large      | 1–10 TB/day       | 30–50      | Full ILM   |
-| Enterprise | > 10 TB/day       | 50+        | Full 4-tier + frozen |
+| Pattern    | Scale            | Data Nodes | Retention            |
+| ---------- | ---------------- | ---------- | -------------------- |
+| Small      | < 100 GB/day     | 4–6        | Short                |
+| Medium     | 100–1,000 GB/day | 10–20      | Medium               |
+| Large      | 1–10 TB/day      | 30–50      | Full ILM             |
+| Enterprise | > 10 TB/day      | 50+        | Full 4-tier + frozen |
 
 ---
 
@@ -618,14 +618,14 @@ Key invariant tested: `jvmHeapGB ≤ 31` regardless of RAM per node.
 
 ## 14. Rejected Approaches
 
-| Rejected Approach             | Reason                                                     |
-|-------------------------------|------------------------------------------------------------|
-| API-backed backend            | No server cost, offline-capable SPA preferred              |
-| NAS for hot/warm storage      | Elastic official guide explicitly recommends against NAS   |
-| Replicas on frozen tier       | Object store handles durability; replicas waste storage    |
-| Virtual-hosted S3 style       | ECS + PowerScale require path-style access                 |
+| Rejected Approach                 | Reason                                                    |
+| --------------------------------- | --------------------------------------------------------- |
+| API-backed backend                | No server cost, offline-capable SPA preferred             |
+| NAS for hot/warm storage          | Elastic official guide explicitly recommends against NAS  |
+| Replicas on frozen tier           | Object store handles durability; replicas waste storage   |
+| Virtual-hosted S3 style           | ECS + PowerScale require path-style access                |
 | Single server model for all roles | Infrastructure roles use R660 always (1U density optimal) |
-| Fetching Dell docs from InfoHub | Blocked by Google reCAPTCHA; user provided local PDFs     |
+| Fetching Dell docs from InfoHub   | Blocked by Google reCAPTCHA; user provided local PDFs     |
 
 ---
 
@@ -664,4 +664,4 @@ doc/PRD.md                                   — Product requirements document
 
 ---
 
-*Last updated: 2026-02-27*
+_Last updated: 2026-02-27_

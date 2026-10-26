@@ -1,12 +1,15 @@
 # Product Requirements Document: ELK Sizer
 
 ## Overview
+
 ELK Sizer is a browser-based Elasticsearch cluster sizing tool designed for engineers deploying Elastic Stack on Dell on-premise infrastructure.
 
 ## Problem Statement
+
 Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involving multiple data tiers, storage types (SAN vs object storage), JVM heap constraints, shard limits, and VM overhead considerations. Engineers need a tool that translates business requirements (data volume, retention) into concrete hardware bills of materials.
 
 ## Target Users
+
 - Infrastructure engineers planning Elastic deployments
 - Pre-sales engineers creating Dell-based proposals
 - Capacity planners estimating TCO for Elastic clusters
@@ -14,21 +17,25 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 ## Core Features
 
 ### 1. Data Ingest Configuration
+
 - Daily ingest volume (1-10,000 GB/day)
 - Compression codec selection (LZ4, DEFLATE, Best Compression)
 - Replica count (0-3)
 - Index count
 
 ### 2. Retention Policy
+
 - Per-tier retention days: Hot (1-90), Warm (0-365), Cold (0-730), Frozen (0-3650)
 - ILM (Index Lifecycle Management) toggle
 
 ### 3. Performance Parameters
+
 - Search rate (queries/second) — drives IOPS estimation
 - Indexing rate (docs/second) — drives write IOPS estimation
 - Concurrent searches
 
 ### 4. Deployment Configuration
+
 - VM vs Bare Metal toggle
 - Dell PowerEdge server model selection (R760, R660, R7725)
 - Dell PowerStore SAN model selection (500T-9200T)
@@ -36,6 +43,7 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 - Network speed: 10/25/100 GbE
 
 ### 5. Sizing Results
+
 - **Cluster Summary**: Total nodes, storage, memory, estimated cost
 - **Tier Breakdown**: Per-tier node count, storage, memory, JVM heap, shards, estimated IOPS
 - **Data Flow Sankey Diagram**: Visual flow from raw ingest through tiers
@@ -44,17 +52,21 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 - **Sustainability**: Power, CO2, TCO over project lifetime
 
 ### 6. Export
+
 - PDF report with all sizing details
 - YAML configuration export
 
 ### 7. Internationalization
+
 - English, French, German, Italian (Swiss languages)
 
 ### 8. URL Sharing
+
 - Complete configuration encoded in URL hash
 - Copy-paste to share exact sizing scenarios
 
 ## Key Sizing Rules
+
 - JVM Heap: 50% of RAM, never exceed 31 GB (compressed OOPs)
 - Memory:Storage ratios: Hot 1:30, Warm 1:160, Cold 1:500, Frozen 1:1600
 - Minimum 2 data nodes per tier
@@ -64,6 +76,7 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 - Target shard size: 50 GB
 
 ### 9. IOPS Health Monitoring
+
 - Estimated indexing IOPS per hot tier node (Lucene write amplification ×4)
 - Estimated search IOPS per tier using a per-shard model (hot: 75% of queries, warm: 20%)
 - Total required vs available IOPS with 30% safety headroom
@@ -71,6 +84,7 @@ Sizing an Elasticsearch cluster for on-premise Dell hardware is complex, involvi
 - Architecture Advisor warning at >60% utilization; critical error at >80%
 
 ## Non-Functional Requirements
+
 - Client-side SPA (no backend required)
 - Works offline after initial load
 - Mobile-responsive (split-screen desktop, stacked mobile)

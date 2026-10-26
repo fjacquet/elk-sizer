@@ -91,13 +91,13 @@ All hooks use `useMemo` with precise dependency arrays. Re-calculation only happ
 
 State is managed by **Zustand** with a single `useConfigStore` hook composed of five slices:
 
-| Slice | Key fields |
-|---|---|
-| `IngestSlice` | `dailyIngestGB`, `compressionCodec`, `replicaCount`, `indexCount` |
-| `RetentionSlice` | `hotDays`, `warmDays`, `coldDays`, `frozenDays`, `ilmEnabled` |
-| `PerformanceSlice` | `searchRate`, `indexingRate`, `concurrentSearches` |
-| `DeploymentSlice` | `deploymentType`, `serverModel`, `cpuOption`, `memoryPerNode`, `storageModel`, `frozenBackend`, `networkSpeed` |
-| `AdvancedSlice` | `pue`, `carbonRegion`, `jvmHeapOverride`, `shardsPerIndex`, `unitSystem`, `electricityCostPerKwh`, `projectYears` |
+| Slice              | Key fields                                                                                                        |
+| ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+| `IngestSlice`      | `dailyIngestGB`, `compressionCodec`, `replicaCount`, `indexCount`                                                 |
+| `RetentionSlice`   | `hotDays`, `warmDays`, `coldDays`, `frozenDays`, `ilmEnabled`                                                     |
+| `PerformanceSlice` | `searchRate`, `indexingRate`, `concurrentSearches`                                                                |
+| `DeploymentSlice`  | `deploymentType`, `serverModel`, `cpuOption`, `memoryPerNode`, `storageModel`, `frozenBackend`, `networkSpeed`    |
+| `AdvancedSlice`    | `pue`, `carbonRegion`, `jvmHeapOverride`, `shardsPerIndex`, `unitSystem`, `electricityCostPerKwh`, `projectYears` |
 
 ### URL Persistence
 
